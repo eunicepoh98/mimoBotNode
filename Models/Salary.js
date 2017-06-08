@@ -1,0 +1,54 @@
+//Salary Model
+module.exports = function (sequelize, DataTypes) {
+    var Salary = sequelize.define('Job', {
+        SalaryD: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true,
+            unique: true,
+            get: function () {
+                return this.getDataValue('SalaryD');
+            },
+            set: function (val) {
+                this.setDataValue('SalaryD');
+            }
+        },
+        SalaryFrom: {
+            type: DataTypes.DECIMAL(14,2),
+            allowNull: false,
+            get: function () {
+                return this.getDataValue('SalaryFrom');
+            },
+            set: function (val) {
+                this.setDataValue('SalaryFrom');
+            }
+        },
+        SalaryTo: {
+            type: DataTypes.DECIMAL(14,2),
+            allowNull: false,
+            get: function () {
+                return this.getDataValue('SalaryTo');
+            },
+            set: function (val) {
+                this.setDataValue('SalaryTo');
+            }
+        },
+        Currency: {
+            type: DataTypes.DECIMAL(14,2),
+            allowNull: false,
+            get: function () {
+                return this.getDataValue('Currency');
+            },
+            set: function (val) {
+                this.setDataValue('Currency');
+            }
+        }
+    },
+        {
+            timestamps: false,
+            freezeTableName: true,
+            tableName: 'job'
+        });
+    return Job;
+};

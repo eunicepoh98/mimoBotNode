@@ -1,0 +1,15 @@
+{
+  "name": "test",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "body-parser": "~1.16.0",
+    "cors": "^2.8.3",
+    "express": "~4.14.1",
+    "mysql": "^2.13.0",
+    "sequelize": "^3.30.4"
+  }
+}
