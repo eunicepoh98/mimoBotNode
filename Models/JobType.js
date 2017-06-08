@@ -27,7 +27,12 @@ module.exports = function (sequelize, DataTypes) {
         {
             timestamps: false,
             freezeTableName: true,
-            tableName: 'jobtype'
+            tableName: 'jobtype',
+            classMethods: {
+                associate: function (models) {
+                    JobType.belongsTo(models.Job, { foreignKey: 'JobTypeID', onDelete: 'CASCADE' });
+                }
+            },
         });
 
     return JobType;

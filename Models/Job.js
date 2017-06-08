@@ -36,8 +36,16 @@ module.exports = function (sequelize, DataTypes) {
         {
             timestamps: false,
             freezeTableName: true,
-            tableName: 'job'
+            tableName: 'job',
+            classMethods: {
+                associate: function (models) {
+                    Job.hasMany(models.JobType, { foreignKey: 'JobTypeID', onDelete: 'CASCADE' });
+                }
+            }
         });
+
+// HasOne and BelongsTo insert the association key in different models from each other. 
+// HasOne inserts the association key in target model whereas BelongsTo inserts the association key in the source model.
 
     // // force: true will drop the table if it already exists
     // Job.sync({ force: true }).then(() => {
@@ -68,3 +76,4 @@ module.exports = function (sequelize, DataTypes) {
 //       this.setDataValue('lastname', names.slice(-1).join(' '));
 //     },
 //   }
+
