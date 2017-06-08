@@ -8,6 +8,7 @@ var jobtypes = require('./Controllers/JobTypeAPIController');
 var jobfunctions = require('./Controllers/JobFunctionAPIController');
 var industries = require('./Controllers/IndustryAPIController');
 var companies = require('./Controllers/CompanyAPIController');
+var salaries = require('./Controllers/SalaryAPIController');
 
 var app = express();
 
@@ -18,11 +19,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 var port = process.env.VCAP_APP_PORT || 3000;
 
-// app.use('/api/job', jobs);
-// app.use('/api/jobtype', jobtypes);
-// app.use('/api/jobfunction', jobfunctions);
-// app.use('/api/industry', industries);
-// app.use('/api/company', companies);
+app.use('/api/job', jobs);
+app.use('/api/jobtype', jobtypes);
+app.use('/api/jobfunction', jobfunctions);
+app.use('/api/industry', industries);
+app.use('/api/company', companies);
+app.use('/api/salary', salaries);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -8,8 +8,8 @@ var Industry = require('../models').Industry;
 router.get('/', function (req, res, next) {
   Industry.findAll({})
     .then((data) => {
-      console.log(data);
-      res.send(JSON.stringify(data));
+      console.log(JSON.stringify(data));
+      res.json(data);
     })
 });
 

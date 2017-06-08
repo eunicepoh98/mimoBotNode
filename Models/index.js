@@ -5,6 +5,7 @@ var path = require('path');
 var Sequelize = require('sequelize');
 var config = require('../config.js').dbCredentials;
 
+//Initialize Connection with db
 var sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 sequelize

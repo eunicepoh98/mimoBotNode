@@ -1,17 +1,17 @@
 //Salary Model
 module.exports = function (sequelize, DataTypes) {
-    var Salary = sequelize.define('Job', {
-        SalaryD: {
+    var Salary = sequelize.define('Salary', {
+        SalaryID: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,
             unique: true,
             get: function () {
-                return this.getDataValue('SalaryD');
+                return this.getDataValue('SalaryID');
             },
             set: function (val) {
-                this.setDataValue('SalaryD');
+                this.setDataValue('SalaryID');
             }
         },
         SalaryFrom: {
@@ -48,7 +48,7 @@ module.exports = function (sequelize, DataTypes) {
         {
             timestamps: false,
             freezeTableName: true,
-            tableName: 'job'
+            tableName: 'salary'
         });
-    return Job;
+    return Salary;
 };
