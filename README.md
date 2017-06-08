@@ -1,7 +1,7 @@
-## FYP Backend
+# FYP Backend
 
-### My Notes
-#### [Sequelize](http://docs.sequelizejs.com/)
+## My Notes
+### [Sequelize](http://docs.sequelizejs.com/)
 
 What's "done"
 + Some models and get methods
@@ -11,7 +11,7 @@ What needs to be done
 + seeding data
 + advance querying
 
-#### [Wit.ai](https://wit.ai/)
+### [Wit.ai](https://wit.ai/)
 
 What's "done"
 + none
