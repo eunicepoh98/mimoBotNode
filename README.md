@@ -26,7 +26,8 @@ What needs to be done
 ### Need to create config.js file
 Contents in config.js
 
-```var config = module.exports = {}
+```
+var config = module.exports = {}
 
 config.dbCredentials = {
     'database': '',
@@ -34,5 +35,6 @@ config.dbCredentials = {
     'password': '',
     "host": "localhost",
     "dialect": "mysql"
-}```
+}
+```
 
