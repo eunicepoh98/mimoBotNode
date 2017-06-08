@@ -15,7 +15,7 @@ What needs to be done
 ### [Wit.ai](https://wit.ai/)
 
 What's "done"
-+ none
++ controllers/methods for handling nature language and loading wit with data (not tested)
 
 What needs to be done
 + create api for frontend
@@ -35,6 +35,11 @@ config.dbCredentials = {
     'password': '',
     "host": "localhost",
     "dialect": "mysql"
+}
+
+config.wit = {
+    'appId': '', //Settings > API Details > App ID
+    'serverToken': '' //Settings > API Details > Server Access Token
 }
 ```
 
