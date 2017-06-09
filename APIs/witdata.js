@@ -24,9 +24,9 @@ witdata.api = {
         })
     },
 
-    loadAllData: function(){
+    loadAllData: function () {
         return new Promise((resolve, reject) => {
-            createEntity("job_type", "contains all the job type", formatData(jobTypeData))
+            createEntity("job_type", "contains all the job type", formatData(jobTypeData));
             createEntity("job_function", "contains all the job function", formatData(jobFunctionData));
             createEntity("industry_type", "contains all the industry", formatData(industryData));
             resolve;
@@ -43,9 +43,13 @@ function formatData(data) {
     var array = [];
     data.forEach(function (value) {
         if (value.includes("/")) {
-            array.push(value.split(" / "));
+            value.split(" / ").forEach(function (one) {
+                array.push({ value: one })
+            })
         } else if (value.includes("&")) {
-            array.push(value.split(" & "));
+            value.split(" & ").forEach(function (one) {
+                array.push({ value: one })
+            })
         } else {
             array.push({ value: value })
         }

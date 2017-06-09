@@ -36,4 +36,8 @@ router.get('/data', function (req, res, next) {
     })
 });
 
+router.get('/test', function (req, res, next) {
+    wit.test();
+});
+
 module.exports = router;

@@ -8,20 +8,20 @@ What's "done"
 
 What needs to be done
 + create methods
-+ relationships
++ relationships***
 + seeding data
 + advance querying
 
 ### [Wit.ai](https://wit.ai/)
 
 What's "done"
-+ controllers/methods for handling nature language and loading wit with data (not tested)
++ api to load data into wit
++ api for frontend
++ able to handle search job scenario (90%?)
 
 What needs to be done
-+ create api for frontend
-+ api to wit.ai
-+ redo stories in wit
-+ handling response from wit
++ story flow for update work experience
++ attaching list of industry/job function/job type in context
 
 ### Need to create config.js file
 Contents in config.js
