@@ -5,10 +5,10 @@
 
 What's "done"
 + Some models and get methods
++ relationships between tables
 
 What needs to be done
 + create methods
-+ relationships***
 + seeding data
 + advance querying
 

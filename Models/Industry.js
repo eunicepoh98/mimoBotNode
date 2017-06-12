@@ -27,9 +27,15 @@ module.exports = function (sequelize, DataTypes) {
         {
             timestamps: false,
             freezeTableName: true,
-            tableName: 'industry'
+            tableName: 'industry',
+            classMethods: {
+                associate: function (models) {
+                    Industry.belongsToMany(models.Job, { through: 'jobindustry', foreignKey: 'IndustryID', onDelete: 'CASCADE' });
+                    //Industry.belongsTo(models.Userexperience, { foreignKey: 'UserExpID', onDelete: 'CASCADE' });
+                    //Industry.hasMany(models.UserSearch, { foreignKey: 'IndustryID', onDelete: 'CASCADE' });
+                }
+            }
         });
-
     return Industry;
 };
 

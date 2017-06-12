@@ -39,14 +39,16 @@ module.exports = function (sequelize, DataTypes) {
             tableName: 'job',
             classMethods: {
                 associate: function (models) {
-                    Job.hasMany(models.JobType, { foreignKey: 'JobTypeID', onDelete: 'CASCADE' });
+                    Job.belongsTo(models.JobType, { foreignKey: 'JobTypeID', onDelete: 'CASCADE' }); //, targetKey: 'JobTypeID'
+                    Job.belongsTo(models.Company, { foreignKey: 'CompanyID', onDelete: 'CASCADE' });
+                    Job.belongsTo(models.Country, { foreignKey: 'CountryID', onDelete: 'CASCADE' });
+                    Job.belongsTo(models.Salary, { foreignKey: 'SalaryID', onDelete: 'CASCADE' });
+                    Job.belongsToMany(models.Industry, { through: 'jobindustry', foreignKey: 'JobID', onDelete: 'CASCADE' });
+                    Job.belongsToMany(models.JobFunction, { through: 'jobfunctionjob', foreignKey: 'JobFunctionID', onDelete: 'CASCADE' });
+                    //Job.hasMany(models.UserBookmark, { foreignKey: 'JobID', onDelete: 'CASCADE' });
                 }
             }
         });
-
-// HasOne and BelongsTo insert the association key in different models from each other. 
-// HasOne inserts the association key in target model whereas BelongsTo inserts the association key in the source model.
-
     // // force: true will drop the table if it already exists
     // Job.sync({ force: true }).then(() => {
     //     // Table created
@@ -62,18 +64,4 @@ module.exports = function (sequelize, DataTypes) {
     return Job;
 };
 
-// getterMethods: {
-//     fullName() {
-//       return this.firstname + ' ' + this.lastname
-//     }
-//   },
-
-//   setterMethods: {
-//     fullName(value) {
-//       const names = value.split(' ');
-
-//       this.setDataValue('firstname', names.slice(0, -1).join(' '));
-//       this.setDataValue('lastname', names.slice(-1).join(' '));
-//     },
-//   }
 

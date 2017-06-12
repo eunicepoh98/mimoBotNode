@@ -45,9 +45,13 @@ module.exports = function (sequelize, DataTypes) {
         {
             timestamps: false,
             freezeTableName: true,
-            tableName: 'company'
+            tableName: 'company',
+            classMethods: {
+                associate: function (models) {
+                    Company.hasMany(models.Job, { foreignKey: 'CompanyID', onDelete: 'CASCADE' });
+                }
+            }
         });
-
     return Company;
 };
 

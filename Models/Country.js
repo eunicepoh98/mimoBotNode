@@ -1,40 +1,40 @@
-//JobType Model
+//Country Model
 module.exports = function (sequelize, DataTypes) {
-    var JobType = sequelize.define('JobType', {
-        JobTypeID: {
+    var Country = sequelize.define('Country', {
+        CountryID: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,
             unique: true,
             get: function () {
-                return this.getDataValue('JobTypeID');
+                return this.getDataValue('CountryID');
             },
             set: function (val) {
-                this.setDataValue('JobTypeID');
+                this.setDataValue('CountryID');
             }
         },
-        JobType: {
+        CountryName: {
             type: DataTypes.STRING,
             get: function () {
-                return this.getDataValue('JobType');
+                return this.getDataValue('CountryName');
             },
             set: function (val) {
-                this.setDataValue('JobType');
+                this.setDataValue('CountryName');
             }
         }
     },
         {
             timestamps: false,
             freezeTableName: true,
-            tableName: 'jobtype',
+            tableName: 'country',
             classMethods: {
                 associate: function (models) {
-                    JobType.hasMany(models.Job, { foreignKey: 'JobTypeID', onDelete: 'CASCADE' });
-                    //JobType.hasMany(models.UserSearch, { foreignKey: 'JobTypeID', onDelete: 'CASCADE' });
+                    Country.hasMany(models.Job, { foreignKey: 'CountryID', onDelete: 'CASCADE' });
+                    Country.hasMany(models.Salary, { foreignKey: 'SalaryID', onDelete: 'CASCADE' });
                 }
             },
         });
-    return JobType;
+    return Country;
 };
 

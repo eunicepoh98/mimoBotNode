@@ -15,7 +15,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         SalaryFrom: {
-            type: DataTypes.DECIMAL(14,2),
+            type: DataTypes.DECIMAL(14, 2),
             allowNull: false,
             get: function () {
                 return this.getDataValue('SalaryFrom');
@@ -25,7 +25,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         SalaryTo: {
-            type: DataTypes.DECIMAL(14,2),
+            type: DataTypes.DECIMAL(14, 2),
             allowNull: false,
             get: function () {
                 return this.getDataValue('SalaryTo');
@@ -35,7 +35,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         Currency: {
-            type: DataTypes.DECIMAL(14,2),
+            type: DataTypes.DECIMAL(14, 2),
             allowNull: false,
             get: function () {
                 return this.getDataValue('Currency');
@@ -48,7 +48,14 @@ module.exports = function (sequelize, DataTypes) {
         {
             timestamps: false,
             freezeTableName: true,
-            tableName: 'salary'
+            tableName: 'salary',
+            classMethods: {
+                associate: function (models) {
+                    Salary.belongsTo(models.Country, { foreignKey: 'CountryID', onDelete: 'CASCADE' });
+                    Salary.hasOne(models.Job, { foreignKey: 'SalaryID', onDelete: 'CASCADE' });
+                    //Salary.belongsTo(model.Userexperience, { foreignKey: 'UserExpID', onDelete: 'CASCADE' });
+                }
+            }
         });
     return Salary;
 };

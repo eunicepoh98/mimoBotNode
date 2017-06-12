@@ -27,9 +27,15 @@ module.exports = function (sequelize, DataTypes) {
         {
             timestamps: false,
             freezeTableName: true,
-            tableName: 'jobfunction'
+            tableName: 'jobfunction',
+            classMethods: {
+                associate: function (models) {
+                    JobFunction.belongsToMany(models.Job, { through: 'jobfunctionjob', foreignKey: 'JobID', onDelete: 'CASCADE' });
+                    //JobFunction.belongsTo(models.Userexperience, { foreignKey: 'UserExpID', onDelete: 'CASCADE' });
+                    //JobFunction.hasMany(models.UserSearch, { foreignKey: 'JobFunctionID', onDelete: 'CASCADE' });
+                }
+            }
         });
-
     return JobFunction;
 };
 
