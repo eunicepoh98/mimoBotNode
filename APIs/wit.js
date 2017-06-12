@@ -50,7 +50,6 @@ const actions = {
     },
     ['getIntention']({ context, entities }) {
         const intent = firstEntityValue(entities, 'intent');
-        console.log(intent);
         if (intent) {
             switch (intent) {
                 case "update work experience": {
@@ -59,7 +58,7 @@ const actions = {
                 }
                 case "search job": {
                     //get industry list from db here
-                    context.industryList = []; //context.suggestionList = [];
+                    context.suggestionList = [{ industryList: getIndustryFromDB() }];
                     context.searchJob = intent;
                     break;
                 }
@@ -72,15 +71,16 @@ const actions = {
     },
     ['getIndustry']({ context, entities }) {
         context.searchJob = context['searchJob'];
-        var yes_no = firstEntityValue(entities, 'yes_no');
-        console.log(yes_no);
-        if (yes_no == 'no') {
+        var short_replies = firstEntityValue(entities, 'short_replies');
+        if (short_replies == 'no') {
             context.industryType = [];
+            //get list of job function from db here
+            context.suggestionList = [{ jobFunctionList: getJobFunctionFromDB() }];
         } else {
             var industries = getEntityValues(entities, 'industry_type');
             if (industries) {
                 //get list of job function from db here
-                context.jobFunctionList = []; //context.suggestionList = [];
+                context.suggestionList = [{ jobFunctionList: getJobFunctionFromDB() }];
                 context.industryType = industries;
                 delete context.missingIndustryType;
             } else {
@@ -92,20 +92,21 @@ const actions = {
     ['getJobFunction']({ context, entities }) {
         context.searchJob = context['searchJob'];
         context.industryType = context['industryType'];
-        var yes_no = firstEntityValue(entities, 'yes_no');
-        console.log(yes_no);
-        if (yes_no == 'no') {
+        var short_replies = firstEntityValue(entities, 'short_replies');
+        if (short_replies == 'no') {
             context.jobFunction = [];
+            //get list of job type from db here
+            context.suggestionList = [{ jobTypeList: getJobTypeFromDB() }];
         } else {
             var JobFunctions = getEntityValues(entities, 'job_function');
             if (JobFunctions) {
                 //get list of job type from db here
-                context.jobTypeList = []; //context.suggestionList = [];
+                context.suggestionList = [{ jobTypeList: getJobTypeFromDB() }];
                 context.jobFunction = JobFunctions;
-                delete context.jobFunctionList;
                 delete context.missingJobFunction;
             } else {
                 context.missingJobFunction = true;
+                delete context.jobFunction;
             }
         }
         return context;
@@ -114,9 +115,8 @@ const actions = {
         context.searchJob = context['searchJob'];
         context.industryType = context['industryType'];
         context.jobFunction = context['jobFunction'];
-        var yes_no = firstEntityValue(entities, 'yes_no');
-        console.log(yes_no);
-        if (yes_no == 'no') {
+        var short_replies = firstEntityValue(entities, 'short_replies');
+        if (short_replies == 'no') {
             context.jobType = [];
         } else {
             var JobTypes = getEntityValues(entities, 'job_type');
@@ -129,16 +129,21 @@ const actions = {
         }
         return context;
     },
-    ['getJobs']({context, entities }){ //needed? or combine with getJobType
+    ['getJobs']({ context, entities }) {
+        var jobType = context['jobType'];
         var industryType = context['industryType'];
         var jobFunction = context['jobFunction'];
-        var jobType = context['jobType'];
+        // var short_replies = firstEntityValue(entities, 'short_replies');
+        // if (short_replies == 'ok') {
         //Query the database here
-        context.jobs = []; //list of jobs based on users criteria
-        delete context.industryType ;
-        delete context.jobFunction ;
-        delete context.jobType ;
+        context.suggestionList = [{ jobList: ['list of jobs based on users criteria'] }]; //list of jobs based on users criteria
+        delete context.industryType;
+        delete context.jobFunction;
+        delete context.jobType;
+        delete context.searchJob;
         return context;
+        // } else {
+        // }
     }
 }
 const firstEntityValue = (entities, entity) => {
@@ -167,4 +172,14 @@ const getEntityValues = (entities, entity) => {
         return entityArray;
     }
 }
+function getIndustryFromDB() {
+    return ['list of industry from db'];
+}
+function getJobFunctionFromDB() {
+    return ['list of job function from db'];
+}
+function getJobTypeFromDB() {
+    return ['list of job type from db'];
+}
+
 const client = new Wit({ accessToken: serverToken, actions });

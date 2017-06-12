@@ -17,11 +17,11 @@ What needs to be done
 What's "done"
 + api to load data into wit
 + api for frontend
-+ able to handle search job scenario (90%?)
++ able to handle search job scenario
 
 What needs to be done
 + story flow for update work experience
-+ attaching list of industry/job function/job type in context
++ attaching list of industry/job function/job type in context (load from db)
 
 ### Need to create config.js file
 Contents in config.js
