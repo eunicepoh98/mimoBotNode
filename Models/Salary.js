@@ -33,16 +33,6 @@ module.exports = function (sequelize, DataTypes) {
             set: function (val) {
                 this.setDataValue('SalaryTo');
             }
-        },
-        Currency: {
-            type: DataTypes.DECIMAL(14, 2),
-            allowNull: false,
-            get: function () {
-                return this.getDataValue('Currency');
-            },
-            set: function (val) {
-                this.setDataValue('Currency');
-            }
         }
     },
         {

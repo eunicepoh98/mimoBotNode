@@ -38,4 +38,8 @@ app.use(function(req, res, next) {
 app.listen(port);
 console.log('Magic happens on port ' + port);
 
+app.get('/', function(req, res){
+  res.send('Available')
+})
+
 module.exports = app;
