@@ -27,18 +27,18 @@ fs.readdirSync(__dirname)
   .forEach(function (file) {
     var model = sequelize.import(path.join(__dirname, file));
     db[model.name] = model;
-    console.log('Imported model:', model.name);
+    //console.log('Imported model:', model.name);
   });
 
 Object.keys(db).forEach(function (modelName) {
   if ('associate' in db[modelName]) {
-    console.log('Setting relationship for:', modelName);
+    //console.log('Setting relationship for:', modelName);
     db[modelName].associate(db);
   }
 });
 
 sequelize.sync({
-  force: true
+  force: false
   //logging:console.log
 })
 // .then(() => {

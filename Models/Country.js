@@ -22,16 +22,6 @@ module.exports = function (sequelize, DataTypes) {
             set: function (val) {
                 this.setDataValue('CountryName');
             }
-        },
-        Currency: {
-            type: DataTypes.DECIMAL(14, 2),
-            allowNull: false,
-            get: function () {
-                return this.getDataValue('Currency');
-            },
-            set: function (val) {
-                this.setDataValue('Currency');
-            }
         }
     },
         {
@@ -41,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
             classMethods: {
                 associate: function (models) {
                     Country.hasMany(models.Job, { foreignKey: 'CountryID', onDelete: 'CASCADE' });
-                    Country.hasMany(models.Salary, { foreignKey: 'SalaryID', onDelete: 'CASCADE' });
+                    //Country.hasMany(models.Salary, { foreignKey: 'SalaryID', onDelete: 'CASCADE' });
                 }
             },
         });

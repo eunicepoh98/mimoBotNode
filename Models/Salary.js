@@ -41,7 +41,7 @@ module.exports = function (sequelize, DataTypes) {
             tableName: 'salary',
             classMethods: {
                 associate: function (models) {
-                    Salary.belongsTo(models.Country, { foreignKey: 'CountryID', onDelete: 'CASCADE' });
+                    Salary.belongsTo(models.Currency, { foreignKey: 'CurrencyID', onDelete: 'CASCADE' });
                     Salary.hasOne(models.Job, { foreignKey: 'SalaryID', onDelete: 'CASCADE' });
                     //Salary.belongsTo(model.Userexperience, { foreignKey: 'UserExpID', onDelete: 'CASCADE' });
                 }
