@@ -8,9 +8,8 @@ What's "done"
 + relationships between tables
 
 What needs to be done
-+ create methods
-+ seeding data
-+ advance querying
++ seeding test data (working..)
++ advance querying (working..)
 
 ### [Wit.ai](https://wit.ai/)
 
