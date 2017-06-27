@@ -30,7 +30,7 @@ module.exports = function (sequelize, DataTypes) {
             tableName: 'industry',
             classMethods: {
                 associate: function (models) {
-                    Industry.belongsToMany(models.Job, { through: 'jobindustry', foreignKey: 'IndustryID', onDelete: 'CASCADE' });
+                    Industry.belongsToMany(models.Job, { through: 'jobindustry', foreignKey: 'IndustryID', onDelete: 'CASCADE', timestamps: false });
                     //Industry.belongsTo(models.Userexperience, { foreignKey: 'UserExpID', onDelete: 'CASCADE' });
                     //Industry.hasMany(models.UserSearch, { foreignKey: 'IndustryID', onDelete: 'CASCADE' });
                 }
