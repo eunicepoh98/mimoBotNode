@@ -1,27 +1,24 @@
 var express = require('express');
 var router = express.Router();
-var JobType = require('../models').JobType;
+var path = require('path');
+var jobtype = require(path.resolve('./APIs/jobtype.js')).api;
 
 /* Get all JobTypes
  * http://localhost:3000/api/jobtype
 */
 router.get('/', function (req, res, next) {
-  JobType.findAll({})
-    .then((data) => {
-      console.log(data);
-      res.send(JSON.stringify(data));
-    })
+  jobtype.getAllJobType().then(function (data) {
+    res.send(data)
+  })
 });
 
 /* Get One JobType by Id
  * http://localhost:3000/api/jobtype/1
 */
 router.get('/:id', function (req, res, next) {
-  JobType.findById(req.params.id)
-    .then((data) => {
-      console.log(data);
-      res.send(JSON.stringify(data));
-    })
+  jobtype.getOneJobType(req.params.id).then(function (data) {
+    res.send(data)
+  })
 });
 
 module.exports = router;

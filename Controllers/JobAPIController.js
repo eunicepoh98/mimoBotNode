@@ -21,11 +21,11 @@ router.get('/one/:id', function (req, res, next) {
   })
 });
 
-/* Get One Job by Id
- * http://localhost:3000/api/job/1
+/* Get Filtered Jobs
+ * http://localhost:3000/api/job/filter
 */
 router.get('/filter', function (req, res, next) {
-  job.getFilteredJob().then(function (data) {
+  job.getUserJob().then(function (data) {
     res.send(data)
   })
 });

@@ -1,36 +1,34 @@
-var industry = module.exports = {};
-var Industry = require('../models').Industry;
+var jobfunction = module.exports = {};
+var JobFunction = require('../models').JobFunction;
 var model = require('../models');
 
-industry.api = {
-    getAllIndustry: function () {
+jobfunction.api = {
+    getAllJobFunction: function () {
         return new Promise((resolve, reject) => {
-            Industry.findAll({})
+            JobFunction.findAll({})
                 .then((data) => {
-                    //console.log(JSON.stringify(data));
                     resolve(data);
                 })
         })
     },
-    getAllIndustryName: function () {
+    getAllJobFunctionName: function () {
         return new Promise((resolve, reject) => {
-            Industry.findAll({
-                attributes: ['IndustryName']
+            JobFunction.findAll({
+                attributes: ['JobFunctionName']
             })
                 .then((data) => {
-                    var array = []
+                   var array = []
                     data.forEach(function (name) {
-                        array.push(name.IndustryName)
+                        array.push(name.JobFunctionName)
                     });
                     resolve(array);
                 })
         })
     },
-    getOneIndustry: function (id) {
+    getOneJobFunction: function (id) {
         return new Promise((resolve, reject) => {
-            Industry.findById(id)
+            JobFunction.findById(id)
                 .then((data) => {
-                    //console.log(JSON.stringify(data));
                     resolve(data);
                 })
         })
