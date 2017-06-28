@@ -51,46 +51,69 @@ job.api = {
     },
     getFilteredJob: function () {
         return new Promise((resolve, reject) => {
+            var industry = 'aerospace'
+            var jFuntion = 'engineering'
+            var jType = 'full time'
             Job.findAll({
                 where: {
                     $or: [
-                        //Please work
-                        //http://docs.sequelizejs.com/manual/tutorial/models-usage.html#including-everything
-                        //
-                        // {
-                        //     include: [
-                        //         {
-                        //             model: model.Industry,
-                        //             where: {
-                        //                 IndustryName: { $like: '%Aerospace%' }
-                        //             }
-                        //         }
-                        //     ]
-                        // }
-                        //     ,
-                        // { JobTitle: { $like: '%aerospace%' } },
-                        // { JobDescription: { $like: '%aerospace%' } },
-                        // { JobQualification: { $like: '%aerospace%' } },
-                        // { JobResponsibilities: { $like: '%aerospace%' } }
-
+                        {
+                            $or:
+                            [
+                                { '$Industries.IndustryName$': { $like: '%' + industry + '%' } },
+                                { '$JobFunctions.JobFunctionName$': { $like: '%' + jFuntion + '%' } }
+                            ]
+                        },
+                        {
+                            $or:
+                            [
+                                { JobTitle: { $like: '%' + industry + '%' } },
+                                { JobTitle: { $like: '%' + jFuntion + '%' } }
+                            ]
+                        },
+                        {
+                            $or:
+                            [
+                                { JobDescription: { $like: '%' + industry + '%' } },
+                                { JobDescription: { $like: '%' + jFuntion + '%' } }
+                            ]
+                        },
+                        {
+                            $or:
+                            [
+                                { JobQualification: { $like: '%' + industry + '%' } },
+                                { JobQualification: { $like: '%' + jFuntion + '%' } }
+                            ]
+                        },
+                        {
+                            $or:
+                            [
+                                { JobResponsibilities: { $like: '%' + industry + '%' } },
+                                { JobResponsibilities: { $like: '%' + jFuntion + '%' } }
+                            ]
+                        }
                     ]
-                    //Sequelize.col('project.state')
+                    // ,
+                    // '$JobTypes.JobType$': { $like: '%' + jType + '%' }
                 },
                 attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
                     'JobPostDate', 'JobPostalCode', 'JobAddress'],
                 include: [
                     {
                         model: model.Industry,
+                        as: 'Industries',
                         attributes: ['IndustryName'], through: { attributes: [] }
-                        // ,
-                        // where: {
-                        //     $or: [
-                        //         { IndustryName: { $like: '%Aerospace%' } }
-                        //     ]
-                        // }
                     },
-                    { model: model.JobFunction, attributes: ['JobFunctionName'], through: { attributes: [] } },
-                    { model: model.JobType, attributes: ['JobType'] },
+                    {
+                        model: model.JobFunction,
+                        as: 'JobFunctions',
+                        attributes: ['JobFunctionName'], through: { attributes: [] }
+                    },
+                    {
+                        model: model.JobType,
+                       // as: 'JobTypes',
+                        attributes: ['JobType']
+                    },
                     { model: model.Company, attributes: ['CompanyName', 'CompanyAddress', 'CompanyPostalCode'] },
                     {
                         model: model.Salary,
