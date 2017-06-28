@@ -3,33 +3,46 @@ var path = require('path');
 var request = require('request');
 var witConfig = require('../config').wit;
 var serverToken = witConfig.serverToken;
+var jobfunction = require(path.resolve('./APIs/jobfunction.js')).api;
+var industry = require(path.resolve('./APIs/industry.js')).api;
+var jobtype = require(path.resolve('./APIs/jobtype.js')).api;
 
 witdata.api = {
 
     loadJobType: function () {
         return new Promise((resolve, reject) => {
-            resolve(createEntity("job_type", "contains all the job type", formatData(jobTypeData)));
+            jobfunction.getAllJobFunctionName().then(function (data) {
+                resolve(createEntity("job_type", "contains all the job type", formatData(data)));
+            })
+
         })
     },
 
     loadJobFunction: function () {
         return new Promise((resolve, reject) => {
-            resolve(createEntity("job_function", "contains all the job function", formatData(jobFunctionData)));
+            jobtype.getAllJobTypeName().then(function (data) {
+                resolve(createEntity("job_function", "contains all the job function", formatData(data)));
+            })
+
         })
     },
 
     loadIndustry: function () {
         return new Promise((resolve, reject) => {
-            resolve(createEntity("industry_type", "contains all the industry", formatData(industryData)));
+            industry.getAllIndustryName().then(function (data) {
+                resolve(createEntity("industry_type", "contains all the industry", formatData(data)));
+            })
+
         })
     },
 
     loadAllData: function () {
         return new Promise((resolve, reject) => {
-            createEntity("job_type", "contains all the job type", formatData(jobTypeData));
-            createEntity("job_function", "contains all the job function", formatData(jobFunctionData));
-            createEntity("industry_type", "contains all the industry", formatData(industryData));
-            resolve;
+            loadIndustry().then(loadJobFunction().then(loadJobType().then(resolve)))
+            // createEntity("job_type", "contains all the job type", formatData(jobTypeData));
+            // createEntity("job_function", "contains all the job function", formatData(jobFunctionData));
+            // createEntity("industry_type", "contains all the industry", formatData(industryData));
+            // resolve;
         })
     }
 }

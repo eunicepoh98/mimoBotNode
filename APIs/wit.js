@@ -1,5 +1,10 @@
 var wit = module.exports = {};
 
+var path = require('path');
+var jobfunction = require(path.resolve('./APIs/jobfunction.js')).api;
+var industry = require(path.resolve('./APIs/industry.js')).api;
+var jobtype = require(path.resolve('./APIs/jobtype.js')).api;
+
 var witConfig = require('../config').wit;
 const { Wit, log } = require('node-wit');
 
@@ -12,7 +17,6 @@ wit.api = {
             client.runActions(sessionId, userMsg, prevContext)
                 .then((context1) => {
                     var result = sessionResult[sessionId];
-                    //console.log(result);
                     delete sessionResult[sessionId];
                     var res = {
                         "botMessage": result.response.text,
@@ -58,8 +62,10 @@ const actions = {
                 }
                 case "search job": {
                     //get industry list from db here
-                    context.suggestionList = [{ industryList: getIndustryFromDB() }];
-                    context.searchJob = intent;
+                    industry.getAllIndustry().then(function (data) {
+                        context.suggestionList = [{ industryList: data }];
+                        context.searchJob = intent;
+                    })
                     break;
                 }
             }
@@ -72,44 +78,50 @@ const actions = {
     ['getIndustry']({ context, entities }) {
         context.searchJob = context['searchJob'];
         var short_replies = firstEntityValue(entities, 'short_replies');
-        if (short_replies == 'no') {
-            context.industryType = [];
-            //get list of job function from db here
-            context.suggestionList = [{ jobFunctionList: getJobFunctionFromDB() }];
-        } else {
-            var industries = getEntityValues(entities, 'industry_type');
-            if (industries) {
+        jobfunction.getAllJobFunction().then(function (data) {
+            if (short_replies == 'no') {
+                context.industryType = [];
                 //get list of job function from db here
-                context.suggestionList = [{ jobFunctionList: getJobFunctionFromDB() }];
-                context.industryType = industries;
-                delete context.missingIndustryType;
+                jobfunction.getAllJobFunction().then(function (data) {
+                    context.suggestionList = [{ jobFunctionList: data }];
+                })
             } else {
-                context.missingIndustryType = true;
+                var industries = getEntityValues(entities, 'industry_type');
+                if (industries) {
+                    //get list of job function from db here
+                    context.suggestionList = [{ jobFunctionList: data }];
+                    context.industryType = industries;
+                    delete context.missingIndustryType;
+                } else {
+                    context.missingIndustryType = true;
+                }
             }
-        }
-        return context;
+            return context;
+        })
     },
     ['getJobFunction']({ context, entities }) {
         context.searchJob = context['searchJob'];
         context.industryType = context['industryType'];
         var short_replies = firstEntityValue(entities, 'short_replies');
-        if (short_replies == 'no') {
-            context.jobFunction = [];
-            //get list of job type from db here
-            context.suggestionList = [{ jobTypeList: getJobTypeFromDB() }];
-        } else {
-            var JobFunctions = getEntityValues(entities, 'job_function');
-            if (JobFunctions) {
+        jobtype.getAllJobType().then(function (data) {
+            if (short_replies == 'no') {
+                context.jobFunction = [];
                 //get list of job type from db here
-                context.suggestionList = [{ jobTypeList: getJobTypeFromDB() }];
-                context.jobFunction = JobFunctions;
-                delete context.missingJobFunction;
+                context.suggestionList = [{ jobTypeList: data }];
             } else {
-                context.missingJobFunction = true;
-                delete context.jobFunction;
+                var JobFunctions = getEntityValues(entities, 'job_function');
+                if (JobFunctions) {
+                    //get list of job type from db here
+                    context.suggestionList = [{ jobTypeList: data }];
+                    context.jobFunction = JobFunctions;
+                    delete context.missingJobFunction;
+                } else {
+                    context.missingJobFunction = true;
+                    delete context.jobFunction;
+                }
             }
-        }
-        return context;
+            return context;
+        })
     },
     ['getJobType']({ context, entities }) {
         context.searchJob = context['searchJob'];
