@@ -1,27 +1,24 @@
 var express = require('express');
 var router = express.Router();
-var Industry = require('../models').Industry;
+var path = require('path');
+var industry = require(path.resolve('./APIs/industry.js')).api;
 
 /* Get all Industries
  * http://localhost:3000/api/industry
 */
 router.get('/', function (req, res, next) {
-  Industry.findAll({})
-    .then((data) => {
-      console.log(JSON.stringify(data));
-      res.json(data);
-    })
+  industry.getAllIndustry().then(function (data) {
+    res.send(data)
+  })
 });
 
 /* Get One Industry by Id
  * http://localhost:3000/api/industry/1
 */
 router.get('/:id', function (req, res, next) {
-  Industry.findById(req.params.id)
-    .then((data) => {
-      console.log(data);
-      res.send(JSON.stringify(data));
-    })
+  industry.getOneIndustry(req.params.id).then(function (data) {
+    res.send(data)
+  })
 });
 
 module.exports = router;
