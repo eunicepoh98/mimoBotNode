@@ -4,12 +4,26 @@ var path = require('path');
 var jobfunction = require(path.resolve('./APIs/jobfunction.js')).api;
 var industry = require(path.resolve('./APIs/industry.js')).api;
 var jobtype = require(path.resolve('./APIs/jobtype.js')).api;
+var job = require(path.resolve('./APIs/job.js')).api;
 
 var witConfig = require('../config').wit;
 const { Wit, log } = require('node-wit');
 
 var serverToken = witConfig.serverToken;
 var sessionResult = {};
+
+// loads data
+var jobType, jobFunction, jobIndustry;
+jobtype.getAllJobTypeName().then(function (data) {
+    jobType = data;
+})
+industry.getAllIndustryName().then(function (data) {
+    jobIndustry = data;
+})
+jobfunction.getAllJobFunctionName().then(function (data) {
+    jobFunction = data;
+})
+
 
 wit.api = {
     NLP: function (sessionId, userMsg, prevContext) {
@@ -27,22 +41,33 @@ wit.api = {
         })
     },
     test: function () {
-        var data = { //entities from wit 
-            industry_type:
-            [{
-                confidence: 0.926022391210834,
-                type: 'value',
-                value: 'Aerospace'
-            },
-            {
-                confidence: 0.9253284478512049,
-                type: 'value',
-                value: 'Entertainment'
-            }]
-        }
-        data['industry_type'].forEach(function (one) {
-            console.log(one.value);
+        return new Promise((resolve, reject) => {
+            var industries = ['aerospace', '1', '2']
+            var s = []
+            for (i = 0; i < industries.length; i++) {
+                s.push({ IndustryName: { $like: '%' + industries[i] + '%' } })
+            }
+            console.log(s)
+            resolve(s)
         })
+
+        //IndustryName: { $like: '%' + industry + '%' }
+        // var data = { //entities from wit 
+        //     industry_type:
+        //     [{
+        //         confidence: 0.926022391210834,
+        //         type: 'value',
+        //         value: 'Aerospace'
+        //     },
+        //     {
+        //         confidence: 0.9253284478512049,
+        //         type: 'value',
+        //         value: 'Entertainment'
+        //     }]
+        // }
+        // data['industry_type'].forEach(function (one) {
+        //     console.log(one.value);
+        // })
     }
 }
 
@@ -61,11 +86,8 @@ const actions = {
                     break;
                 }
                 case "search job": {
-                    //get industry list from db here
-                    industry.getAllIndustry().then(function (data) {
-                        context.suggestionList = [{ industryList: data }];
-                        context.searchJob = intent;
-                    })
+                    context.suggestionList = [{ industryList: jobIndustry }]; //industry list from db 
+                    context.searchJob = intent;
                     break;
                 }
             }
@@ -78,58 +100,50 @@ const actions = {
     ['getIndustry']({ context, entities }) {
         context.searchJob = context['searchJob'];
         var short_replies = firstEntityValue(entities, 'short_replies');
-        jobfunction.getAllJobFunction().then(function (data) {
-            if (short_replies == 'no') {
-                context.industryType = [];
-                //get list of job function from db here
-                jobfunction.getAllJobFunction().then(function (data) {
-                    context.suggestionList = [{ jobFunctionList: data }];
-                })
+        if (short_replies == 'no') {
+            context.industryType = [];
+            context.suggestionList = [{ jobFunctionList: jobFunction }]; //list of job function from db
+        } else {
+            var industries = getEntityValues(entities, 'industry_type');
+            if (industries) {
+                context.suggestionList = [{ jobFunctionList: jobFunction }]; //list of job function from db
+                context.industryType = industries;
+                delete context.missingIndustryType;
             } else {
-                var industries = getEntityValues(entities, 'industry_type');
-                if (industries) {
-                    //get list of job function from db here
-                    context.suggestionList = [{ jobFunctionList: data }];
-                    context.industryType = industries;
-                    delete context.missingIndustryType;
-                } else {
-                    context.missingIndustryType = true;
-                }
+                context.missingIndustryType = true;
             }
-            return context;
-        })
+        }
+        return context;
     },
     ['getJobFunction']({ context, entities }) {
         context.searchJob = context['searchJob'];
         context.industryType = context['industryType'];
         var short_replies = firstEntityValue(entities, 'short_replies');
-        jobtype.getAllJobType().then(function (data) {
-            if (short_replies == 'no') {
-                context.jobFunction = [];
-                //get list of job type from db here
-                context.suggestionList = [{ jobTypeList: data }];
+        if (short_replies == 'no') {
+            context.jobFunction = [];
+            context.suggestionList = [{ jobTypeList: jobType }]; //list of job type from db
+        } else {
+            var JobFunctions = getEntityValues(entities, 'job_function');
+            if (JobFunctions) {
+                context.suggestionList = [{ jobTypeList: jobType }]; //list of job type from db
+                context.jobFunction = JobFunctions;
+                delete context.missingJobFunction;
             } else {
-                var JobFunctions = getEntityValues(entities, 'job_function');
-                if (JobFunctions) {
-                    //get list of job type from db here
-                    context.suggestionList = [{ jobTypeList: data }];
-                    context.jobFunction = JobFunctions;
-                    delete context.missingJobFunction;
-                } else {
-                    context.missingJobFunction = true;
-                    delete context.jobFunction;
-                }
+                context.missingJobFunction = true;
+                delete context.jobFunction;
             }
-            return context;
-        })
+        }
+        return context;
     },
     ['getJobType']({ context, entities }) {
         context.searchJob = context['searchJob'];
         context.industryType = context['industryType'];
         context.jobFunction = context['jobFunction'];
         var short_replies = firstEntityValue(entities, 'short_replies');
+        console.log("hii")
         if (short_replies == 'no') {
             context.jobType = [];
+            console.log("here")
         } else {
             var JobTypes = getEntityValues(entities, 'job_type');
             if (JobTypes) {
@@ -145,17 +159,16 @@ const actions = {
         var jobType = context['jobType'];
         var industryType = context['industryType'];
         var jobFunction = context['jobFunction'];
-        // var short_replies = firstEntityValue(entities, 'short_replies');
-        // if (short_replies == 'ok') {
-        //Query the database here
-        context.suggestionList = [{ jobList: ['list of jobs based on users criteria'] }]; //list of jobs based on users criteria
-        delete context.industryType;
-        delete context.jobFunction;
-        delete context.jobType;
-        delete context.searchJob;
+        console.log(jobType + " " + industryType + " " + jobFunction)
+        job.getUserJob(industryType, jobFunction, jobType).then((result) => {
+            delete context.industryType;
+            delete context.jobFunction;
+            delete context.jobType;
+            delete context.searchJob;
+            delete context.suggestionList;
+            context.result = [{ jobList: JSON.parse(result) }]; //list of jobs based on users criteria
+        })
         return context;
-        // } else {
-        // }
     }
 }
 const firstEntityValue = (entities, entity) => {
@@ -184,14 +197,9 @@ const getEntityValues = (entities, entity) => {
         return entityArray;
     }
 }
-function getIndustryFromDB() {
+function getFilteredJobs() {
     return ['list of industry from db'];
 }
-function getJobFunctionFromDB() {
-    return ['list of job function from db'];
-}
-function getJobTypeFromDB() {
-    return ['list of job type from db'];
-}
+
 
 const client = new Wit({ accessToken: serverToken, actions });
