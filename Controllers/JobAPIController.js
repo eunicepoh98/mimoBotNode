@@ -8,7 +8,7 @@ var job = require(path.resolve('./APIs/job.js')).api;
 */
 router.get('/', function (req, res, next) {
   job.getAllJob().then(function (data) {
-    res.send(data)
+    res.send(JSON.parse(data))
   })
 });
 
@@ -26,7 +26,7 @@ router.get('/one/:id', function (req, res, next) {
 */
 router.get('/filter', function (req, res, next) {
   job.getUserJob().then(function (data) {
-    res.send(data)
+    res.send(JSON.parse(data))
   })
 });
 

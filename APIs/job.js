@@ -7,6 +7,7 @@ job.api = {
     getAllJob: function () {
         return new Promise((resolve, reject) => {
             Job.findAll({
+                order: [],
                 attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
                     'JobPostDate', 'JobPostalCode', 'JobAddress'],
                 include: [
@@ -60,7 +61,7 @@ job.api = {
                         {
                             $or:
                             [
-                                { '$Industries.IndustryName$': { $like: '%' + industry + '%' } },
+                                { '$Industries.IndustryName$': { $like: '%' + industry + '%' } },//'%' + industry + '%' 
                                 { '$JobFunctions.JobFunctionName$': { $like: '%' + jFuntion + '%' } }
                             ]
                         },
@@ -93,8 +94,6 @@ job.api = {
                             ]
                         }
                     ]
-                    // ,
-                    // '$JobTypes.JobType$': { $like: '%' + jType + '%' }
                 },
                 attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
                     'JobPostDate', 'JobPostalCode', 'JobAddress'],
@@ -111,7 +110,7 @@ job.api = {
                     },
                     {
                         model: model.JobType,
-                       // as: 'JobTypes',
+                        // as: 'JobTypes',
                         attributes: ['JobType']
                     },
                     { model: model.Company, attributes: ['CompanyName', 'CompanyAddress', 'CompanyPostalCode'] },
@@ -124,6 +123,70 @@ job.api = {
             })
                 .then((data) => {
                     resolve(data)
+                })
+        })
+    },
+    getUserJob: function (industry, jFuntion, jType) { //industry, jFuntion, jType
+        // var industry = ["fishing"]
+        // var jFuntion = []
+        // var jType = []
+        return new Promise((resolve, reject) => {
+            var whereInd
+            if (industry.length == 0) { whereInd = {} }
+            else {
+                var ind = []
+                for (i = 0; i < industry.length; i++) {
+                    ind.push({ IndustryName: { $like: '%' + industry[i] + '%' } })
+                }
+                whereInd = { $or: ind }
+            }
+            var wherejFunction
+            if (jFuntion.length == 0) { wherejFunction = {} }
+            else {
+                var jf = []
+                for (i = 0; i < jFuntion.length; i++) {
+                    jf.push({ JobFunctionName: { $like: '%' + jFuntion[i] + '%' } })
+                }
+                wherejFunction = { $or: jf }
+            }
+            var wherejType
+            if (jType.length == 0) { wherejType = {} }
+            else {
+                var jt = []
+                for (i = 0; i < jType.length; i++) {
+                    jt.push({ JobType: { $like: '%' + jType[i] + '%' } })
+                }
+                wherejType = { $or: jt }
+            }
+            Job.findAll({
+                attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
+                    'JobPostDate', 'JobPostalCode', 'JobAddress'],
+                include: [
+                    {
+                        model: model.Industry,
+                        where: whereInd,
+                        attributes: ['IndustryName'], through: { attributes: [] }
+                    },
+                    {
+                        model: model.JobFunction,
+                        where: wherejFunction,
+                        attributes: ['JobFunctionName'], through: { attributes: [] }
+                    },
+                    {
+                        model: model.JobType,
+                        where: wherejType,
+                        attributes: ['JobType']
+                    },
+                    { model: model.Company, attributes: ['CompanyName', 'CompanyAddress', 'CompanyPostalCode'] },
+                    {
+                        model: model.Salary,
+                        attributes: ['SalaryFrom', 'SalaryTo'],
+                        include: [{ model: model.Currency, attributes: ['Symbol', 'CurrencyCode'] }]
+                    },
+                    { model: model.Country, attributes: ['CountryName'] }]
+            })
+                .then((data) => {
+                    resolve(JSON.stringify(data))
                 })
         })
     }
