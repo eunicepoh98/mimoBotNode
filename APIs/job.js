@@ -23,7 +23,7 @@ job.api = {
                     { model: model.Country, attributes: ['CountryName'] }]
             })
                 .then((data) => {
-                    resolve(data)
+                    resolve(JSON.stringify(data))
                 })
         })
     },
