@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('SalaryID');
             },
             set: function (val) {
-                this.setDataValue('SalaryID');
+                this.setDataValue('SalaryID', val);
             }
         },
         SalaryFrom: {
@@ -21,7 +21,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('SalaryFrom');
             },
             set: function (val) {
-                this.setDataValue('SalaryFrom');
+                this.setDataValue('SalaryFrom', val);
             }
         },
         SalaryTo: {
@@ -31,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('SalaryTo');
             },
             set: function (val) {
-                this.setDataValue('SalaryTo');
+                this.setDataValue('SalaryTo', val);
             }
         }
     },

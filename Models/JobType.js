@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('JobTypeID');
             },
             set: function (val) {
-                this.setDataValue('JobTypeID');
+                this.setDataValue('JobTypeID', val);
             }
         },
         JobType: {
@@ -20,7 +20,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('JobType');
             },
             set: function (val) {
-                this.setDataValue('JobType');
+                this.setDataValue('JobType', val);
             }
         }
     },

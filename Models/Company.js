@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('CompanyID');
             },
             set: function (val) {
-                this.setDataValue('CompanyID');
+                this.setDataValue('CompanyID', val);
             }
         },
         CompanyName: {
@@ -20,7 +20,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('CompanyName');
             },
             set: function (val) {
-                this.setDataValue('CompanyName');
+                this.setDataValue('CompanyName', val);
             }
         },
         CompanyAddress: {
@@ -29,7 +29,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('CompanyAddress');
             },
             set: function (val) {
-                this.setDataValue('CompanyAddress');
+                this.setDataValue('CompanyAddress', val);
             }
         },
         CompanyPostalCode: {
@@ -38,7 +38,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('CompanyPostalCode');
             },
             set: function (val) {
-                this.setDataValue('CompanyPostalCode');
+                this.setDataValue('CompanyPostalCode', val);
             }
         }
     },

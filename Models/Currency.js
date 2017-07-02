@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('CurrencyID');
             },
             set: function (val) {
-                this.setDataValue('CurrencyID');
+                this.setDataValue('CurrencyID', val);
             }
         },
         CurrencyCode: {
@@ -21,7 +21,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('CurrencyCode');
             },
             set: function (val) {
-                this.setDataValue('CurrencyCode');
+                this.setDataValue('CurrencyCode', val);
             }
         },
         Symbol: {
@@ -31,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('Symbol');
             },
             set: function (val) {
-                this.setDataValue('Symbol');
+                this.setDataValue('Symbol', val);
             }
         }
     },

@@ -11,16 +11,18 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('IndustryID');
             },
             set: function (val) {
-                this.setDataValue('IndustryID');
+                this.setDataValue('IndustryID', val);
             }
         },
         IndustryName: {
             type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
             get: function () {
                 return this.getDataValue('IndustryName');
             },
             set: function (val) {
-                this.setDataValue('IndustryName');
+                this.setDataValue('IndustryName', val);
             }
         }
     },

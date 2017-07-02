@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('JobID');
             },
             set: function (val) {
-                this.setDataValue('JobID');
+                this.setDataValue('JobID', val);
             }
         },
         JobTitle: {
@@ -20,7 +20,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('JobTitle');
             },
             set: function (val) {
-                this.setDataValue('JobTitle');
+                this.setDataValue('JobTitle', val);
             }
         },
         JobDescription: {
@@ -29,7 +29,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('JobDescription');
             },
             set: function (val) {
-                this.setDataValue('JobDescription');
+                this.setDataValue('JobDescription', val);
             }
         },
         JobQualification: {
@@ -38,7 +38,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('JobQualification');
             },
             set: function (val) {
-                this.setDataValue('JobQualification');
+                this.setDataValue('JobQualification', val);
             }
         },
         JobResponsibilities: {
@@ -47,7 +47,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('JoResponsibilities');
             },
             set: function (val) {
-                this.setDataValue('JoResponsibilities');
+                this.setDataValue('JoResponsibilities', val);
             }
         },
         JobPostDate: {
@@ -56,7 +56,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('JobPostDate');
             },
             set: function (val) {
-                this.setDataValue('JobPostDate');
+                this.setDataValue('JobPostDate', val);
             }
         },
         JobPostalCode: {
@@ -65,7 +65,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('JobPostalCode');
             },
             set: function (val) {
-                this.setDataValue('JobPostalCode');
+                this.setDataValue('JobPostalCode', val);
             }
         },
         JobAddress: {
@@ -74,7 +74,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('JobAddress');
             },
             set: function (val) {
-                this.setDataValue('JobAddress');
+                this.setDataValue('JobAddress', val);
             }
         }
     },

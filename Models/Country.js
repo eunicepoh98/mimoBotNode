@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('CountryID');
             },
             set: function (val) {
-                this.setDataValue('CountryID');
+                this.setDataValue('CountryID', val);
             }
         },
         CountryName: {
@@ -20,7 +20,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('CountryName');
             },
             set: function (val) {
-                this.setDataValue('CountryName');
+                this.setDataValue('CountryName', val);
             }
         }
     },
