@@ -32,5 +32,14 @@ jobtype.api = {
                     resolve(data);
                 })
         })
+    },
+    addJobType: function (jobtype) {
+        return new Promise((resolve, reject) => {
+            JobType.create(jobtype).then(function (newJobType) {
+                resolve(newJobType)
+            }).catch(function (error) {
+                console.log("Error: " + error)
+            })
+        })
     }
 }

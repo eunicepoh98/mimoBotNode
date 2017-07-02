@@ -34,5 +34,15 @@ industry.api = {
                     resolve(data);
                 })
         })
+    },
+    addIndustry: function (industry) {
+        return new Promise((resolve, reject) => {
+            console.log(industry)
+            Industry.create(industry).then(function (newIndustry) {
+                resolve(newIndustry)
+            }).catch(function (error) {
+                console.log("Error: " + error)
+            })
+        })
     }
 }

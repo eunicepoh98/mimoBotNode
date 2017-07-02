@@ -21,4 +21,19 @@ router.get('/:id', function (req, res, next) {
   })
 });
 
+/* Add JobType
+ * http://localhost:3000/api/jobtype
+ * {
+	    "jobtype": ""
+   }
+*/
+router.post('/', function (req, res, next) {
+  var jt = {
+    JobType: req.body.jobtype
+  };
+  jobtype.addJobType(jt).then(function (result) {
+    res.send(result)
+  })
+})
+
 module.exports = router;

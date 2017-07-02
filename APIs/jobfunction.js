@@ -32,5 +32,14 @@ jobfunction.api = {
                     resolve(data);
                 })
         })
+    },
+    addJobFunction: function (jobFunction) {
+        return new Promise((resolve, reject) => {
+            JobFunction.create(jobFunction).then(function (newJobFunction) {
+                resolve(newJobFunction)
+            }).catch(function (error) {
+                console.log("Error: " + error)
+            })
+        })
     }
 }
