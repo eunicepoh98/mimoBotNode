@@ -51,7 +51,8 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         JobPostDate: {
-            type: DataTypes.STRING,
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
             get: function () {
                 return this.getDataValue('JobPostDate');
             },
