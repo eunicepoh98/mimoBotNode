@@ -189,5 +189,28 @@ job.api = {
                     resolve(JSON.stringify(data))
                 })
         })
+    },
+    addJob: function (salary, job, indID, jfID) {
+        return new Promise((resolve, reject) => {
+            model.Salary.create(salary).then(function (newSalary) {
+                var SalaryID = newSalary.SalaryID;
+                job["SalaryID"] = SalaryID
+                Job.create(job).then(function (newJob) {
+                    indID.forEach(function (currentId) {
+                        newJob.addIndustry(currentId).then(function (result) { })
+                    });
+                    jfID.forEach(function (currentID) {
+                        newJob.addJobFunction(currentID).then(function (result) { })
+                    })
+                    resolve(JSON.stringify(newJob))
+                }).catch(function (error) {
+                    console.log("Error: " + error)
+                    reject(error)
+                })
+            }).catch(function (error) {
+                console.log("Error: " + error)
+                reject(error)
+            })
+        })
     }
 }
