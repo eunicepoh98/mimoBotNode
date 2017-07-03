@@ -31,7 +31,7 @@ industry.api = {
             Industry.findById(id)
                 .then((data) => {
                     //console.log(JSON.stringify(data));
-                    resolve(data);
+                    resolve(JSON.stringify(data));
                 })
         })
     },
@@ -39,9 +39,10 @@ industry.api = {
         return new Promise((resolve, reject) => {
             console.log(industry)
             Industry.create(industry).then(function (newIndustry) {
-                resolve(newIndustry)
+                resolve(JSON.stringify(newIndustry))
             }).catch(function (error) {
                 console.log("Error: " + error)
+                reject;
             })
         })
     }
