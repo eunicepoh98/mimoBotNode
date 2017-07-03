@@ -8,7 +8,6 @@ var jobtypes = require('./Controllers/JobTypeAPIController');
 var jobfunctions = require('./Controllers/JobFunctionAPIController');
 var industries = require('./Controllers/IndustryAPIController');
 var companies = require('./Controllers/CompanyAPIController');
-var salaries = require('./Controllers/SalaryAPIController');
 var wit = require('./Controllers/WitAPIController');
 
 var app = express();
@@ -25,7 +24,6 @@ app.use('/api/jobtype', jobtypes);
 app.use('/api/jobfunction', jobfunctions);
 app.use('/api/industry', industries);
 app.use('/api/company', companies);
-app.use('/api/salary', salaries);
 app.use('/api/wit', wit);
 
 // catch 404 and forward to error handler
