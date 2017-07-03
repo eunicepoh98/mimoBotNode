@@ -24,12 +24,12 @@ router.get('/:id', function (req, res, next) {
 /* Add JobFunction
  * http://localhost:3000/api/jobfunction
  * {
-	    "jobfunctionName": ""
+	    "JobfunctionName": ""
    }
 */
 router.post('/', function (req, res, next) {
   var jf = {
-    JobFunctionName: req.body.jobfunctionName
+    JobFunctionName: req.body.JobfunctionName
   };
   jobfunction.addJobFunction(jf).then(function (result) {
     res.send(result)

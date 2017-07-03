@@ -24,12 +24,12 @@ router.get('/:id', function (req, res, next) {
 /* Add JobType
  * http://localhost:3000/api/jobtype
  * {
-	    "jobtype": ""
+	    "JobType": ""
    }
 */
 router.post('/', function (req, res, next) {
   var jt = {
-    JobType: req.body.jobtype
+    JobType: req.body.JobType
   };
   jobtype.addJobType(jt).then(function (result) {
     res.send(result)

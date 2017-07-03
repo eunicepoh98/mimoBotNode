@@ -24,12 +24,12 @@ router.get('/:id', function (req, res, next) {
 /* Add Industry
  * http://localhost:3000/api/industry
  * {
-	    "industryName": ""
+	    "IndustryName": ""
    }
 */
 router.post('/', function (req, res, next) {
   var ind = {
-    IndustryName: req.body.industryName
+    IndustryName: req.body.IndustryName
   };
   industry.addIndustry(ind).then(function (result) {
     res.send(result)
