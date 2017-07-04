@@ -10,9 +10,7 @@ What's "done"
 What needs to be done
 + seeding test data (working..)
 + advance querying (working..)
-+ basic crud for fun
 + user search table
-+ create record for job
 
 ### [Wit.ai](https://wit.ai/)
 
@@ -22,10 +20,21 @@ What's "done"
 + able to handle search job scenario
 
 What needs to be done
-+ No option to reject path
 + shorten response timing?
 + story flow for update work experience
-+ attaching list of industry/job function/job type in context (load from db)
+
+### Authentication/Security
+>[Passport](http://passportjs.org)
+>[JWT](https://www.sitepoint.com/using-json-web-tokens-node-js/)
+
+What's "done"
++ generate and verify jwt token
++ sign in and sign up with local passport
+
+What needs to be done
++ add into codes here
++ facebook access_token verification
++ other user columns
 
 ### Need to create config.js file
 Contents in config.js
