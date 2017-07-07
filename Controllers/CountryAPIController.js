@@ -7,7 +7,7 @@ var Country = require('../models').Country;
 */
 router.get('/', function (req, res, next) {
   Country.findAll({})
-    .then((data) => {
+    .then(function (data) {
       console.log(data);
       res.send(JSON.stringify(data));
     })
@@ -18,7 +18,7 @@ router.get('/', function (req, res, next) {
 */
 router.get('/:id', function (req, res, next) {
   Country.findById(req.params.id)
-    .then((data) => {
+    .then(function (data) {
       console.log(data);
       res.send(JSON.stringify(data));
     })

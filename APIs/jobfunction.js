@@ -1,23 +1,23 @@
 var jobfunction = module.exports = {};
-var JobFunction = require('../models').JobFunction;
-var model = require('../models');
+var JobFunction = require('../Models').JobFunction;
+var model = require('../Models');
 
 jobfunction.api = {
     getAllJobFunction: function () {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             JobFunction.findAll({})
-                .then((data) => {
+                .then(function (data) {
                     resolve(data);
                 })
         })
     },
     getAllJobFunctionName: function () {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             JobFunction.findAll({
                 attributes: ['JobFunctionName']
             })
-                .then((data) => {
-                   var array = []
+                .then(function (data) {
+                    var array = []
                     data.forEach(function (name) {
                         array.push(name.JobFunctionName)
                     });
@@ -26,15 +26,15 @@ jobfunction.api = {
         })
     },
     getOneJobFunction: function (id) {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             JobFunction.findById(id)
-                .then((data) => {
+                .then(function (data) {
                     resolve(data);
                 })
         })
     },
     addJobFunction: function (jobFunction) {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             JobFunction.create(jobFunction).then(function (newJobFunction) {
                 resolve(JSON.stringify(newJobFunction))
             }).catch(function (error) {

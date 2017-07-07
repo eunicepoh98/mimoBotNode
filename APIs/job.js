@@ -1,11 +1,11 @@
 var job = module.exports = {};
-var Job = require('../models').Job;
-var model = require('../models');
+var Job = require('../Models').Job;
+var model = require('../Models');
 
 job.api = {
 
     getAllJob: function () {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             Job.findAll({
                 order: [],
                 attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
@@ -22,13 +22,13 @@ job.api = {
                     },
                     { model: model.Country, attributes: ['CountryName'] }]
             })
-                .then((data) => {
+                .then(function (data) {
                     resolve(JSON.stringify(data))
                 })
         })
     },
     getOneJob: function (id) {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             Job.findOne({
                 where: { JobID: id },
                 attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
@@ -45,13 +45,13 @@ job.api = {
                     },
                     { model: model.Country, attributes: ['CountryName'] }]
             })
-                .then((data) => {
+                .then(function (data) {
                     resolve(data);
                 })
         })
     },
     getFilteredJob: function () {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             var industry = 'aerospace'
             var jFuntion = 'engineering'
             var jType = 'full time'
@@ -61,7 +61,7 @@ job.api = {
                         {
                             $or:
                             [
-                                { '$Industries.IndustryName$': { $like: '%' + industry + '%' } },//'%' + industry + '%' 
+                                { '$Industries.IndustryName$': { $like: '%' + industry + '%' } },
                                 { '$JobFunctions.JobFunctionName$': { $like: '%' + jFuntion + '%' } }
                             ]
                         },
@@ -121,16 +121,14 @@ job.api = {
                     },
                     { model: model.Country, attributes: ['CountryName'] }]
             })
-                .then((data) => {
+                .then(function (data) {
                     resolve(data)
                 })
         })
     },
-    getUserJob: function (industry, jFuntion, jType) { //industry, jFuntion, jType
-        // var industry = ["fishing"]
-        // var jFuntion = []
-        // var jType = []
-        return new Promise((resolve, reject) => {
+    getUserJob: function (industry, jFuntion, jType) { // get jobs base on user's filter
+        // var industry = ["fishing"], jFuntion = [], jType = []
+        return new Promise(function (resolve, reject) {
             var whereInd
             if (industry.length == 0) { whereInd = {} }
             else {
@@ -185,13 +183,13 @@ job.api = {
                     },
                     { model: model.Country, attributes: ['CountryName'] }]
             })
-                .then((data) => {
+                .then(function (data) {
                     resolve(JSON.stringify(data))
                 })
         })
     },
     addJob: function (salary, job, indID, jfID) {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             model.Salary.create(salary).then(function (newSalary) {
                 var SalaryID = newSalary.SalaryID;
                 job["SalaryID"] = SalaryID

@@ -1,22 +1,22 @@
 var jobtype = module.exports = {};
-var JobType = require('../models').JobType;
-var model = require('../models');
+var JobType = require('../Models').JobType;
+var model = require('../Models');
 
 jobtype.api = {
     getAllJobType: function () {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             JobType.findAll({})
-                .then((data) => {
+                .then(function (data) {
                     resolve(data);
                 })
         })
     },
     getAllJobTypeName: function () {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             JobType.findAll({
                 attribute: ['JobType']
             })
-                .then((data) => {
+                .then(function (data) {
                     var array = []
                     data.forEach(function (name) {
                         array.push(name.JobType)
@@ -26,15 +26,15 @@ jobtype.api = {
         })
     },
     getOneJobType: function (id) {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             JobType.findById(id)
-                .then((data) => {
+                .then(function (data) {
                     resolve(data);
                 })
         })
     },
     addJobType: function (jobtype) {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             JobType.create(jobtype).then(function (newJobType) {
                 resolve(JSON.stringify(newJobType))
             }).catch(function (error) {

@@ -27,9 +27,9 @@ jobfunction.getAllJobFunctionName().then(function (data) {
 
 wit.api = {
     NLP: function (sessionId, userMsg, prevContext) {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             client.runActions(sessionId, userMsg, prevContext)
-                .then((context1) => {
+                .then(function (context1) {
                     var result = sessionResult[sessionId];
                     delete sessionResult[sessionId];
                     var res = {
@@ -41,7 +41,7 @@ wit.api = {
         })
     },
     test: function () {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             var industries = ['aerospace', '1', '2']
             var s = []
             for (i = 0; i < industries.length; i++) {
@@ -140,10 +140,8 @@ const actions = {
         context.industryType = context['industryType'];
         context.jobFunction = context['jobFunction'];
         var short_replies = firstEntityValue(entities, 'short_replies');
-        console.log("hii")
         if (short_replies == 'no') {
             context.jobType = [];
-            console.log("here")
         } else {
             var JobTypes = getEntityValues(entities, 'job_type');
             if (JobTypes) {
@@ -160,7 +158,7 @@ const actions = {
         var industryType = context['industryType'];
         var jobFunction = context['jobFunction'];
         console.log(jobType + " " + industryType + " " + jobFunction)
-        job.getUserJob(industryType, jobFunction, jobType).then((result) => {
+        job.getUserJob(industryType, jobFunction, jobType).then(function (result) {
             delete context.industryType;
             delete context.jobFunction;
             delete context.jobType;
@@ -171,7 +169,7 @@ const actions = {
         return context;
     }
 }
-const firstEntityValue = (entities, entity) => {
+const firstEntityValue = function (entities, entity) {
     const val = entities && entities[entity] &&
         Array.isArray(entities[entity]) &&
         entities[entity].length > 0 &&
@@ -182,7 +180,7 @@ const firstEntityValue = (entities, entity) => {
     }
     return typeof val === 'object' ? val.value : val;
 };
-const getEntityValues = (entities, entity) => {
+const getEntityValues = function (entities, entity) {
     var entityArray = [];
     const val = entities && entities[entity] &&
         Array.isArray(entities[entity]) &&

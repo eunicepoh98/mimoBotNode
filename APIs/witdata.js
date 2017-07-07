@@ -10,7 +10,7 @@ var jobtype = require(path.resolve('./APIs/jobtype.js')).api;
 witdata.api = {
 
     loadJobType: function () {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             jobfunction.getAllJobFunctionName().then(function (data) {
                 resolve(createEntity("job_type", "contains all the job type", formatData(data)));
             })
@@ -19,7 +19,7 @@ witdata.api = {
     },
 
     loadJobFunction: function () {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             jobtype.getAllJobTypeName().then(function (data) {
                 resolve(createEntity("job_function", "contains all the job function", formatData(data)));
             })
@@ -28,7 +28,7 @@ witdata.api = {
     },
 
     loadIndustry: function () {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             industry.getAllIndustryName().then(function (data) {
                 resolve(createEntity("industry_type", "contains all the industry", formatData(data)));
             })
@@ -37,7 +37,7 @@ witdata.api = {
     },
 
     loadAllData: function () {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             loadIndustry().then(loadJobFunction().then(loadJobType().then(resolve)))
             // createEntity("job_type", "contains all the job type", formatData(jobTypeData));
             // createEntity("job_function", "contains all the job function", formatData(jobFunctionData));

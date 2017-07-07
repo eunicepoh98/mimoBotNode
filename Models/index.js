@@ -10,10 +10,10 @@ var sequelize = new Sequelize(config.database, config.username, config.password,
 
 sequelize
   .authenticate()
-  .then(() => {
+  .then(function () {
     console.log('Connection has been established successfully.');
   })
-  .catch(err => {
+  .catch(function (err) {
     console.error('Unable to connect to the database:', err);
   });
 
