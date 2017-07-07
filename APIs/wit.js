@@ -86,7 +86,7 @@ const actions = {
                     break;
                 }
                 case "search job": {
-                    context.suggestionList = [{ industryList: jobIndustry }]; //industry list from db 
+                    context.action = { action: true, name: 'displaySuggestion', data: jobIndustry }; //industry list from db 
                     context.searchJob = intent;
                     break;
                 }
@@ -100,13 +100,12 @@ const actions = {
     ['getIndustry']({ context, entities }) {
         context.searchJob = context['searchJob'];
         var short_replies = firstEntityValue(entities, 'short_replies');
+        context.action = { action: true, name: 'displaySuggestion', data: jobFunction }; //list of job function from db
         if (short_replies == 'no') {
             context.industryType = [];
-            context.suggestionList = [{ jobFunctionList: jobFunction }]; //list of job function from db
         } else {
             var industries = getEntityValues(entities, 'industry_type');
             if (industries) {
-                context.suggestionList = [{ jobFunctionList: jobFunction }]; //list of job function from db
                 context.industryType = industries;
                 delete context.missingIndustryType;
             } else {
@@ -119,13 +118,12 @@ const actions = {
         context.searchJob = context['searchJob'];
         context.industryType = context['industryType'];
         var short_replies = firstEntityValue(entities, 'short_replies');
+        context.action = [{ action: true, name: 'displaySuggestion', data: jobType }]; //list of job type from db
         if (short_replies == 'no') {
             context.jobFunction = [];
-            context.suggestionList = [{ jobTypeList: jobType }]; //list of job type from db
         } else {
             var JobFunctions = getEntityValues(entities, 'job_function');
             if (JobFunctions) {
-                context.suggestionList = [{ jobTypeList: jobType }]; //list of job type from db
                 context.jobFunction = JobFunctions;
                 delete context.missingJobFunction;
             } else {
@@ -140,6 +138,7 @@ const actions = {
         context.industryType = context['industryType'];
         context.jobFunction = context['jobFunction'];
         var short_replies = firstEntityValue(entities, 'short_replies');
+        context.action = { action: false };
         if (short_replies == 'no') {
             context.jobType = [];
         } else {
@@ -157,7 +156,8 @@ const actions = {
         var jobType = context['jobType'];
         var industryType = context['industryType'];
         var jobFunction = context['jobFunction'];
-        console.log(jobType + " " + industryType + " " + jobFunction)
+        context.action = { action: true, name: "resetID" };
+        //console.log(jobType + " " + industryType + " " + jobFunction)
         job.getUserJob(industryType, jobFunction, jobType).then(function (result) {
             delete context.industryType;
             delete context.jobFunction;
