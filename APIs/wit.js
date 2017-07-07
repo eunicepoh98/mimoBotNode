@@ -73,16 +73,17 @@ wit.api = {
 
 const actions = {
     send(request, response) {
-        const { sessionId, context, entities } = request;
-        const { text, quickreplies } = response;
+        const { sessionId, context, userText, entities } = request;
+        const { botText, quickreplies } = response;
         sessionResult[sessionId] = { "response": response, "request": request };
     },
     ['getIntention']({ context, entities }) {
         const intent = firstEntityValue(entities, 'intent');
         if (intent) {
             switch (intent) {
-                case "update work experience": {
-                    context.updateWorkExperience = intent;
+                case "add work experience": {
+                    context.addWorkExperience = intent;
+                    context.action = { action: false };
                     break;
                 }
                 case "search job": {
@@ -97,6 +98,7 @@ const actions = {
         }
         return context;
     },
+    //Search Job Methods
     ['getIndustry']({ context, entities }) {
         context.searchJob = context['searchJob'];
         var short_replies = firstEntityValue(entities, 'short_replies');
@@ -167,7 +169,34 @@ const actions = {
             context.result = [{ jobList: JSON.parse(result) }]; //list of jobs based on users criteria
         })
         return context;
-    }
+    },
+    //Add Work Experience Methods
+    ['getCompanyName']({ context, entities, text }) {
+        //console.log("Entities: " + JSON.stringify(entities))
+        context.addWorkExperience = context['addWorkExperience'];
+        context.action = { action: false };
+        if (text == "") {
+            context.missingCompanyName = true;
+        } else {
+            context.companyName = text;
+            delete context.missingCompanyName;
+        }
+        return context;
+    },
+    ['getWorkAs']({ context, entities, text }) {
+        context.addWorkExperience = context['addWorkExperience'];
+        context.companyName = context['companyName'];
+        context.action = { action: false };
+        if (text == "") {
+            context.missingWorkAs = true;
+        } else {
+            context.workAs = text;
+            delete context.missingWorkAs;
+        }
+        return context;
+        // var short_replies = firstEntityValue(entities, 'short_replies');
+        // context.action = { action: true, name: 'displaySuggestion', data: jobFunction }; //list of job function from db
+    },
 }
 const firstEntityValue = function (entities, entity) {
     const val = entities && entities[entity] &&

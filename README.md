@@ -18,13 +18,16 @@ What's "done"
 + api to load data into wit
 + api for frontend
 + able to handle search job scenario
++ work experience: companyname and work as
 
 What needs to be done
 + shorten response timing?
 + story flow for update work experience
++ the rest of the work experience flow
 
 ### Authentication/Security
 >[Passport](http://passportjs.org)
+
 >[JWT](https://www.sitepoint.com/using-json-web-tokens-node-js/)
 
 What's "done"
@@ -32,7 +35,6 @@ What's "done"
 + sign in and sign up with local passport
 
 What needs to be done
-+ add into codes here
 + facebook access_token verification
 + other user columns
 
@@ -53,6 +55,10 @@ config.dbCredentials = {
 config.wit = {
     'appId': '', //Settings > API Details > App ID
     'serverToken': '' //Settings > API Details > Server Access Token
+}
+
+config.others = {
+    'secretKey': ''
 }
 ```
 
