@@ -17,13 +17,11 @@ What needs to be done
 What's "done"
 + api to load data into wit
 + api for frontend
-+ able to handle search job scenario
-+ work experience: companyname and work as
++ able to handle search job, add work experience scenario
 
 What needs to be done
-+ shorten response timing?
-+ story flow for update work experience
-+ the rest of the work experience flow
++ integrate add work experience with database
++ testings
 
 ### Authentication/Security
 >[Passport](http://passportjs.org)
@@ -37,6 +35,8 @@ What's "done"
 What needs to be done
 + facebook access_token verification
 + other user columns
++ combining with other tables
++ saving resume to file system
 
 ### Need to create config.js file
 Contents in config.js
