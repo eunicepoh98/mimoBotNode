@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-var wit = require(path.resolve('./APIs/wit.js')).api;
-var witdata = require(path.resolve('./APIs/witdata.js')).api;
+var wit = require(path.resolve('./APIs/wit.js'));
+var witdata = require(path.resolve('./APIs/witdata.js'));
 
 /* Test Wit Controller
  * http://localhost:3000/api/wit
@@ -11,8 +11,15 @@ router.get('/', function (req, res, next) {
     res.send("Available");
 });
 
-/* Process Nature Language
+/** 
+ * Process Nature Language
  * http://localhost:3000/api/wit
+ * Body: JSON(application/json)
+ * {
+        "userMsg": "",
+        "id": "1234",
+        "context": {}
+    }
 */
 router.post('/', function (req, res, next) {
     var userMsg = req.body.userMsg;
@@ -22,8 +29,9 @@ router.post('/', function (req, res, next) {
         .then(function (result) {
             res.send(result);
         }).catch(function (result) {
-            res.send(result);
-        })
+            var response = { success: false, message: error };
+            res.send(response);
+        });
 });
 
 /* Populate Some Data into Wit 
@@ -31,13 +39,13 @@ router.post('/', function (req, res, next) {
 */
 router.get('/data', function (req, res, next) {
     witdata.loadAllData()
-    .then(function(){
-        res.send("Data loaded into wit!")
-    })
+        .then(function () {
+            res.send("Data loaded into wit!")
+        })
 });
 
 router.get('/test', function (req, res, next) {
-    wit.test().then(function(result){
+    wit.test().then(function (result) {
         res.send(result)
     })
 });

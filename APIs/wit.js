@@ -1,10 +1,10 @@
 var wit = module.exports = {};
 
 var path = require('path');
-var jobfunction = require(path.resolve('./APIs/jobfunction.js')).api;
-var industry = require(path.resolve('./APIs/industry.js')).api;
-var jobtype = require(path.resolve('./APIs/jobtype.js')).api;
-var job = require(path.resolve('./APIs/job.js')).api;
+var jobfunction = require(path.resolve('./APIs/jobfunction.js'));
+var industry = require(path.resolve('./APIs/industry.js'));
+var jobtype = require(path.resolve('./APIs/jobtype.js'));
+var job = require(path.resolve('./APIs/job.js'));
 
 var witConfig = require('../config').wit;
 const { Wit, log } = require('node-wit');
@@ -12,7 +12,7 @@ const { Wit, log } = require('node-wit');
 var serverToken = witConfig.serverToken;
 var sessionResult = {};
 
-// loads data
+// loads Job Type, Job Function and Industry data from the database
 var jobType, jobFunction, jobIndustry;
 jobtype.getAllJobTypeName().then(function (data) {
     jobType = data;
@@ -24,54 +24,42 @@ jobfunction.getAllJobFunctionName().then(function (data) {
     jobFunction = data;
 })
 
-wit.api = {
-    NLP: function (sessionId, userMsg, prevContext) {
-        return new Promise(function (resolve, reject) {
-            if (userMsg == "") { userMsg = " "; }
-            client.runActions(sessionId, userMsg, prevContext)
-                .then(function (context1) {
-                    var result = sessionResult[sessionId];
-                    delete sessionResult[sessionId];
-                    var res = {
-                        "botMessage": result.response.text,
-                        "context": result.request.context
-                    };
-                    resolve(res);
-                }).catch(function (error) {
-                    reject(error);
-                })
-        })
-    },
-    test: function () {
-        return new Promise(function (resolve, reject) {
-            var industries = ['aerospace', '1', '2']
-            var s = []
-            for (i = 0; i < industries.length; i++) {
-                s.push({ IndustryName: { $like: '%' + industries[i] + '%' } })
-            }
-            console.log(s)
-            resolve(s)
-        })
+/**
+ * Process user message and return the bot next action
+ * @param {int} sessionId - sessionId of the conversation
+ * @param {string} userMsg - What the user say
+ * @param {string} prevContext - wit Context 
+ * @returns {string} JSON format containing the bot message and wit context
+ */
+wit.NLP = function (sessionId, userMsg, prevContext) {
+    return new Promise(function (resolve, reject) {
+        if (userMsg == "") { userMsg = " "; }
+        client.runActions(sessionId, userMsg, prevContext)
+            .then(function (context1) {
+                var result = sessionResult[sessionId];
+                delete sessionResult[sessionId];
+                var res = {
+                    "botMessage": result.response.text,
+                    "context": result.request.context
+                };
+                resolve(res);
+            }).catch(function (error) {
+                reject(error.toString());
+            });
+    });
+};
 
-        //IndustryName: { $like: '%' + industry + '%' }
-        // var data = { //entities from wit 
-        //     industry_type:
-        //     [{
-        //         confidence: 0.926022391210834,
-        //         type: 'value',
-        //         value: 'Aerospace'
-        //     },
-        //     {
-        //         confidence: 0.9253284478512049,
-        //         type: 'value',
-        //         value: 'Entertainment'
-        //     }]
-        // }
-        // data['industry_type'].forEach(function (one) {
-        //     console.log(one.value);
-        // })
-    }
+wit.test = function () {
+    return new Promise(function (resolve, reject) {
+        var industries = ['aerospace', '1', '2']
+        var s = []
+        for (i = 0; i < industries.length; i++) {
+            s.push({ IndustryName: { $like: '%' + industries[i] + '%' } })
+        }
+        resolve(s)
+    })
 }
+
 
 const actions = {
     send(request, response) {
@@ -299,6 +287,13 @@ const actions = {
         return context;
     }
 }
+
+/**
+ * Extract the value of a certain entity from a list of entities
+ * @param {string} entities - JSON format of entities from wit
+ * @param {string} entity - the name of the value to extract from entities
+ * @returns {null|string} null if entity to extract not present | value of entity extracted from entities
+ */
 const firstEntityValue = function (entities, entity) {
     const val = entities && entities[entity] &&
         Array.isArray(entities[entity]) &&
@@ -310,6 +305,13 @@ const firstEntityValue = function (entities, entity) {
     }
     return typeof val === 'object' ? val.value : val;
 };
+
+/**
+ * Extract the values of a certain entity from a list of entities
+ * @param {string} entities - JSON format of entities from wit
+ * @param {string} entity - the name of the value to extract from entities
+ * @returns {null|array} null if entity to extract not present | array of values of entity extracted from entities
+ */
 const getEntityValues = function (entities, entity) {
     var entityArray = [];
     const val = entities && entities[entity] &&

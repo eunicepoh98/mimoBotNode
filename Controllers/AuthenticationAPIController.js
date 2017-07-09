@@ -1,15 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-//var user = require(path.resolve('./APIs/user.js')).api;
 var token = require('../token.js');
 
 module.exports = function (app, passport) {
 
-    app.get('/', token.verifyToken, function (req, res) {
-        res.send('Available');
-    })
-
+    /**
+     * Create an account for the user
+     * http://localhost:3000/signup
+     */
     app.post('/signup', function (req, res, next) {
         passport.authenticate('local-signup', function (err, user, msg) {
             if (!user) {
@@ -29,6 +28,10 @@ module.exports = function (app, passport) {
         })(req, res, next);
     });
 
+    /**
+     * Check user credentials for sign in
+     * http://localhost:3000/
+     */
     app.post('/signin', function (req, res, next) {
         passport.authenticate('local-signin', function (err, user, msg) {
             if (!user) {
@@ -48,6 +51,10 @@ module.exports = function (app, passport) {
         })(req, res, next);
     });
 
+    /**
+     * Check if JWT token is valid
+     * http://localhost:3000/
+     */
     app.get('/checktoken', token.verifyToken, function (req, res) {
         res.status(200).send({
             success: true,

@@ -1,37 +1,56 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-var job = require(path.resolve('./APIs/job.js')).api;
+var job = require(path.resolve('./APIs/job.js'));
 
 /* Get all Jobs
  * http://localhost:3000/api/job
 */
 router.get('/', function (req, res, next) {
-  job.getAllJob().then(function (data) {
-    res.send(JSON.parse(data))
-  })
+  job.getAllJob()
+    .then(function (data) {
+      var response = { success: true, result: JSON.parse(data) };
+      res.status(200).send(response);
+    }).catch(function (error) {
+      var response = { success: false, message: error };
+      res.send(response);
+    });
 });
 
 /* Get One Job by Id
  * http://localhost:3000/api/job/1
+ * Params: /id
+ * id - id of the job
 */
 router.get('/one/:id', function (req, res, next) {
-  job.getOneJob(req.params.id).then(function (data) {
-    res.send(data)
-  })
+  job.getOneJob(req.params.id)
+    .then(function (data) {
+      var response = { success: true, result: JSON.parse(data) };
+      res.status(200).send(response);
+    }).catch(function (error) {
+      var response = { success: false, message: error };
+      res.send(response);
+    });
 });
 
 /* Get Filtered Jobs
  * http://localhost:3000/api/job/filter
 */
 router.get('/filter', function (req, res, next) {
-  job.getUserJob().then(function (data) {
-    res.send(JSON.parse(data))
-  })
+  job.getUserJob()
+    .then(function (data) {
+      var response = { success: true, result: JSON.parse(data) };
+      res.status(200).send(response);
+    }).catch(function (error) {
+      var response = { success: false, message: error };
+      res.send(response);
+    });
 });
 
-/* Add Job
+/** 
+ * Add Job
  * http://localhost:3000/api/job
+ * Body: JSON(application/json)
  * {
 	    "JobTitle": "",
       "JobDescription": "",
@@ -66,11 +85,14 @@ router.post('/', function (req, res, next) {
     JobTypeID: req.body.JobTypeID,
     CountryID: req.body.CountryID
   };
-  job.addJob(salary, newJob, req.body.IndustryID, req.body.JobFunctionID).then(function (result) {
-    res.send(result)
-  }).catch(function(error){
-    res.status(404).send(error)
-  })
+  job.addJob(salary, newJob, req.body.IndustryID, req.body.JobFunctionID)
+    .then(function (data) {
+      var response = { success: true, result: JSON.parse(data) };
+      res.status(200).send(response);
+    }).catch(function (error) {
+      var response = { success: false, message: error };
+      res.send(response);
+    });
 })
 
 module.exports = router;

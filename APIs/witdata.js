@@ -3,55 +3,35 @@ var path = require('path');
 var request = require('request');
 var witConfig = require('../config').wit;
 var serverToken = witConfig.serverToken;
-var jobfunction = require(path.resolve('./APIs/jobfunction.js')).api;
-var industry = require(path.resolve('./APIs/industry.js')).api;
-var jobtype = require(path.resolve('./APIs/jobtype.js')).api;
+var jobfunction = require(path.resolve('./APIs/jobfunction.js'));
+var industry = require(path.resolve('./APIs/industry.js'));
+var jobtype = require(path.resolve('./APIs/jobtype.js'));
 
-witdata.api = {
-
-    loadJobType: function () {
-        return new Promise(function (resolve, reject) {
-            jobfunction.getAllJobFunctionName().then(function (data) {
-                resolve(createEntity("job_type", "contains all the job type", formatData(data)));
-            })
-
-        })
-    },
-
-    loadJobFunction: function () {
-        return new Promise(function (resolve, reject) {
-            jobtype.getAllJobTypeName().then(function (data) {
-                resolve(createEntity("job_function", "contains all the job function", formatData(data)));
-            })
-
-        })
-    },
-
-    loadIndustry: function () {
-        return new Promise(function (resolve, reject) {
-            industry.getAllIndustryName().then(function (data) {
-                resolve(createEntity("industry_type", "contains all the industry", formatData(data)));
-            })
-
-        })
-    },
-
-    loadAllData: function () {
-        return new Promise(function (resolve, reject) {
-            loadIndustry().then(loadJobFunction().then(loadJobType().then(resolve)))
-            // createEntity("job_type", "contains all the job type", formatData(jobTypeData));
-            // createEntity("job_function", "contains all the job function", formatData(jobFunctionData));
-            // createEntity("industry_type", "contains all the industry", formatData(industryData));
-            // resolve;
-        })
-    }
+function loadJobType() {
+    return new Promise(function (resolve, reject) {
+        jobfunction.getAllJobFunctionName().then(function (data) {
+            resolve(createEntity("job_type", "contains all the job type", formatData(data)));
+        });
+    });
 }
-
+function loadJobFunction() {
+    return new Promise(function (resolve, reject) {
+        jobtype.getAllJobTypeName().then(function (data) {
+            resolve(createEntity("job_function", "contains all the job function", formatData(data)));
+        });
+    });
+}
+function loadIndustry() {
+    return new Promise(function (resolve, reject) {
+        industry.getAllIndustryName().then(function (data) {
+            resolve(createEntity("industry_type", "contains all the industry", formatData(data)));
+        });
+    });
+}
 function Value(value, expressions) {
     this.value = value;
     this.expressions = expressions
 }
-
 function formatData(data) {
     var array = [];
     data.forEach(function (value) {
@@ -69,7 +49,6 @@ function formatData(data) {
     });
     return array;
 }
-
 function createEntity(entityName, description, value) {
     var entities = {
         "doc": description,
@@ -89,8 +68,13 @@ function createEntity(entityName, description, value) {
     //sends the request
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
-        //resolve(body);
         return body
+    });
+}
+
+witdata.loadAllData = function () {
+    return new Promise(function (resolve, reject) {
+        loadIndustry().then(loadJobFunction().then(loadJobType().then(resolve)));
     });
 }
 
@@ -138,46 +122,4 @@ var jobFunctionData = [
     'Telecom / Service Provider',
     'Headhunter & Recruiter'
 ];
-
-//old format data
-// function formatData(data) {
-//     var array = [];
-//     data.forEach(function (value) {
-//         if (value.includes("-")) {
-//             var syn = value.split(" - ");
-//             array.push(new Value(value, syn));
-//         } else if (value.includes("/")) {
-//             var syn = []
-//             var slash = value.split(" / ");
-//             slash.forEach((one) => {
-//                 if (one.includes("&")) {
-//                     var and = one.split(" & ");
-//                     and.forEach((a) => { syn.push(a); })
-//                 } else { syn.push(one); }
-//             })
-//             array.push(new Value(value, syn));
-//         } else if (value.includes("&")) {
-//             var syn = []
-//             var slash = value.split(" & ");
-//             slash.forEach((one) => {
-//                 if (one.includes("/")) {
-//                     var and = one.split(" / ");
-//                     and.forEach((a) => { syn.push(a); })
-//                 } else { syn.push(one); }
-//             })
-//             array.push(new Value(value, syn));
-//         } else if (value.includes(",")) {
-//             var syn = []
-//             var slash = value.split(", ");
-//             slash.forEach((one) => {
-//                 if (one.includes("&")) {
-//                     var and = one.split(" & ");
-//                     and.forEach((a) => { syn.push(a); })
-//                 } else { syn.push(one); }
-//             })
-//             array.push(new Value(value, syn));
-//         } else { array.push(new Value(value, [])); }
-//     });
-//     return (array);
-// }
 
