@@ -12,9 +12,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 var port = process.env.VCAP_APP_PORT || 3000;
 
-// Models
-//app.set('models', require('./Models'));
-
 // Routes
 var authentication = require('./Controllers/AuthenticationAPIController')(app, passport);
 var jobs = require('./Controllers/JobAPIController');
@@ -22,12 +19,15 @@ var jobtypes = require('./Controllers/JobTypeAPIController');
 var jobfunctions = require('./Controllers/JobFunctionAPIController');
 var industries = require('./Controllers/IndustryAPIController');
 var companies = require('./Controllers/CompanyAPIController');
+var countries = require('./Controllers/CountryAPIController');
 var wit = require('./Controllers/WitAPIController');
+
 app.use('/api/job', jobs);
 app.use('/api/jobtype', jobtypes);
 app.use('/api/jobfunction', jobfunctions);
 app.use('/api/industry', industries);
 app.use('/api/company', companies);
+app.use('/api/country', countries);
 app.use('/api/wit', wit);
 
 // Load Passport Strategies
