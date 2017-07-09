@@ -22,7 +22,7 @@ router.post('/', function (req, res, next) {
         .then(function (result) {
             res.send(result);
         }).catch(function (result) {
-            res.end(result)
+            res.send(result);
         })
 });
 

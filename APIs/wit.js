@@ -24,10 +24,10 @@ jobfunction.getAllJobFunctionName().then(function (data) {
     jobFunction = data;
 })
 
-
 wit.api = {
     NLP: function (sessionId, userMsg, prevContext) {
         return new Promise(function (resolve, reject) {
+            if (userMsg == "") { userMsg = " "; }
             client.runActions(sessionId, userMsg, prevContext)
                 .then(function (context1) {
                     var result = sessionResult[sessionId];
@@ -35,8 +35,10 @@ wit.api = {
                     var res = {
                         "botMessage": result.response.text,
                         "context": result.request.context
-                    }
+                    };
                     resolve(res);
+                }).catch(function (error) {
+                    reject(error);
                 })
         })
     },
@@ -80,17 +82,12 @@ const actions = {
     ['getIntention']({ context, entities }) {
         const intent = firstEntityValue(entities, 'intent');
         if (intent) {
-            switch (intent) {
-                case "add work experience": {
-                    context.addWorkExperience = intent;
-                    context.action = { action: false };
-                    break;
-                }
-                case "search job": {
-                    context.action = { action: true, name: 'displaySuggestion', data: jobIndustry }; //industry list from db 
-                    context.searchJob = intent;
-                    break;
-                }
+            if (intent == "add work experience") {
+                context.addWorkExperience = intent;
+                context.action = { action: false };
+            } else if (intent == "search job") {
+                context.action = { action: true, name: 'displaySuggestion', data: jobIndustry }; //industry list from db 
+                context.searchJob = intent;
             }
             delete context.missingIntent;
         } else {
@@ -172,10 +169,9 @@ const actions = {
     },
     //Add Work Experience Methods
     ['getCompanyName']({ context, entities, text }) {
-        //console.log("Entities: " + JSON.stringify(entities))
         context.addWorkExperience = context['addWorkExperience'];
         context.action = { action: false };
-        if (text == "") {
+        if (text.length < 2) {
             context.missingCompanyName = true;
         } else {
             context.companyName = text;
@@ -187,16 +183,121 @@ const actions = {
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
         context.action = { action: false };
-        if (text == "") {
+        if (text.length < 2) {
             context.missingWorkAs = true;
         } else {
             context.workAs = text;
             delete context.missingWorkAs;
         }
         return context;
-        // var short_replies = firstEntityValue(entities, 'short_replies');
-        // context.action = { action: true, name: 'displaySuggestion', data: jobFunction }; //list of job function from db
     },
+    ['haveDescription']({ context, entities, text }) {
+        var short_replies = firstEntityValue(entities, 'short_replies');
+        context.addWorkExperience = context['addWorkExperience'];
+        context.companyName = context['companyName'];
+        context.workAs = context['workAs'];
+        context.action = { action: false };
+        if (short_replies) {
+            delete context.missingHaveDescription;
+            if (short_replies == "no") {
+                context.haveDescription = false;
+                context.description = "";
+                context.action = { action: true, name: "displayDatePicker" };
+            } else if (short_replies == "yes") {
+                context.haveDescription = true;
+            }
+        } else {
+            context.missingHaveDescription = true;
+        }
+        return context;
+    },
+    ['getDescription']({ context, entities, text }) {
+        context.addWorkExperience = context['addWorkExperience'];
+        context.companyName = context['companyName'];
+        context.workAs = context['workAs'];
+        context.haveDescription = context['haveDescription'];
+        if (text.length < 2) {
+            delete context.haveDescription;
+            context.action = { action: false };
+            context.missingHaveDescription = true;
+        } else {
+            context.action = { action: true, name: "displayDatePicker" };
+            context.description = text;
+            delete context.missingWorkAs;
+        }
+        return context;
+    },
+    ['getStartDay']({ context, entities, text }) {
+        var startDay = firstEntityValue(entities, 'datetime');
+        context.addWorkExperience = context['addWorkExperience'];
+        context.companyName = context['companyName'];
+        context.workAs = context['workAs'];
+        context.haveDescription = context['haveDescription'];
+        context.description = context['description'];
+        context.action = { action: false };
+        if (startDay) {
+            context.startDay = startDay;
+            delete context.missingStartDay;
+        } else {
+            context.action = { action: true, name: "displayDatePicker" };
+            context.missingStartDay = true;
+        }
+        return context;
+    },
+    ['currentJob']({ context, entities }) {
+        var short_replies = firstEntityValue(entities, 'short_replies');
+        context.addWorkExperience = context['addWorkExperience'];
+        context.companyName = context['companyName'];
+        context.workAs = context['workAs'];
+        context.haveDescription = context['haveDescription'];
+        context.description = context['description'];
+        context.startDay = context['startDay'];
+        if (context['endDay']) {
+            context.endDay = context['endDay'];
+        } else {
+            if (short_replies) {
+                delete context.missingCurrentJob;
+                if (short_replies == "no") {
+                    context.currentJob = false;
+                    context.action = { action: true, name: "displayFilterDatePicker" };
+                } else if (short_replies == "yes") {
+                    context.currentJob = true;
+                    context.endDay = "null";
+                    context.action = { action: true, name: "resetID" };
+                }
+            } else {
+                context.missingCurrentJob = true;
+                context.action = { action: false };
+            }
+        }
+        return context;
+    },
+    ['getEndDay']({ context, entities, text }) {
+        var endDay = firstEntityValue(entities, 'datetime');
+        context.addWorkExperience = context['addWorkExperience'];
+        context.companyName = context['companyName'];
+        context.workAs = context['workAs'];
+        context.haveDescription = context['haveDescription'];
+        context.description = context['description'];
+        context.action = { action: false };
+        if (endDay) {
+            context.endDay = endDay;
+            delete context.missingEndDay;
+        } else {
+            context.missingEndDay = true;
+        }
+        return context;
+    },
+    ['addWorkExperience']({ context }) {
+        var companyName = context['companyName'];
+        var workAs = context['workAs'];
+        var description = context['description'];
+        var startDay = context['startDay'];
+        var endDay = context['endDay'];
+        console.log(companyName + " " + workAs + " " + description + " " + startDay + " " + endDay);
+        //add to db here
+        return context;
+    }
 }
 const firstEntityValue = function (entities, entity) {
     const val = entities && entities[entity] &&
@@ -224,9 +325,5 @@ const getEntityValues = function (entities, entity) {
         return entityArray;
     }
 }
-function getFilteredJobs() {
-    return ['list of industry from db'];
-}
-
 
 const client = new Wit({ accessToken: serverToken, actions });
