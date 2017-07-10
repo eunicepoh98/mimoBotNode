@@ -64,79 +64,53 @@ job.getOneJob = function (id) {
 } //end of getOneJob()
 
 /** NOT DONE
- * Get all Jobs from the database based on Industries, Job Functions and Job Types, more variety search from other columns
+ * Get all Jobs from the database based on Industries, Job Functions and more variety search from other columns
  * @param {array} industry - Array of industry name
  * @param {array} jFuntion - Array of jobfunction name
  * @param {array} jType - Array of jobtype
  * @returns {string} JSON format of all the filtered Jobs
  */
-job.getFilteredJob = function () {
+job.getFilteredJob = function (industry, jFuntion, jType) {
     return new Promise(function (resolve, reject) {
-        var industry = 'aerospace'
-        var jFuntion = 'engineering'
-        var jType = 'full time'
+        var everything = [], name = [], title = [], des = [], qual = [], res = [];
+        for (i = 0; i < industry.length; i++) {
+            name.push({ '$Industries.IndustryName$': { $like: '%' + industry[i] + '%' } });
+            title.push({ JobTitle: { $like: '%' + industry[i] + '%' } });
+            des.push({ JobDescription: { $like: '%' + industry[i] + '%' } });
+            qual.push({ JobQualification: { $like: '%' + industry[i] + '%' } });
+            res.push({ JobResponsibilities: { $like: '%' + industry[i] + '%' } });
+        }
+        for (i = 0; i < jFuntion.length; i++) {
+            name.push({ '$JobFunctions.JobFunctionName$': { $like: '%' + jFuntion[i] + '%' } });
+            title.push({ JobTitle: { $like: '%' + jFuntion[i] + '%' } });
+            des.push({ JobDescription: { $like: '%' + jFuntion[i] + '%' } });
+            qual.push({ JobQualification: { $like: '%' + jFuntion[i] + '%' } });
+            res.push({ JobResponsibilities: { $like: '%' + jFuntion[i] + '%' } });
+        }
+        for (i = 0; i < jType.length; i++) {
+            title.push({ JobTitle: { $like: '%' + jType[i] + '%' } });
+            des.push({ JobDescription: { $like: '%' + jType[i] + '%' } });
+            qual.push({ JobQualification: { $like: '%' + jType[i] + '%' } });
+            res.push({ JobResponsibilities: { $like: '%' + jType[i] + '%' } });
+        }
+        everything.push(name);
+        everything.push(title);
+        everything.push(des);
+        everything.push(qual);
+        everything.push(res);
+        var whereStuff = { $or: everything }
+        console.log(JSON.stringify(whereStuff))
         Job.findAll({
-            where: {
-                $or: [
-                    {
-                        $or:
-                        [
-                            { '$Industries.IndustryName$': { $like: '%' + industry + '%' } },
-                            { '$JobFunctions.JobFunctionName$': { $like: '%' + jFuntion + '%' } }
-                        ]
-                    },
-                    {
-                        $or:
-                        [
-                            { JobTitle: { $like: '%' + industry + '%' } },
-                            { JobTitle: { $like: '%' + jFuntion + '%' } }
-                        ]
-                    },
-                    {
-                        $or:
-                        [
-                            { JobDescription: { $like: '%' + industry + '%' } },
-                            { JobDescription: { $like: '%' + jFuntion + '%' } }
-                        ]
-                    },
-                    {
-                        $or:
-                        [
-                            { JobQualification: { $like: '%' + industry + '%' } },
-                            { JobQualification: { $like: '%' + jFuntion + '%' } }
-                        ]
-                    },
-                    {
-                        $or:
-                        [
-                            { JobResponsibilities: { $like: '%' + industry + '%' } },
-                            { JobResponsibilities: { $like: '%' + jFuntion + '%' } }
-                        ]
-                    }
-                ]
-            },
+            where: whereStuff,
             attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
                 'JobPostDate', 'JobPostalCode', 'JobAddress'],
             include: [
-                {
-                    model: model.Industry,
-                    as: 'Industries',
-                    attributes: ['IndustryName'], through: { attributes: [] }
-                },
-                {
-                    model: model.JobFunction,
-                    as: 'JobFunctions',
-                    attributes: ['JobFunctionName'], through: { attributes: [] }
-                },
-                {
-                    model: model.JobType,
-                    // as: 'JobTypes',
-                    attributes: ['JobType']
-                },
+                { model: model.Industry, as: 'Industries', attributes: ['IndustryName'], through: { attributes: [] } },
+                { model: model.JobFunction, as: 'JobFunctions', attributes: ['JobFunctionName'], through: { attributes: [] } },
+                { model: model.JobType, attributes: ['JobType'] },
                 { model: model.Company, attributes: ['CompanyName', 'CompanyAddress', 'CompanyPostalCode'] },
                 {
-                    model: model.Salary,
-                    attributes: ['SalaryFrom', 'SalaryTo'],
+                    model: model.Salary, attributes: ['SalaryFrom', 'SalaryTo'],
                     include: [{ model: model.Currency, attributes: ['Symbol', 'CurrencyCode'] }]
                 },
                 { model: model.Country, attributes: ['CountryName'] }]
@@ -150,7 +124,7 @@ job.getFilteredJob = function () {
 } //end of getFilteredJob()
 
 /**
- * Get all Jobs from the database based on Industries, Job Functions and Job Types
+ * Get all Jobs from the database based on User search criteria - Industries, Job Functions and Job Types
  * @param {array} industry - Array of industry name
  * @param {array} jFuntion - Array of jobfunction name
  * @param {array} jType - Array of jobtype

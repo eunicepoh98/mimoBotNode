@@ -36,8 +36,8 @@ router.get('/one/:id', function (req, res, next) {
 /* Get Filtered Jobs
  * http://localhost:3000/api/job/filter
 */
-router.get('/filter', function (req, res, next) {
-  job.getUserJob()
+router.post('/filter', function (req, res, next) {
+  job.getFilteredJob(req.body.ind, req.body.jf, req.body.jt)
     .then(function (data) {
       var response = { success: true, result: JSON.parse(data) };
       res.status(200).send(response);
@@ -45,6 +45,14 @@ router.get('/filter', function (req, res, next) {
       var response = { success: false, message: error };
       res.send(response);
     });
+  // job.getUserJob()
+  //   .then(function (data) {
+  //     var response = { success: true, result: JSON.parse(data) };
+  //     res.status(200).send(response);
+  //   }).catch(function (error) {
+  //     var response = { success: false, message: error };
+  //     res.send(response);
+  //   });
 });
 
 /** 
@@ -68,7 +76,7 @@ router.get('/filter', function (req, res, next) {
       "JobFunctionID": [] 
    }
 */
-router.post('/', function (req, res, next) {
+router.post('/add', function (req, res, next) {
   var salary = {
     SalaryFrom: req.body.SalaryFrom,
     SalaryTo: req.body.SalaryTo,
