@@ -31,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
             classMethods: {
                 associate: function (models) {
                     Country.hasMany(models.Job, { foreignKey: 'CountryID', onDelete: 'CASCADE' });
-                    //Country.hasMany(models.Salary, { foreignKey: 'SalaryID', onDelete: 'CASCADE' });
+                    Country.hasMany(models.User, { foreignKey: 'CountryID', onDelete: 'CASCADE' });
                 }
             },
         });

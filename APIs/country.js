@@ -1,5 +1,5 @@
 var country = module.exports = {};
-var Country = require('../models').Country;
+var Country = require('../Models').Country;
 
 /**
  * Get all the Country information from the database
