@@ -32,6 +32,7 @@ router.get('/:id', function (req, res, next) {
       "UserName": "",
       "DateOfBirth": "",
       "Address": "",
+      "PostalCode": "",
       "Gender": "",
       "CountryID": 1
     }
@@ -43,6 +44,7 @@ router.put('/update/:id', function (req, res) {
     UserName: req.body.UserName,
     DateOfBirth: req.body.DateOfBirth,
     Address: req.body.Address,
+    PostalCode: req.body.PostalCode,
     Gender: req.body.Gender,
     CountryID: req.body.CountryID
   }

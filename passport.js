@@ -21,6 +21,7 @@ module.exports = function (passport) {
                             UserName: req.body.UserName,
                             DateOfBirth: req.body.DateOfBirth,
                             Address: req.body.Address,
+                            PostalCode: req.body.PostalCode,
                             Gender: req.body.Gender,
                             CountryID: req.body.CountryID
                         };
@@ -30,7 +31,6 @@ module.exports = function (passport) {
                                     return done(null, false, { message: "Something went wrong, Please try again" });
                                 }
                                 if (newUser) {
-                                    console.log(JSON.stringify(newUser))
                                     return done(null, newUser, { message: "Successfully sign up" });
                                 }
                             }).catch(function (error) {

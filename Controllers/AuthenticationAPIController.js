@@ -21,7 +21,7 @@ module.exports = function (app, passport) {
                 var response = {
                     success: true,
                     message: msg.message,
-                    user: user
+                    result: user
                 }
                 return res.status(201).send(response);
             }
@@ -45,7 +45,7 @@ module.exports = function (app, passport) {
                     success: true,
                     message: msg.message,
                     accessToken: token.generateToken(user),
-                    user: user
+                    result: user
                 });
             }
         })(req, res, next);

@@ -11,7 +11,7 @@ user.getOneUser = function (id) {
     return new Promise(function (resolve, reject) {
         User.findOne({
             where: { UserID: id },
-            attributes: { exclude: ['Password'] },
+            attributes: { exclude: ['RecordStatus', 'LastUpdated', 'CountryID', 'Password'] },
             include: [{ model: model.Country, attributes: ['CountryName'] }]
         }).then(function (data) {
             resolve(JSON.stringify(data));
@@ -49,21 +49,22 @@ user.updateAttributes = function (id, user) {
     });
 }; //end of updatAttributes()
 
-/**
- * Destroy User information into the database
- * @param {string} user - JSON format of the user details
- */
-user.destroy = function (user) {
-    return new Promise(function (resolve, reject) {
-        User.destroy(resume)
-            .then(function (destroy) {
-                resolve(JSON.stringify(destroy))
-            }).catch(function (error) {
-                console.log("Error:" + error);
-                reject(error.toString());
-            });
-    });
-};// end of detroy()
+// /**
+//  * Destroy User information into the database
+//  * @param {string} user - JSON format of the user details
+//  */
+// user.destroy = function (id) {
+//     return new Promise(function (resolve, reject) {
+//         User.destroy({
+//             where: { UserID: id }
+//         }).then(function (destroy) {
+//             resolve(JSON.stringify(destroy))
+//         }).catch(function (error) {
+//             console.log("Error:" + error);
+//             reject(error.toString());
+//         });
+//     });
+// };// end of detroy()
 
 
 // /**
