@@ -22,6 +22,27 @@ module.exports = function (sequelize, DataTypes) {
             set: function (val) {
                 this.setDataValue('JobType', val);
             }
+        },
+        RecordStatus: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'A',
+            get: function () {
+                return this.getDataValue('RecordStatus');
+            },
+            set: function (val) {
+                this.setDataValue('RecordStatus', val);
+            }
+        },
+        LastUpdated: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
+            get: function () {
+                return this.getDataValue('LastUpdated');
+            },
+            set: function (val) {
+                this.setDataValue('LastUpdated', val);
+            }
         }
     },
         {

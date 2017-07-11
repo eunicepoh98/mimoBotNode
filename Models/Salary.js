@@ -9,9 +9,6 @@ module.exports = function (sequelize, DataTypes) {
             unique: true,
             get: function () {
                 return this.getDataValue('SalaryID');
-            },
-            set: function (val) {
-                this.setDataValue('SalaryID', val);
             }
         },
         SalaryFrom: {
@@ -33,6 +30,27 @@ module.exports = function (sequelize, DataTypes) {
             set: function (val) {
                 this.setDataValue('SalaryTo', val);
             }
+        },
+        RecordStatus: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'A',
+            get: function () {
+                return this.getDataValue('RecordStatus');
+            },
+            set: function (val) {
+                this.setDataValue('RecordStatus', val);
+            }
+        },
+        LastUpdated: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
+            get: function () {
+                return this.getDataValue('LastUpdated');
+            },
+            set: function (val) {
+                this.setDataValue('LastUpdated', val);
+            }
         }
     },
         {
@@ -43,7 +61,6 @@ module.exports = function (sequelize, DataTypes) {
                 associate: function (models) {
                     Salary.belongsTo(models.Currency, { foreignKey: 'CurrencyID', onDelete: 'CASCADE' });
                     Salary.hasOne(models.Job, { foreignKey: 'SalaryID', onDelete: 'CASCADE' });
-                    //Salary.belongsTo(model.Userexperience, { foreignKey: 'UserExpID', onDelete: 'CASCADE' });
                 }
             }
         });

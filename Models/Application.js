@@ -1,34 +1,32 @@
-//Currency Model
+//Application Model
 module.exports = function (sequelize, DataTypes) {
-    var Currency = sequelize.define('Currency', {
-        CurrencyID: {
+    var Application = sequelize.define('Application', {
+        ApplicationID: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,
             unique: true,
             get: function () {
-                return this.getDataValue('CurrencyID');
+                return this.getDataValue('ApplicationID');
             }
         },
-        CurrencyCode: {
-            type: DataTypes.STRING,
-            allowNull: false,
+        DateApplied: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
             get: function () {
-                return this.getDataValue('CurrencyCode');
-            },
-            set: function (val) {
-                this.setDataValue('CurrencyCode', val);
+                return this.getDataValue('DateApplied');
             }
         },
-        Symbol: {
+        ApplicationStatus: {
             type: DataTypes.STRING,
             allowNull: false,
+            defaultValue: 'Pending',
             get: function () {
-                return this.getDataValue('Symbol');
+                return this.getDataValue('ApplicationStatus');
             },
             set: function (val) {
-                this.setDataValue('Symbol', val);
+                this.setDataValue('ApplicationStatus', val);
             }
         },
         RecordStatus: {
@@ -56,13 +54,15 @@ module.exports = function (sequelize, DataTypes) {
         {
             timestamps: false,
             freezeTableName: true,
-            tableName: 'currency',
+            tableName: 'application',
             classMethods: {
                 associate: function (models) {
-                    Currency.hasMany(models.Salary, { foreignKey: 'CurrencyID', onDelete: 'CASCADE' });
+                    Application.belongsTo(models.User, { foreignKey: 'UserID', onDelete: 'CASCADE' });
+                    Application.belongsTo(models.Job, { foreignKey: 'JobID', onDelete: 'CASCADE' });
+                    Application.belongsTo(models.Resume, { foreignKey: 'ResumeID', onDelete: 'CASCADE' });
                 }
-            },
+            }
         });
-    return Currency;
+    return Application;
 };
 

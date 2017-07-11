@@ -1,34 +1,17 @@
-//Currency Model
+//UserBookmark Model
 module.exports = function (sequelize, DataTypes) {
-    var Currency = sequelize.define('Currency', {
-        CurrencyID: {
+    var Bookmark = sequelize.define('Bookmark', {
+        BookmarkID: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,
             unique: true,
             get: function () {
-                return this.getDataValue('CurrencyID');
-            }
-        },
-        CurrencyCode: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            get: function () {
-                return this.getDataValue('CurrencyCode');
+                return this.getDataValue('BookmarkID');
             },
             set: function (val) {
-                this.setDataValue('CurrencyCode', val);
-            }
-        },
-        Symbol: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            get: function () {
-                return this.getDataValue('Symbol');
-            },
-            set: function (val) {
-                this.setDataValue('Symbol', val);
+                this.setDataValue('BookmarkID');
             }
         },
         RecordStatus: {
@@ -56,13 +39,13 @@ module.exports = function (sequelize, DataTypes) {
         {
             timestamps: false,
             freezeTableName: true,
-            tableName: 'currency',
+            tableName: 'bookmark',
             classMethods: {
                 associate: function (models) {
-                    Currency.hasMany(models.Salary, { foreignKey: 'CurrencyID', onDelete: 'CASCADE' });
+                    Bookmark.belongsTo(models.User, { foreignKey: 'UserID', onDelete: 'CASCADE' });
+                    Bookmark.belongsTo(models.Job, { foreignKey: 'JobID', onDelete: 'CASCADE' });
                 }
             },
         });
-    return Currency;
+    return Bookmark;
 };
-

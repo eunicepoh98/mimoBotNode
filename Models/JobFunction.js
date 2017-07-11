@@ -9,9 +9,6 @@ module.exports = function (sequelize, DataTypes) {
             unique: true,
             get: function () {
                 return this.getDataValue('JobFunctionID');
-            },
-            set: function (val) {
-                this.setDataValue('JobFunctionID', val);
             }
         },
         JobFunctionName: {
@@ -22,6 +19,27 @@ module.exports = function (sequelize, DataTypes) {
             set: function (val) {
                 this.setDataValue('JobFunctionName', val);
             }
+        },
+        RecordStatus: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'A',
+            get: function () {
+                return this.getDataValue('RecordStatus');
+            },
+            set: function (val) {
+                this.setDataValue('RecordStatus', val);
+            }
+        },
+        LastUpdated: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
+            get: function () {
+                return this.getDataValue('LastUpdated');
+            },
+            set: function (val) {
+                this.setDataValue('LastUpdated', val);
+            }
         }
     },
         {
@@ -31,8 +49,6 @@ module.exports = function (sequelize, DataTypes) {
             classMethods: {
                 associate: function (models) {
                     JobFunction.belongsToMany(models.Job, { through: 'jobfunctionjob', foreignKey: 'JobFunctionID', onDelete: 'CASCADE', timestamps: false });
-                    //JobFunction.belongsTo(models.Userexperience, { foreignKey: 'UserExpID', onDelete: 'CASCADE' });
-                    //JobFunction.hasMany(models.UserSearch, { foreignKey: 'JobFunctionID', onDelete: 'CASCADE' });
                 }
             }
         });

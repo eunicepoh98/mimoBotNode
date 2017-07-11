@@ -36,23 +36,23 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         UserName: {
-            type: DataTypes.STRING(100),
+            type: DataTypes.STRING(),
             allowNull: false,
             get: function () {
                 return this.getDataValue('UserName');
             },
             set: function (val) {
-                this.setDataValue('UserName', val.toUpperCase());
+                this.setDataValue('UserName', val);
             }
         },
-        DOB: {
+        DateOfBirth: {
             type: DataTypes.DATE,
             allowNull: false,
             get: function () {
-                return this.getDataValue('DOB');
+                return this.getDataValue('DateOfBirth');
             },
             set: function (val) {
-                this.setDataValue('DOB', val);
+                this.setDataValue('DateOfBirth', val);
             }
         },
         Address: {
@@ -86,6 +86,27 @@ module.exports = function (sequelize, DataTypes) {
                 this.setDataValue('DateRegistered', val);
             }
         },
+        RecordStatus: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'A',
+            get: function () {
+                return this.getDataValue('RecordStatus');
+            },
+            set: function (val) {
+                this.setDataValue('RecordStatus', val);
+            }
+        },
+        LastUpdated: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
+            get: function () {
+                return this.getDataValue('LastUpdated');
+            },
+            set: function (val) {
+                this.setDataValue('LastUpdated', val);
+            }
+        }
     },
         {
             timestamps: false,
@@ -94,10 +115,11 @@ module.exports = function (sequelize, DataTypes) {
             classMethods: {
                 associate: function (models) {
                     User.hasMany(models.WorkExperience, { foreignKey: 'UserID', onDelete: 'CASCADE' });
+                    User.hasMany(models.Bookmark, { foreignKey: 'UserID', onDelete: 'CASCADE' });
+                    User.hasMany(models.Notification, { foreignKey: 'UserID', onDelete: 'CASCADE' });
+                    User.hasMany(models.Resume, { foreignKey: 'UserID', onDelete: 'CASCADE' });
+                    User.hasMany(models.UserSearch, { foreignKey: 'UserID', onDelete: 'CASCADE' });
                     User.belongsTo(models.Country, { foreignKey: 'CountryID', onDelete: 'CASCADE' });
-                    // User.hasMany(models.Resume, { foreignKey: 'UserID', onDelete: 'CASCADE' });
-                    // User.hasMany(models.Notification, { foreignKey: 'UserID', onDelete: 'CASCADE' });
-                    // User.hasMany(models.UserBookmark, { foreignKey: 'UserID', onDelete: 'CASCADE' });
                 },
                 generateHash: function (password) {
                     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);

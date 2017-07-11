@@ -9,9 +9,6 @@ module.exports = function (sequelize, DataTypes) {
             unique: true,
             get: function () {
                 return this.getDataValue('CountryID');
-            },
-            set: function (val) {
-                this.setDataValue('CountryID', val);
             }
         },
         CountryName: {
@@ -21,6 +18,27 @@ module.exports = function (sequelize, DataTypes) {
             },
             set: function (val) {
                 this.setDataValue('CountryName', val);
+            }
+        },
+        RecordStatus: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'A',
+            get: function () {
+                return this.getDataValue('RecordStatus');
+            },
+            set: function (val) {
+                this.setDataValue('RecordStatus', val);
+            }
+        },
+        LastUpdated: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
+            get: function () {
+                return this.getDataValue('LastUpdated');
+            },
+            set: function (val) {
+                this.setDataValue('LastUpdated', val);
             }
         }
     },

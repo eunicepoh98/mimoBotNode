@@ -9,9 +9,6 @@ module.exports = function (sequelize, DataTypes) {
             unique: true,
             get: function () {
                 return this.getDataValue('IndustryID');
-            },
-            set: function (val) {
-                this.setDataValue('IndustryID', val);
             }
         },
         IndustryName: {
@@ -24,6 +21,27 @@ module.exports = function (sequelize, DataTypes) {
             set: function (val) {
                 this.setDataValue('IndustryName', val);
             }
+        },
+        RecordStatus: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'A',
+            get: function () {
+                return this.getDataValue('RecordStatus');
+            },
+            set: function (val) {
+                this.setDataValue('RecordStatus', val);
+            }
+        },
+        LastUpdated: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
+            get: function () {
+                return this.getDataValue('LastUpdated');
+            },
+            set: function (val) {
+                this.setDataValue('LastUpdated', val);
+            }
         }
     },
         {
@@ -33,8 +51,6 @@ module.exports = function (sequelize, DataTypes) {
             classMethods: {
                 associate: function (models) {
                     Industry.belongsToMany(models.Job, { through: 'jobindustry', foreignKey: 'IndustryID', onDelete: 'CASCADE', timestamps: false });
-                    //Industry.belongsTo(models.Userexperience, { foreignKey: 'UserExpID', onDelete: 'CASCADE' });
-                    //Industry.hasMany(models.UserSearch, { foreignKey: 'IndustryID', onDelete: 'CASCADE' });
                 }
             }
         });

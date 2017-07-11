@@ -1,34 +1,27 @@
-//Work Experience model
+//Notification model
 module.exports = function (sequelize, DataTypes) {
-    var WorkExperience = sequelize.define('WorkExperience', {
-        WorkExperienceID: {
+    var Notification = sequelize.define('Notification', {
+        NotificationID: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,
             unique: true,
             get: function () {
-                return this.getDataValue('WorkExperienceID');
-            }
+                return this.getDataValue('NotificationID');
+            },
+            set: function (val) {
+                this.setDataValue('NotificationID');
+            },
         },
-        CompanyName: {
+        Title: {
             type: DataTypes.STRING(),
             allowNull: false,
             get: function () {
-                return this.getDataValue('CompanyName');
+                return this.getDataValue('Title');
             },
             set: function (val) {
-                this.setDataValue('CompanyName', val);
-            }
-        },
-        Role: {
-            type: DataTypes.STRING(),
-            allowNull: false,
-            get: function () {
-                return this.getDataValue('Role');
-            },
-            set: function (val) {
-                this.setDataValue('Role', val);
+                this.setDataValue('Title');
             }
         },
         Description: {
@@ -38,27 +31,14 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('Description');
             },
             set: function (val) {
-                this.setDataValue('Description', val);
+                this.setDataValue('Description');
             }
         },
-        StartDate: {
+        DateSent: {
             type: DataTypes.DATE,
-            allowNull: false,
+            defaultValue: DataTypes.NOW,
             get: function () {
-                return this.getDataValue('StartDate');
-            },
-            set: function (val) {
-                this.setDataValue('StartDate', val);
-            }
-        },
-        EndDate: {
-            type: DataTypes.DATE,
-            allowNull: true,
-            get: function () {
-                return this.getDataValue('EndDate');
-            },
-            set: function (val) {
-                this.setDataValue('EndDate', val);
+                return this.getDataValue('DateSent');
             }
         },
         RecordStatus: {
@@ -86,12 +66,12 @@ module.exports = function (sequelize, DataTypes) {
         {
             timestamps: false,
             freezeTableName: true,
-            tableName: 'workexperience',
+            tableName: 'notification',
             classMethods: {
                 associate: function (models) {
-                    WorkExperience.belongsTo(models.User, { foreignKey: 'UserID', onDelete: 'CASCADE' });
+                    Notification.belongsTo(models.User, { foreignKey: 'UserID', onDelete: 'CASCADE' });
                 }
             }
         });
-    return WorkExperience;
+    return Notification;
 };

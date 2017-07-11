@@ -1,39 +1,18 @@
-//Work Experience model
+//Resume Model
 module.exports = function (sequelize, DataTypes) {
-    var WorkExperience = sequelize.define('WorkExperience', {
-        WorkExperienceID: {
+    var Resume = sequelize.define('Resume', {
+        ResumeID: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,
             unique: true,
             get: function () {
-                return this.getDataValue('WorkExperienceID');
-            }
-        },
-        CompanyName: {
-            type: DataTypes.STRING(),
-            allowNull: false,
-            get: function () {
-                return this.getDataValue('CompanyName');
-            },
-            set: function (val) {
-                this.setDataValue('CompanyName', val);
-            }
-        },
-        Role: {
-            type: DataTypes.STRING(),
-            allowNull: false,
-            get: function () {
-                return this.getDataValue('Role');
-            },
-            set: function (val) {
-                this.setDataValue('Role', val);
+                return this.getDataValue('ResumeID');
             }
         },
         Description: {
-            type: DataTypes.STRING(),
-            allowNull: false,
+            type: DataTypes.STRING,
             get: function () {
                 return this.getDataValue('Description');
             },
@@ -41,24 +20,31 @@ module.exports = function (sequelize, DataTypes) {
                 this.setDataValue('Description', val);
             }
         },
-        StartDate: {
-            type: DataTypes.DATE,
-            allowNull: false,
+        MD5Code: {
+            type: DataTypes.STRING,
             get: function () {
-                return this.getDataValue('StartDate');
+                return this.getDataValue('MD5Code');
             },
             set: function (val) {
-                this.setDataValue('StartDate', val);
+                this.setDataValue('MD5Code', val);
             }
         },
-        EndDate: {
-            type: DataTypes.DATE,
-            allowNull: true,
+        PathName: {
+            type: DataTypes.STRING,
             get: function () {
-                return this.getDataValue('EndDate');
+                return this.getDataValue('PathName');
             },
             set: function (val) {
-                this.setDataValue('EndDate', val);
+                this.setDataValue('PathName', val);
+            }
+        },
+        FileName: {
+            type: DataTypes.STRING,
+            get: function () {
+                return this.getDataValue('FileName');
+            },
+            set: function (val) {
+                this.setDataValue('FileName', val);
             }
         },
         RecordStatus: {
@@ -86,12 +72,13 @@ module.exports = function (sequelize, DataTypes) {
         {
             timestamps: false,
             freezeTableName: true,
-            tableName: 'workexperience',
+            tableName: 'resume',
             classMethods: {
                 associate: function (models) {
-                    WorkExperience.belongsTo(models.User, { foreignKey: 'UserID', onDelete: 'CASCADE' });
+                    Resume.belongsTo(models.User, { foreignKey: 'UserID', onDelete: 'CASCADE' });
+                    Resume.hasOne(models.Application, { foreignKey: 'ResumeID', onDelete: 'CASCADE' });
                 }
             }
         });
-    return WorkExperience;
+    return Resume;
 };

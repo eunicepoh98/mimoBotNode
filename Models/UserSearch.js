@@ -1,64 +1,48 @@
-//Work Experience model
+//UserSearch Model
 module.exports = function (sequelize, DataTypes) {
-    var WorkExperience = sequelize.define('WorkExperience', {
-        WorkExperienceID: {
+    var UserSearch = sequelize.define('UserSearch', {
+        UserSearchID: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,
             unique: true,
             get: function () {
-                return this.getDataValue('WorkExperienceID');
+                return this.getDataValue('UserSearchID');
             }
         },
-        CompanyName: {
-            type: DataTypes.STRING(),
-            allowNull: false,
+        IndustryList: {
+            type: DataTypes.STRING,
             get: function () {
-                return this.getDataValue('CompanyName');
+                return this.getDataValue('IndustryList');
             },
             set: function (val) {
-                this.setDataValue('CompanyName', val);
+                this.setDataValue('IndustryList', val);
             }
         },
-        Role: {
-            type: DataTypes.STRING(),
-            allowNull: false,
+        JobTypeList: {
+            type: DataTypes.STRING,
             get: function () {
-                return this.getDataValue('Role');
+                return this.getDataValue('JobTypeList');
             },
             set: function (val) {
-                this.setDataValue('Role', val);
+                this.setDataValue('JobTypeList', val);
             }
         },
-        Description: {
-            type: DataTypes.STRING(),
-            allowNull: false,
+        JobFunctionList: {
+            type: DataTypes.STRING,
             get: function () {
-                return this.getDataValue('Description');
+                return this.getDataValue('JobFunctionList');
             },
             set: function (val) {
-                this.setDataValue('Description', val);
+                this.setDataValue('JobFunctionList', val);
             }
         },
-        StartDate: {
+        DateSearch: {
             type: DataTypes.DATE,
-            allowNull: false,
+            defaultValue: DataTypes.NOW,
             get: function () {
-                return this.getDataValue('StartDate');
-            },
-            set: function (val) {
-                this.setDataValue('StartDate', val);
-            }
-        },
-        EndDate: {
-            type: DataTypes.DATE,
-            allowNull: true,
-            get: function () {
-                return this.getDataValue('EndDate');
-            },
-            set: function (val) {
-                this.setDataValue('EndDate', val);
+                return this.getDataValue('DateSearch');
             }
         },
         RecordStatus: {
@@ -86,12 +70,12 @@ module.exports = function (sequelize, DataTypes) {
         {
             timestamps: false,
             freezeTableName: true,
-            tableName: 'workexperience',
+            tableName: 'usersearch',
             classMethods: {
                 associate: function (models) {
-                    WorkExperience.belongsTo(models.User, { foreignKey: 'UserID', onDelete: 'CASCADE' });
+                    UserSearch.belongsTo(models.User, { foreignKey: 'UserID', onDelete: 'CASCADE' });
                 }
             }
         });
-    return WorkExperience;
+    return UserSearch;
 };
