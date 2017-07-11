@@ -30,7 +30,7 @@ router.get('/:id', function (req, res, next) {
       "email": "",
       "password": "",
       "UserName": "",
-      "DOB": "",
+      "DateOfBirth": "",
       "Address": "",
       "Gender": "",
       "CountryID": 1
@@ -41,7 +41,7 @@ router.put('/update/:id', function (req, res) {
     Email: req.body.email,
     Password: req.body.password,
     UserName: req.body.UserName,
-    DOB: req.body.DOB,
+    DateOfBirth: req.body.DateOfBirth,
     Address: req.body.Address,
     Gender: req.body.Gender,
     CountryID: req.body.CountryID
@@ -80,7 +80,7 @@ module.exports = router;
 //  * {
 // 	    "UserName": "",
 //       "Email": "",
-//       "DOB": "",
+//       "DateOfBirth": "",
 //       "Address": "",
 //       "Gender": "",
 //       "Password": ""
@@ -90,7 +90,7 @@ module.exports = router;
 //   var u = {
 //     UserName: req.body.UserName,
 //     Email: req.body.Email,
-//     DOB: req.body.DOB,
+//     DateOfBirth: req.body.DateOfBirth,
 //     Address: req.body.Address,
 //     Gender: req.body.Gender,
 //     Password: req.body.Password

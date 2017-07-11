@@ -19,7 +19,7 @@ module.exports = function (passport) {
                             Email: email,
                             Password: User.generateHash(password),
                             UserName: req.body.UserName,
-                            DOB: req.body.DOB,
+                            DateOfBirth: req.body.DateOfBirth,
                             Address: req.body.Address,
                             Gender: req.body.Gender,
                             CountryID: req.body.CountryID
