@@ -34,6 +34,7 @@ user.updateAttributes = function (id, user) {
             .then(function (gotuser) {
                 if (gotuser) {
                     user["Password"] = User.generateHash(user["Password"]);
+                    user["LastUpdated"] = '';
                     gotuser.update(user)
                         .then(function (update) {
                             resolve(JSON.stringify(update))
