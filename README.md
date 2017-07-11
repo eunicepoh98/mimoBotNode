@@ -11,6 +11,7 @@ What needs to be done
 + seeding test data (working..)
 + advance querying (working..)
 + user search table
++ Bookmark, Notification, Resume, UserSearch API
 
 ### [Wit.ai](https://wit.ai/)
 
