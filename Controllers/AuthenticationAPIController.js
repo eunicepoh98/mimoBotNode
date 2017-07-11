@@ -12,17 +12,10 @@ module.exports = function (app, passport) {
     app.post('/signup', function (req, res, next) {
         passport.authenticate('local-signup', function (err, user, msg) {
             if (!user) {
-                return res.status(409).send({
-                    success: false,
-                    message: msg.message
-                });
+                return res.status(409).send({ success: false, message: msg.message });
             }
             if (user) {
-                var response = {
-                    success: true,
-                    message: msg.message,
-                    result: user
-                }
+                var response = { success: true, message: msg.message, result: user }
                 return res.status(201).send(response);
             }
         })(req, res, next);
@@ -35,18 +28,10 @@ module.exports = function (app, passport) {
     app.post('/signin', function (req, res, next) {
         passport.authenticate('local-signin', function (err, user, msg) {
             if (!user) {
-                return res.status(401).send({
-                    success: false,
-                    message: msg.message
-                });
+                return res.status(401).send({ success: false, message: msg.message });
             }
             if (user) {
-                return res.status(201).send({
-                    success: true,
-                    message: msg.message,
-                    accessToken: token.generateToken(user),
-                    result: user
-                });
+                return res.status(201).send({ success: true, message: msg.message, accessToken: token.generateToken(user), result: user });
             }
         })(req, res, next);
     });

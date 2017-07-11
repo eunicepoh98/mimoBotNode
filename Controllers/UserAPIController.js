@@ -50,29 +50,12 @@ router.put('/update/:id', function (req, res) {
   }
   user.updateAttributes(req.params.id, update)
     .then(function (data) {
-      var response = { success: true, result: JSON.parse(data) };
+      var response = { success: true, message: 'Successfully updated user details', result: JSON.parse(data) };
       res.status(200).send(response);
     }).catch(function (error) {
       var response = { success: false, message: error };
       res.send(response);
     });
-});
-
-/**
- * Delete User
- * http://localhost:3000/api/user/1
- */
-router.delete('/user/:id', function (req, res) {
-  models.User.destroy({
-    where: { id: req.params.id },
-    paranoid: true // query and loads the soft deleted records
-  }).then(function (data) {
-    var response = { success: true, result: JSON.parse(data) };
-    res.status(200).send(response);
-  }).catch(function (error) {
-    var response = { success: false, message: error };
-    res.send(response);
-  });
 });
 
 module.exports = router;
@@ -100,4 +83,21 @@ module.exports = router;
 //   user.addUser(u).then(function (result) {
 //     res.send(result)
 //   })
-// });    
+// });   
+
+// /**
+//  * Delete User
+//  * http://localhost:3000/api/user/1
+//  */
+// router.delete('/user/:id', function (req, res) {
+//   models.User.destroy({
+//     where: { id: req.params.id },
+//     paranoid: true // query and loads the soft deleted records
+//   }).then(function (data) {
+//     var response = { success: true, result: JSON.parse(data) };
+//     res.status(200).send(response);
+//   }).catch(function (error) {
+//     var response = { success: false, message: error };
+//     res.send(response);
+//   });
+// }); 
