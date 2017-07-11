@@ -38,7 +38,7 @@ Object.keys(db).forEach(function (modelName) {
 });
 
 sequelize.sync({
-  force: false
+  force: true // force: true will drop the table if it already exists
   //logging:console.log
 })
 // .then(() => {

@@ -65,6 +65,15 @@ module.exports = function (sequelize, DataTypes) {
                 this.setDataValue('Address', val);
             }
         },
+        PostalCode: {
+            type: DataTypes.STRING,
+            get: function () {
+                return this.getDataValue('PostalCode');
+            },
+            set: function (val) {
+                this.setDataValue('PostalCode', val);
+            }
+        },
         Gender: {
             type: DataTypes.STRING(10),
             allowNull: false,
@@ -103,8 +112,8 @@ module.exports = function (sequelize, DataTypes) {
             get: function () {
                 return this.getDataValue('LastUpdated');
             },
-            set: function (val) {
-                this.setDataValue('LastUpdated', val);
+            set: function () {
+                this.setDataValue('LastUpdated', new Date().toISOString().slice(0, 19));
             }
         }
     },

@@ -39,8 +39,8 @@ module.exports = function (sequelize, DataTypes) {
             get: function () {
                 return this.getDataValue('LastUpdated');
             },
-            set: function (val) {
-                this.setDataValue('LastUpdated', val);
+            set: function () {
+                this.setDataValue('LastUpdated', new Date().toISOString().slice(0, 19));
             }
         }
     },
