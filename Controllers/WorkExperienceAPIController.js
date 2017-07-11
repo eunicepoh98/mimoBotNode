@@ -64,7 +64,7 @@ router.post('/', function (req, res, next) {
     };
     workexperience.addWorkExperience(we)
         .then(function (data) {
-            var response = { success: true, result: JSON.parse(data) };
+            var response = { success: true, message: 'Successfully added work experience', result: JSON.parse(data) };
             res.status(200).send(response);
         }).catch(function (error) {
             var response = { success: false, message: error };
@@ -98,7 +98,7 @@ router.put('/:id', function (req, res) {
     }
     workexperience.updateAttributes(req.params.id, we)
         .then(function (data) {
-            var response = { success: true, result: JSON.parse(data) };
+            var response = { success: true, message: 'Successfully updated work experience', result: JSON.parse(data) };
             res.status(200).send(response);
         }).catch(function (error) {
             var response = { success: false, message: error };
@@ -106,19 +106,17 @@ router.put('/:id', function (req, res) {
         });
 });
 
-/** not done
+/**
  * [DELETE]
  * Delete WorkExperience
  * http://localhost:3000/api/workexperience/1
  * Params: /id
  * id - id of the work experience
  */
-router.delete('/workexperience/:id', function (req, res) {
-    models.WorkExperience.destroy({
-        where: { id: req.params.id },
-        paranoid: true // query and loads the soft deleted records
-    }).then(function (data) {
-        var response = { success: true, result: JSON.parse(data) };
+router.delete('/:id', function (req, res) {
+    workexperience.delete(req.params.id)
+        .then(function (data) {
+            var response = { success: true, message: 'Successfully deleted work experience', result: JSON.parse(data) };
             res.status(200).send(response);
         }).catch(function (error) {
             var response = { success: false, message: error };

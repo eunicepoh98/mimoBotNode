@@ -10,7 +10,7 @@ var model = require('../Models');
 workexperience.getAllWorkExperience = function (userId) {
     return new Promise(function (resolve, reject) {
         WorkExperience.findAll({
-            where: { 'UserID': userId }
+            where: { UserID: userId, RecordStatus: {$not: 'D'} }
         }).then(function (data) {
             resolve(JSON.stringify(data));
         }).catch(function (error) {
@@ -66,6 +66,7 @@ workexperience.updateAttributes = function (id, workexperience) {
         WorkExperience.find({ where: { WorkExperienceID: id } })
             .then(function (we) {
                 if (we) {
+                    workexperience["LastUpdated"] = '';
                     we.update(workexperience)
                         .then(function (update) {
                             resolve(JSON.stringify(update))
@@ -83,14 +84,21 @@ workexperience.updateAttributes = function (id, workexperience) {
 
 /**
  * Destroy WorkExperience information into the database
- * @param {string} workexperience - JSON format of the workexperience details
+ * @param {int} id - Work Experience ID to soft delete
  */
-
-workexperience.destroy = function (workexperience) {
+workexperience.delete = function (id) {
     return new Promise(function (resolve, reject) {
-        WorkExperience.destroy(workexperience)
-            .then(function (destroy) {
-                resolve(destroy)
+        WorkExperience.find({ where: { WorkExperienceID: id } })
+            .then(function (we) {
+                if (we) {
+                    we.update({ RecordStatus: 'D', LastUpdated: '' }, { fields: ['RecordStatus', 'LastUpdated'] })
+                        .then(function (update) {
+                            resolve(JSON.stringify(update))
+                        }).catch(function (error) {
+                            console.log("Error: " + error)
+                            reject(error.toString());
+                        });
+                }
             }).catch(function (error) {
                 console.log("Error: " + error)
                 reject(error.toString());
