@@ -21,7 +21,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('Title');
             },
             set: function (val) {
-                this.setDataValue('Title');
+                this.setDataValue('Title', val);
             }
         },
         Description: {
@@ -31,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('Description');
             },
             set: function (val) {
-                this.setDataValue('Description');
+                this.setDataValue('Description', val);
             }
         },
         DateSent: {

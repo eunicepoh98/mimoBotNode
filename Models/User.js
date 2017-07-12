@@ -95,6 +95,16 @@ module.exports = function (sequelize, DataTypes) {
                 this.setDataValue('DateRegistered', val);
             }
         },
+        DeviceToken: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+            get: function () {
+                return this.getDataValue('DeviceToken');
+            },
+            set: function (val) {
+                this.setDataValue('DeviceToken', val);
+            }
+        },
         RecordStatus: {
             type: DataTypes.STRING,
             allowNull: false,
