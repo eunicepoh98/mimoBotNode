@@ -4,20 +4,18 @@
 ### [Sequelize](http://docs.sequelizejs.com/)
 
 What's "done"
-+ Some models and get methods
-+ relationships between tables
++ APIs for all the tables
 
 What needs to be done
-+ seeding test data (working..)
-+ advance querying (working..)
++ seeding data
 + user search table
-+ Bookmark, Notification, Resume, UserSearch API
++ filter job with bookmark
++ resume upload (Hibba)
 
 ### [Wit.ai](https://wit.ai/)
 
 What's "done"
-+ api to load data into wit
-+ api for frontend
++ API to load data and nlp
 + able to handle search job, add work experience scenario
 
 What needs to be done
@@ -35,9 +33,7 @@ What's "done"
 
 What needs to be done
 + facebook access_token verification
-+ other user columns
-+ combining with other tables
-+ saving resume to file system
++ renewing accessToken
 
 ### Need to create config.js file
 Contents in config.js
@@ -46,7 +42,7 @@ Contents in config.js
 var config = module.exports = {}
 
 config.dbCredentials = {
-    'database': '',
+    'database': 'database_name',
     'username': 'root',
     'password': '',
     "host": "localhost",
@@ -56,6 +52,10 @@ config.dbCredentials = {
 config.wit = {
     'appId': '', //Settings > API Details > App ID
     'serverToken': '' //Settings > API Details > Server Access Token
+}
+
+config.fbAdminCredentials = {
+    // firebase admin key
 }
 
 config.others = {
