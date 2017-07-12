@@ -24,6 +24,9 @@ var countries = require('./Controllers/CountryAPIController');
 var workexperiences = require('./Controllers/WorkExperienceAPIController');
 var users = require('./Controllers/UserAPIController');
 var bookmarks = require('./Controllers/BookmarkAPIController');
+var resumes = require('./Controllers/ResumeAPIController');
+var applications = require('./Controllers/ApplicationAPIController');
+var notifications = require('./Controllers/NotificationAPIController');
 var wit = require('./Controllers/WitAPIController');
 
 app.use('/api/job', jobs);
@@ -35,6 +38,9 @@ app.use('/api/country', countries);
 app.use('/api/workexperience', workexperiences);
 app.use('/api/user', users);
 app.use('/api/bookmark', bookmarks);
+app.use('/api/resume', resumes);
+app.use('/api/application', applications);
+app.use('/api/notification', notifications);
 app.use('/api/wit', wit);
 
 // Load Passport Strategies
