@@ -1,6 +1,5 @@
 var workexperience = module.exports = {};
 var WorkExperience = require('../Models').WorkExperience;
-var model = require('../Models');
 
 /**
  * Get all the WorkExperience information from the database
@@ -10,32 +9,15 @@ var model = require('../Models');
 workexperience.getAllWorkExperience = function (userId) {
     return new Promise(function (resolve, reject) {
         WorkExperience.findAll({
-            where: { UserID: userId, RecordStatus: {$not: 'D'} }
+            where: { UserID: userId, RecordStatus: { $not: 'D' } }
         }).then(function (data) {
             resolve(JSON.stringify(data));
         }).catch(function (error) {
             console.log("Error: " + error)
             reject(error.toString());
         });
-    })
+    });
 }; //end of getAllWorkExperience()
-
-/**
- * Get the information of one WorkExperience based on the ID from the database
- * @param {int} id - WorkExperience's ID
- * @returns {string} JSON format of the WorkExperience details
- */
-workexperience.getOneWorkExperience = function (id) {
-    return new Promise(function (resolve, reject) {
-        WorkExperience.findById(id)
-            .then(function (data) {
-                resolve(JSON.stringify(data));
-            }).catch(function (error) {
-                console.log("Error: " + error)
-                reject(error.toString());
-            });
-    })
-}; //end of getOneWorkExperience() 
 
 /**
  * Add WorkExperience information into the database
@@ -60,7 +42,6 @@ workexperience.addWorkExperience = function (workexperience) {
  * @param {string} workexperience - JSON format of the workexperience details
  * @returns {string} JSON format of the information of the new WorkExperience added
  */
-
 workexperience.updateAttributes = function (id, workexperience) {
     return new Promise(function (resolve, reject) {
         WorkExperience.find({ where: { WorkExperienceID: id } })
@@ -74,19 +55,21 @@ workexperience.updateAttributes = function (id, workexperience) {
                             console.log("Error: " + error)
                             reject(error.toString());
                         });
+                } else {
+                    reject("Failed to update Work Experience");
                 }
             }).catch(function (error) {
                 console.log("Error: " + error)
                 reject(error.toString());
             });
     });
-}; //end of updatAttributes()
+}; //end of updateAttributes()
 
 /**
  * Destroy WorkExperience information into the database
  * @param {int} id - Work Experience ID to soft delete
  */
-workexperience.delete = function (id) {
+workexperience.deleteWorkExperience = function (id) {
     return new Promise(function (resolve, reject) {
         WorkExperience.find({ where: { WorkExperienceID: id } })
             .then(function (we) {
@@ -98,10 +81,12 @@ workexperience.delete = function (id) {
                             console.log("Error: " + error)
                             reject(error.toString());
                         });
+                } else {
+                    reject("Failed to delete Work Experience");
                 }
             }).catch(function (error) {
                 console.log("Error: " + error)
                 reject(error.toString());
             });
     });
-};// end of detroy()
+};// end of deleteWorkExperience()

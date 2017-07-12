@@ -22,24 +22,6 @@ router.get('/user/:id', function (req, res, next) {
 });
 
 /**
- * [GET]
- * Get One WorkExperience by Id
- * http://localhost:3000/api/workexperience/one/1
- * Params: /id
- * id - id of the work experience
- */
-router.get('/one/:id', function (req, res, next) {
-    workexperience.getOneWorkExperience()
-        .then(function (data) {
-            var response = { success: true, result: JSON.parse(data) };
-            res.status(200).send(response);
-        }).catch(function (error) {
-            var response = { success: false, message: error };
-            res.send(response);
-        });
-});
-
-/**
  * [POST]
  * Add WorkExperience
  * http://localhost:3000/api/workexperience
@@ -114,7 +96,7 @@ router.put('/:id', function (req, res) {
  * id - id of the work experience
  */
 router.delete('/:id', function (req, res) {
-    workexperience.delete(req.params.id)
+    workexperience.deleteWorkExperience(req.params.id)
         .then(function (data) {
             var response = { success: true, message: 'Successfully deleted work experience', result: JSON.parse(data) };
             res.status(200).send(response);
