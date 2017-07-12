@@ -3,10 +3,69 @@ var User = require('../Models').User;
 var model = require('../Models');
 
 /**
-* Get the information of one User based on the ID from the database
-* @param {int} id - User's ID
-* @returns {string} JSON format of the User details
-*/
+ * Create account for User
+ * @param {string} user - JSON format of User's details
+ * @returns {string} JSON format of the User details and message / error message
+ */
+user.signup = function (user) {
+    return new Promise(function (resolve, reject) {
+        user.Password = User.generateHash(user.Password)
+        User.findOne({ where: { Email: user.Email } })
+            .then(function (gotuser) {
+                if (gotuser) {
+                    reject('That email is already taken');
+                } else {
+                    User.create(user)
+                        .then(function (newUser) {
+                            if (!newUser) {
+                                reject("Something went wrong, Please try again");
+                            }
+                            if (newUser) {
+                                resolve({ user: newUser, msg: "Successfully sign up" });
+                            }
+                        }).catch(function (error) {
+                            console.log("Error: " + error);
+                            reject("Something went wrong, Please try again");
+                        });
+                }
+            }).catch(function (error) {
+                console.log("Error: " + error);
+                reject("Something went wrong, Please try again");
+            });
+    });
+}
+
+/**
+ * Check User's Credentials against the database
+ * @param {string} email - User's email
+ * @param {string} password - User's password
+ * @returns {string} JSON format of the User details and message / error message
+ */
+user.signin = function (email, password) {
+    return new Promise(function (resolve, reject) {
+        User.findOne({ where: { Email: email }, include: [{ model: model.Country, attributes: ['CountryName'] }] })
+            .then(function (user) {
+                if (!user) {
+                    reject('Email does not exist');
+                }
+                if (!user.validPassword(password)) {
+                    reject('Incorrect password.');
+                }
+                var userinfo = user.get();
+                delete userinfo.Password;
+                resolve({ user: userinfo, msg: 'Succuessfully signed in' });
+            }).catch(function (err) {
+                console.log("Error:", err);
+                reject('Something went wrong when signing in')
+            });
+    });
+}
+
+/**
+ * Get the information of one User based on the ID from the database
+ * @param {int} id - User's ID
+ * @returns {string} JSON format of the User details
+ */
 user.getOneUser = function (id) {
     return new Promise(function (resolve, reject) {
         User.findOne({
@@ -42,6 +101,8 @@ user.updateAttributes = function (id, user) {
                             console.log("Error: " + error)
                             reject(error.toString());
                         });
+                } else {
+                    reject("User not found");
                 }
             }).catch(function (error) {
                 console.log("Error: " + error)
@@ -50,36 +111,29 @@ user.updateAttributes = function (id, user) {
     });
 }; //end of updatAttributes()
 
-// /**
-//  * Destroy User information into the database
-//  * @param {string} user - JSON format of the user details
-//  */
-// user.destroy = function (id) {
-//     return new Promise(function (resolve, reject) {
-//         User.destroy({
-//             where: { UserID: id }
-//         }).then(function (destroy) {
-//             resolve(JSON.stringify(destroy))
-//         }).catch(function (error) {
-//             console.log("Error:" + error);
-//             reject(error.toString());
-//         });
-//     });
-// };// end of detroy()
-
-
-// /**
-//  * Add User information into the database
-//  * @param {string} user - JSON format of the user details
-//  * @returns {string} JSON format of the information of the new User added
-//  */
-// user.addUser = function (user) {
-//     return new Promise(function (resolve, reject) {
-//         User.create(user).then(function (newUser) {
-//             resolve(JSON.stringify(newUser))
-//         }).catch(function (error) {
-//             console.log("Error: " + error)
-//             reject;
-//         })
-//     })
-// }; //end of addUser() 
+/**
+ * Update the User's Device Token
+ * @param {int} userId - User's ID
+ * @param {string} deviceToken - user's deviceToken
+ */
+user.updateDeviceToken = function (userId, deviceToken) {
+    return new Promise(function (resolve, reject) {
+        User.find({ where: { UserID: userId } })
+            .then(function (user) {
+                if (user) {
+                    user.update({ DeviceToken: deviceToken, LastUpdated: '' }, { fields: ['DeviceToken', 'LastUpdated'] })
+                        .then(function (update) {
+                            resolve(JSON.stringify(update))
+                        }).catch(function (error) {
+                            console.log("Error: " + error)
+                            reject(error.toString());
+                        });
+                } else {
+                    reject("User not found");
+                }
+            }).catch(function (error) {
+                console.log("Error: " + error)
+                reject(error.toString());
+            });
+    });
+};// end of updateDeviceToken()
