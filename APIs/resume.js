@@ -1,5 +1,5 @@
 var resume = module.exports = {};
-var Resume = require('../models').Resume;
+var Resume = require('../Models').Resume;
 
 /**
  * Get all the User Resumes
