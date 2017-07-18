@@ -22,7 +22,7 @@ jwttoken.verifyToken = function (req, res, next) {
                 });
             } else {
                 // if everything is good, save to request for use in other routes
-                req.decoded = decoded.data.UserID;
+                req.headers.userid = decoded.data.UserID;
                 next();
             }
         });
@@ -43,11 +43,11 @@ jwttoken.renewToken = function (req, res, next) {
         jwt.verify(token, secretKey, function (err, decoded) {
             if (err) {
                 req.message = "Successfully renewed token";
-                req.decoded = jwttoken.generateToken({ "Email": req.body.Email, "UserID": req.body.UserID })
+                req.headers.userid = jwttoken.generateToken({ "Email": req.body.Email, "UserID": req.body.UserID })
                 next();
             } else {
                 req.message = "Token is still valid";
-                req.decoded = token;
+                req.headers.userid = token;
                 next();
             }
         });
