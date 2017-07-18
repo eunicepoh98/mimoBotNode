@@ -5,6 +5,7 @@ var secretKey = require(path.resolve('config.js')).others.secretKey;
 
 /** Generate JWT token */
 jwttoken.generateToken = function (user) {
+    console.log(user);
     return jwt.sign({ data: user }, secretKey, { expiresIn: 60 });
 }
 
@@ -42,7 +43,7 @@ jwttoken.renewToken = function (req, res, next) {
         jwt.verify(token, secretKey, function (err, decoded) {
             if (err) {
                 req.message = "Successfully renewed token";
-                req.decoded = jwttoken.generateToken({ "Email": req.Email, "UserID": req.UserID })
+                req.decoded = jwttoken.generateToken({ "Email": req.body.Email, "UserID": req.body.UserID })
                 next();
             } else {
                 req.message = "Token is still valid";
