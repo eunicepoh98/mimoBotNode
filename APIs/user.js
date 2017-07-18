@@ -4,9 +4,59 @@ var model = require('../Models');
 var token = require('../token.js');
 
 /**
+ * Create account for Facebook User
+ * @param {string} user - JSON format of User's details
+ * @returns {string} JSON format of user {UserID, Email, accessToken} and message || error message
+ */
+user.facebook = function (newuser) {
+    return new Promise(function (resolve, reject) {
+        User.findOne({ where: { Email: newuser.Email } })
+            .then(function (gotuser) {
+                if (gotuser) {
+                    var userinfo = {
+                        "Email": gotuser.Email,
+                        "UserID": gotuser.UserID
+                    }
+                    var response = {
+                        "Email": gotuser.Email,
+                        "UserID": gotuser.UserID,
+                        "accessToken": token.generateToken(userinfo)
+                    }
+                    resolve({ user: response, msg: 'Successfully signed in with Facebook' });
+                } else {
+                    User.create(newuser)
+                        .then(function (newUser) {
+                            if (!newUser) {
+                                reject("Something went wrong, Please try again");
+                            }
+                            if (newUser) {
+                                var userinfo = {
+                                    "Email": newUser.Email,
+                                    "UserID": newUser.UserID
+                                }
+                                var response = {
+                                    "Email": newUser.Email,
+                                    "UserID": newUser.UserID,
+                                    "accessToken": token.generateToken(userinfo)
+                                }
+                                resolve({ user: response, msg: 'Successfully signed in with Facebook' });
+                            }
+                        }).catch(function (error) {
+                            console.log("Error: " + error);
+                            reject("Something went wrong, Please try again");
+                        });
+                }
+            }).catch(function (error) {
+                console.log("Error: " + error);
+                reject("Something went wrong, Please try again");
+            });
+    });
+}
+
+/**
  * Create account for User
  * @param {string} user - JSON format of User's details
- * @returns {string} JSON format of the User details and message / error message
+ * @returns {string} JSON format of user {UserID, Email, accessToken} and message || error message
  */
 user.signup = function (newuser) {
     return new Promise(function (resolve, reject) {
@@ -27,7 +77,7 @@ user.signup = function (newuser) {
                                     .then(function (result) {
                                         resolve({ user: result.user, msg: result.msg });
                                     }).catch(function (error) {
-                                        console.log("Error2: " + error);
+                                        console.log("Error: " + error);
                                         reject(error);
                                     });
                             }
@@ -47,7 +97,7 @@ user.signup = function (newuser) {
  * Check User's Credentials against the database
  * @param {string} email - User's email
  * @param {string} password - User's password
- * @returns {string} JSON format of the User details and message / error message
+ * @returns {string} JSON format of user {UserID, Email, accessToken} and message || error message
  */
 user.signin = function (email, password) {
     return new Promise(function (resolve, reject) {
@@ -70,7 +120,7 @@ user.signin = function (email, password) {
                     "UserID": user.UserID,
                     "accessToken": token.generateToken(userinfo)
                 }
-                resolve({ user: response, msg: 'Succuessfully signed in' });
+                resolve({ user: response, msg: 'Successfully signed in' });
             }).catch(function (err) {
                 console.log("Error:", err);
                 reject('Something went wrong when signing in')
@@ -113,7 +163,7 @@ user.updateAttributes = function (id, user) {
                     user["LastUpdated"] = '';
                     gotuser.update(user)
                         .then(function (update) {
-                            resolve(JSON.stringify(update))
+                            resolve({ data: JSON.stringify(update), msg: 'Successfully updated user details' })
                         }).catch(function (error) {
                             console.log("Error: " + error)
                             reject(error.toString());
@@ -140,7 +190,7 @@ user.updateDeviceToken = function (userId, deviceToken) {
                 if (user) {
                     user.update({ DeviceToken: deviceToken, LastUpdated: '' }, { fields: ['DeviceToken', 'LastUpdated'] })
                         .then(function (update) {
-                            resolve(JSON.stringify(update))
+                            resolve({ data: JSON.stringify(update), msg: 'Successfully updated user devicetoken' })
                         }).catch(function (error) {
                             console.log("Error: " + error)
                             reject(error.toString());

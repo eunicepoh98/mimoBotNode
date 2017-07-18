@@ -51,15 +51,27 @@ module.exports = function (passport) {
         }
     ));
 
-    passport.use(new FacebookTokenStrategy(facebookConfig,
+    passport.use(new FacebookTokenStrategy(
+        {
+            clientID: facebookConfig.clientID,
+            clientSecret: facebookConfig.clientSecret,
+            profileFields: ['id', 'displayName', 'birthday', 'profileUrl', 'emails', 'gender']
+        },
         function (accessToken, refreshToken, profile, done) {
-            console.log(profile);
-            //profile.displayName
-            //profile.emails[0].value
-            return done(null, "", { message: "" });
-            // User.findOrCreate({ facebookId: profile.id }, function (error, user) {
-            //     return done(error, user);
-            // });
+            console.log(profile._json)
+            var data = {
+                Email: profile._json.email,
+                UserName: profile._json.name,
+                DateOfBirth: profile._json.birthday,
+                Gender: profile._json.gender
+            };
+            console.log(data);
+            user.facebook(data)
+                .then(function (data) {
+                    return done(null, data.user, { message: data.msg });
+                }).catch(function (error) {
+                    return done(null, false, { message: error });
+                });
         }
     ));
 }

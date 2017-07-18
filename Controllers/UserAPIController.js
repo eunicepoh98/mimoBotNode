@@ -4,13 +4,14 @@ var path = require('path');
 var user = require(path.resolve('./APIs/user.js'));
 
 /** 
- * Get One User by Id
- * http://localhost:3000/api/user/1
- * Params: /id
- * id - id of the user
+ * [GET]
+ * Get User Details by UserID
+ * http://localhost:3000/api/user/
+ * Headers: userid
 */
-router.get('/:id', function (req, res, next) {
-  user.getOneUser(req.params.id)
+router.get('/', function (req, res, next) {
+  var userid = req.headers.userid; //req.decoded;
+  user.getOneUser(userid)
     .then(function (data) {
       var response = { success: true, result: JSON.parse(data) };
       res.status(200).send(response);
@@ -20,11 +21,11 @@ router.get('/:id', function (req, res, next) {
     });
 });
 
-/** 
+/**
+ * [PUT]
  * Update User
- * http://localhost:3000/api/user/update/1
- * Params: /id
- * id - id of the user
+ * http://localhost:3000/api/user
+ * Headers: userid
  * Body: JSON(application/json)
  * {
       "email": "",
@@ -37,7 +38,8 @@ router.get('/:id', function (req, res, next) {
       "CountryID": 1
     }
  */
-router.put('/update/:id', function (req, res) {
+router.put('/', function (req, res) {
+  var userid = req.headers.userid; //req.decoded;
   var update = {
     Email: req.body.email,
     Password: req.body.password,
@@ -48,9 +50,32 @@ router.put('/update/:id', function (req, res) {
     Gender: req.body.Gender,
     CountryID: req.body.CountryID
   }
-  user.updateAttributes(req.params.id, update)
+  user.updateAttributes(userid, update)
     .then(function (data) {
-      var response = { success: true, message: 'Successfully updated user details', result: JSON.parse(data) };
+      var response = { success: true, message: data.msg, result: JSON.parse(data.data) };
+      res.status(200).send(response);
+    }).catch(function (error) {
+      var response = { success: false, message: error };
+      res.send(response);
+    });
+});
+
+/**
+ * [PUT]
+ * Update User Device Token
+ * http://localhost:3000/api/user/devicetoken
+ * Headers: userid
+ * Body: JSON(application/json)
+ * {
+      "DeviceToken": ""
+   }
+ */
+router.put('/devicetoken', function (req, res) {
+  var userid = req.headers.userid; //req.decoded;
+  var devicetoken = req.body.DeviceToken;
+  user.updateAttributes(userid, devicetoken)
+    .then(function (data) {
+      var response = { success: true, message: data.msg, result: JSON.parse(data.data) };
       res.status(200).send(response);
     }).catch(function (error) {
       var response = { success: false, message: error };
@@ -59,45 +84,3 @@ router.put('/update/:id', function (req, res) {
 });
 
 module.exports = router;
-
-// /* Add User
-//  * http://localhost:3000/api/user
-//  * {
-// 	    "UserName": "",
-//       "Email": "",
-//       "DateOfBirth": "",
-//       "Address": "",
-//       "Gender": "",
-//       "Password": ""
-//    }
-// */
-// router.post('/', function (req, res, next) {
-//   var u = {
-//     UserName: req.body.UserName,
-//     Email: req.body.Email,
-//     DateOfBirth: req.body.DateOfBirth,
-//     Address: req.body.Address,
-//     Gender: req.body.Gender,
-//     Password: req.body.Password
-//   };
-//   user.addUser(u).then(function (result) {
-//     res.send(result)
-//   })
-// });   
-
-// /**
-//  * Delete User
-//  * http://localhost:3000/api/user/1
-//  */
-// router.delete('/user/:id', function (req, res) {
-//   models.User.destroy({
-//     where: { id: req.params.id },
-//     paranoid: true // query and loads the soft deleted records
-//   }).then(function (data) {
-//     var response = { success: true, result: JSON.parse(data) };
-//     res.status(200).send(response);
-//   }).catch(function (error) {
-//     var response = { success: false, message: error };
-//     res.send(response);
-//   });
-// }); 

@@ -1,4 +1,5 @@
 var bcrypt = require("bcrypt-nodejs");
+var moment = require('moment');
 //User model
 module.exports = function (sequelize, DataTypes) {
     var User = sequelize.define('User', {
@@ -47,17 +48,17 @@ module.exports = function (sequelize, DataTypes) {
         },
         DateOfBirth: {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
             get: function () {
                 return this.getDataValue('DateOfBirth');
             },
             set: function (val) {
-                this.setDataValue('DateOfBirth', val);
+                this.setDataValue('DateOfBirth', moment(val).toISOString());
             }
         },
         Address: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
             get: function () {
                 return this.getDataValue('Address');
             },
@@ -67,6 +68,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         PostalCode: {
             type: DataTypes.STRING,
+            allowNull: true,
             get: function () {
                 return this.getDataValue('PostalCode');
             },
@@ -76,7 +78,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         Gender: {
             type: DataTypes.STRING(10),
-            allowNull: false,
+            allowNull: true,
             get: function () {
                 return this.getDataValue('Gender');
             },
@@ -92,12 +94,12 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('DateRegistered');
             },
             set: function (val) {
-                this.setDataValue('DateRegistered', val);
+                this.setDataValue('DateRegistered', val.toISOString());
             }
         },
         DeviceToken: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
             get: function () {
                 return this.getDataValue('DeviceToken');
             },

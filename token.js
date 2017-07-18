@@ -3,7 +3,6 @@ var path = require('path');
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var secretKey = require(path.resolve('config.js')).others.secretKey;
 
-
 /** Generate JWT token */
 jwttoken.generateToken = function (user) {
     return jwt.sign({ data: user }, secretKey, { expiresIn: 60 });
@@ -12,7 +11,6 @@ jwttoken.generateToken = function (user) {
 jwttoken.verifyToken = function (req, res, next) {
     // check header or url parameters or post parameters for token
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    // decode token
     if (token) {
         // verifies secret and checks exp
         jwt.verify(token, secretKey, function (err, decoded) {
@@ -43,7 +41,7 @@ jwttoken.renewToken = function (req, res, next) {
         // verifies secret and checks exp
         jwt.verify(token, secretKey, function (err, decoded) {
             if (err) {
-                req.message = "Succesfully renewed token";
+                req.message = "Successfully renewed token";
                 req.decoded = jwttoken.generateToken({ "Email": req.Email, "UserID": req.UserID })
                 next();
             } else {

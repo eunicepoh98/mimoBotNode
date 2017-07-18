@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-var passport   = require('passport');
+var passport = require('passport');
 
 var app = express();
 
@@ -10,11 +10,10 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
-var port = process.env.VCAP_APP_PORT || 3000;
-//var port = process.env.VCAP_APP_PORT || 8680;
+//var port = process.env.VCAP_APP_PORT || 3000;
+var port = process.env.VCAP_APP_PORT || 8680;
 
 // Routes
-var authentication = require('./Controllers/AuthenticationAPIController')(app, passport);
 var jobs = require('./Controllers/JobAPIController');
 var jobtypes = require('./Controllers/JobTypeAPIController');
 var jobfunctions = require('./Controllers/JobFunctionAPIController');
@@ -28,6 +27,9 @@ var resumes = require('./Controllers/ResumeAPIController');
 var applications = require('./Controllers/ApplicationAPIController');
 var notifications = require('./Controllers/NotificationAPIController');
 var wit = require('./Controllers/WitAPIController');
+var authentication = require('./Controllers/AuthenticationAPIController');
+
+var token = require('./token.js');
 
 app.use('/api/job', jobs);
 app.use('/api/jobtype', jobtypes);
@@ -41,13 +43,14 @@ app.use('/api/bookmark', bookmarks);
 app.use('/api/resume', resumes);
 app.use('/api/application', applications);
 app.use('/api/notification', notifications);
-app.use('/api/wit', wit);
+app.use('/api/wit', wit); //, token.verifyToken
+app.use('/', authentication);
 
 // Load Passport Strategies
 require('./passport.js')(passport);
 
 // Catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
@@ -55,9 +58,5 @@ app.use(function(req, res, next) {
 
 app.listen(port);
 console.log('Magic happens on port ' + port);
-
-app.get('/', function(req, res){
-  res.send('Available')
-})
 
 module.exports = app;
