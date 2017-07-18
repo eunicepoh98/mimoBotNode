@@ -11,6 +11,7 @@ const { Wit, log } = require('node-wit');
 
 var serverToken = witConfig.serverToken;
 var sessionResult = {};
+var usersessionid = {};
 
 // loads Job Type, Job Function and Industry data from the database
 var jobType, jobFunction, jobIndustry;
@@ -68,6 +69,7 @@ const actions = {
         sessionResult[sessionId] = { "response": response, "request": request };
     },
     ['getIntention']({ context, entities }) {
+        context.userid = context.userid;
         const intent = firstEntityValue(entities, 'intent');
         if (intent) {
             if (intent == "add work experience") {
@@ -85,6 +87,7 @@ const actions = {
     },
     //Search Job Methods
     ['getIndustry']({ context, entities }) {
+        context.userid = context.userid;
         context.searchJob = context['searchJob'];
         var short_replies = firstEntityValue(entities, 'short_replies');
         context.action = { action: true, name: 'displaySuggestion', data: jobFunction }; //list of job function from db
@@ -102,6 +105,7 @@ const actions = {
         return context;
     },
     ['getJobFunction']({ context, entities }) {
+        context.userid = context.userid;
         context.searchJob = context['searchJob'];
         context.industryType = context['industryType'];
         var short_replies = firstEntityValue(entities, 'short_replies');
@@ -121,6 +125,7 @@ const actions = {
         return context;
     },
     ['getJobType']({ context, entities }) {
+        context.userid = context.userid;
         context.searchJob = context['searchJob'];
         context.industryType = context['industryType'];
         context.jobFunction = context['jobFunction'];
@@ -140,6 +145,7 @@ const actions = {
         return context;
     },
     ['getJobs']({ context, entities }) {
+        var userid = context.userid;
         var jobType = context['jobType'];
         var industryType = context['industryType'];
         var jobFunction = context['jobFunction'];
@@ -157,6 +163,7 @@ const actions = {
     },
     //Add Work Experience Methods
     ['getCompanyName']({ context, entities, text }) {
+        context.userid = context.userid;
         context.addWorkExperience = context['addWorkExperience'];
         context.action = { action: false };
         if (text.length < 2) {
@@ -168,6 +175,7 @@ const actions = {
         return context;
     },
     ['getWorkAs']({ context, entities, text }) {
+        context.userid = context.userid;
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
         context.action = { action: false };
@@ -180,6 +188,7 @@ const actions = {
         return context;
     },
     ['haveDescription']({ context, entities, text }) {
+        context.userid = context.userid;
         var short_replies = firstEntityValue(entities, 'short_replies');
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
@@ -200,6 +209,7 @@ const actions = {
         return context;
     },
     ['getDescription']({ context, entities, text }) {
+        context.userid = context.userid;
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
         context.workAs = context['workAs'];
@@ -216,6 +226,7 @@ const actions = {
         return context;
     },
     ['getStartDay']({ context, entities, text }) {
+        context.userid = context.userid;
         var startDay = firstEntityValue(entities, 'datetime');
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
@@ -233,6 +244,7 @@ const actions = {
         return context;
     },
     ['currentJob']({ context, entities }) {
+        context.userid = context.userid;
         var short_replies = firstEntityValue(entities, 'short_replies');
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
@@ -261,6 +273,7 @@ const actions = {
         return context;
     },
     ['getEndDay']({ context, entities, text }) {
+        context.userid = context.userid;
         var endDay = firstEntityValue(entities, 'datetime');
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
@@ -277,6 +290,7 @@ const actions = {
         return context;
     },
     ['addWorkExperience']({ context }) {
+        var userid = context.userid;
         var companyName = context['companyName'];
         var workAs = context['workAs'];
         var description = context['description'];
