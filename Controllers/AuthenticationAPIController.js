@@ -104,7 +104,7 @@ router.post('/renewtoken', token.renewToken, function (req, res) {
     res.status(200).send({
         success: true,
         message: req.message,
-        result: req.decoded
+        result: req.headers.userid
     });
 });
 

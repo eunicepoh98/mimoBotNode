@@ -6,12 +6,12 @@ var application = require(path.resolve('./APIs/application.js'));
 /**
  * [GET]
  * Get all User Applications
- * http://localhost:3000/api/application/1
- * Params: /id
- * id - user id
+ * http://localhost:3000/api/application
+ * Headers: x-access-token (JWT Token) | For Testing - userid
  */
-router.get('/:id', function (req, res, next) {
-  application.getAllApplication(req.params.id)
+router.get('/', function (req, res, next) {
+  var userid = req.headers.userid;
+  application.getAllApplication(userid)
     .then(function (data) {
       var response = { success: true, result: JSON.parse(data) };
       res.status(200).send(response);
@@ -25,17 +25,18 @@ router.get('/:id', function (req, res, next) {
  * [POST]
  * Add User Application
  * http://localhost:3000/api/application
+ * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
       "JobID": 1,
-      "UserID": 1,
       "ResumeID": 1          
    }
  */
 router.post('/', function (req, res, next) {
+  var userid = req.headers.userid;
   var newapplication = {
     JobID: req.body.JobID,
-    UserID: req.body.UserID,
+    UserID: userid,
     ResumeID: req.body.ResumeID
   };
   application.sendApplication(newapplication)

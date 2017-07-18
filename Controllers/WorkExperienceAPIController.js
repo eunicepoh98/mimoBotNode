@@ -6,12 +6,12 @@ var workexperience = require(path.resolve('./APIs/workexperience.js'));
 /**
  * [GET]
  * Get all WorkExperience of 1 user
- * http://localhost:3000/api/workexperience/user/1
- * Params: /id
- * id - id of the user
+ * http://localhost:3000/api/workexperience
+ * Headers: x-access-token (JWT Token) | For Testing - userid
  */
-router.get('/user/:id', function (req, res, next) {
-    workexperience.getAllWorkExperience(req.params.id)
+router.get('/', function (req, res, next) {
+    var userid = req.headers.userid;
+    workexperience.getAllWorkExperience(userid)
         .then(function (data) {
             var response = { success: true, result: JSON.parse(data) };
             res.status(200).send(response);
@@ -25,6 +25,7 @@ router.get('/user/:id', function (req, res, next) {
  * [POST]
  * Add WorkExperience
  * http://localhost:3000/api/workexperience
+ * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
 	  "CompanyName": "",
@@ -36,13 +37,14 @@ router.get('/user/:id', function (req, res, next) {
    }
  */
 router.post('/', function (req, res, next) {
+    var userid = req.headers.userid;
     var we = {
         CompanyName: req.body.CompanyName,
         Role: req.body.Role,
         Description: req.body.Description,
         StartDate: req.body.StartDate,
         EndDate: req.body.EndDate,
-        UserID: req.body.UserID
+        UserID: userid
     };
     workexperience.addWorkExperience(we)
         .then(function (data) {
@@ -57,9 +59,8 @@ router.post('/', function (req, res, next) {
 /**
  * [PUT]
  * Update WorkExperience
- * http://localhost:3000/api/workexperience/1
- * Params: /id
- * id - id of the work experience
+ * http://localhost:3000/api/workexperience
+ * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
 	  "CompanyName": "",
@@ -70,17 +71,18 @@ router.post('/', function (req, res, next) {
       "UserID": ""
    }
  */
-router.put('/:id', function (req, res) {
+router.put('/', function (req, res) {
+    var userid = req.headers.userid;
     var we = {
         CompanyName: req.body.CompanyName,
         Description: req.body.Description,
         StartDate: req.body.StartDate,
         EndDate: req.body.EndDate,
-        UserID: req.body.UserID
+        UserID: userid
     }
     workexperience.updateAttributes(req.params.id, we)
         .then(function (data) {
-            var response = { success: true, message: 'Successfully updated work experience', result: JSON.parse(data) };
+            var response = { success: true, message: "Successfully updated work experience", result: JSON.parse(data) };
             res.status(200).send(response);
         }).catch(function (error) {
             var response = { success: false, message: error };
@@ -92,13 +94,13 @@ router.put('/:id', function (req, res) {
  * [DELETE]
  * Delete WorkExperience
  * http://localhost:3000/api/workexperience/1
- * Params: /id
- * id - id of the work experience
+ * Headers: x-access-token (JWT Token) | For Testing - userid
+ * Params: workexperience id
  */
 router.delete('/:id', function (req, res) {
     workexperience.deleteWorkExperience(req.params.id)
         .then(function (data) {
-            var response = { success: true, message: 'Successfully deleted work experience', result: JSON.parse(data) };
+            var response = { success: true, message: "Successfully deleted work experience", result: JSON.parse(data) };
             res.status(200).send(response);
         }).catch(function (error) {
             var response = { success: false, message: error };

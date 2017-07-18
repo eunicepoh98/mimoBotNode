@@ -6,12 +6,12 @@ var bookmark = require(path.resolve('./APIs/bookmark.js'));
 /**
  * [GET]
  * Get all User Bookmarks
- * http://localhost:3000/api/bookmark/1
- * Params: /id
- * id - user id
+ * http://localhost:3000/api/bookmark
+ * Headers: x-access-token (JWT Token) | For Testing - userid
  */
-router.get('/:id', function (req, res, next) {
-  bookmark.getAllBookmark(req.params.id)
+router.get('/', function (req, res, next) {
+  var userid = req.headers.userid;
+  bookmark.getAllBookmark(userid)
     .then(function (data) {
       var response = { success: true, result: JSON.parse(data) };
       res.status(200).send(response);
@@ -25,16 +25,17 @@ router.get('/:id', function (req, res, next) {
  * [POST]
  * Add User Bookmark
  * http://localhost:3000/api/bookmark
+ * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
-      "JobID": 1,
-      "UserID": 1    
+      "JobID": 1   
    }
 */
 router.post('/', function (req, res, next) {
+  var userid = req.headers.userid;
   var newbookmark = {
     JobID: req.body.JobID,
-    UserID: req.body.UserID
+    UserID: userid
   };
   bookmark.addBookmark(newbookmark)
     .then(function (data) {
@@ -50,14 +51,15 @@ router.post('/', function (req, res, next) {
  * [PUT]
  * Remove Bookmark
  * http://localhost:3000/api/bookmark
+ * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
-      "JobID": 1,
-      "UserID": 1    
+      "JobID": 1   
    }
  */
 router.put('/', function (req, res) {
-  bookmark.removeBookmark(req.body.JobID, req.body.UserID)
+  var userid = req.headers.userid;
+  bookmark.removeBookmark(req.body.JobID, userid)
     .then(function (data) {
       var response = { success: true, message: 'Job removed from Bookmark', result: JSON.parse(data) };
       res.status(200).send(response);

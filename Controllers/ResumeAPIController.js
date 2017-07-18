@@ -6,12 +6,12 @@ var resume = require(path.resolve('./APIs/resume.js'));
 /**
  * [GET]
  * Get all resume of user
- * http://localhost:3000/api/resume/1
- * Params: /id
- * id - id of the user
+ * http://localhost:3000/api/resume
+ * Headers: x-access-token (JWT Token) | For Testing - userid
  */
-router.get('/:id', function (req, res, next) {
-  resume.getAllResume(req.params.id)
+router.get('/', function (req, res, next) {
+  var userid = req.headers.userid;
+  resume.getAllResume(userid)
     .then(function (data) {
       var response = { success: true, result: JSON.parse(data) };
       res.status(200).send(response);
@@ -24,16 +24,16 @@ router.get('/:id', function (req, res, next) {
 /**
  * [POST]
  * Add Resume
- * http://localhost:3000/api/resume/1
- * Params: /id
- * id - id of the user
+ * http://localhost:3000/api/resume
+ * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
 	    "Description": ""
    }
 */
-router.post('/:id', function (req, res, next) {
-  resume.addResume(req.params.id, req.body.Description)
+router.post('/', function (req, res, next) {
+  var userid = req.headers.userid;
+  resume.addResume(userid, req.body.Description)
     .then(function (data) {
       var response = { success: true, message: 'Successfully added resume', result: JSON.parse(data) };
       res.status(200).send(response);
@@ -46,16 +46,16 @@ router.post('/:id', function (req, res, next) {
 /** 
  * [PUT]
  * Update Resume
- * http://localhost:3000/api/resume/1
- * Params: /id
- * id - id of the user
+ * http://localhost:3000/api/resume
+ * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
 	    "Description": ""
    }
 */
-router.put('/:id', function (req, res) {
-  resume.updateAttributes(req.params.id, req.body.Description)
+router.put('/', function (req, res) {
+  var userid = req.headers.userid;
+  resume.updateAttributes(userid, req.body.Description)
     .then(function (data) {
       var response = { success: true, message: 'Successfully updated resume details', result: JSON.parse(data) };
       res.status(200).send(response);
@@ -69,8 +69,8 @@ router.put('/:id', function (req, res) {
  * [DELETE]
  * Delete Resume
  * http://localhost:3000/api/resume/1
- * Params: /id
- * id - id of the work experience
+ * Headers: x-access-token (JWT Token) | For Testing - userid
+ * Params: resume id
  */
 router.delete('/:id', function (req, res) {
   resume.deleteResume(req.params.id)

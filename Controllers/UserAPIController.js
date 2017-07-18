@@ -6,11 +6,11 @@ var user = require(path.resolve('./APIs/user.js'));
 /** 
  * [GET]
  * Get User Details by UserID
- * http://localhost:3000/api/user/
- * Headers: userid
+ * http://localhost:3000/api
+ * Headers: x-access-token (JWT Token) | For Testing - userid
 */
 router.get('/', function (req, res, next) {
-  var userid = req.headers.userid; //req.decoded;
+  var userid = req.headers.userid;
   user.getOneUser(userid)
     .then(function (data) {
       var response = { success: true, result: JSON.parse(data) };
@@ -24,12 +24,10 @@ router.get('/', function (req, res, next) {
 /**
  * [PUT]
  * Update User
- * http://localhost:3000/api/user
- * Headers: userid
+ * http://localhost:3000/api
+ * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
-      "email": "",
-      "password": "",
       "UserName": "",
       "DateOfBirth": "",
       "Address": "",
@@ -39,10 +37,8 @@ router.get('/', function (req, res, next) {
     }
  */
 router.put('/', function (req, res) {
-  var userid = req.headers.userid; //req.decoded;
+  var userid = req.headers.userid;
   var update = {
-    Email: req.body.email,
-    Password: req.body.password,
     UserName: req.body.UserName,
     DateOfBirth: req.body.DateOfBirth,
     Address: req.body.Address,
@@ -64,16 +60,16 @@ router.put('/', function (req, res) {
  * [PUT]
  * Update User Device Token
  * http://localhost:3000/api/user/devicetoken
- * Headers: userid
+ * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
       "DeviceToken": ""
    }
  */
 router.put('/devicetoken', function (req, res) {
-  var userid = req.headers.userid; //req.decoded;
+  var userid = req.headers.userid;
   var devicetoken = req.body.DeviceToken;
-  user.updateAttributes(userid, devicetoken)
+  user.updateDeviceToken(userid, devicetoken)
     .then(function (data) {
       var response = { success: true, message: data.msg, result: JSON.parse(data.data) };
       res.status(200).send(response);

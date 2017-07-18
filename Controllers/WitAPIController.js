@@ -14,6 +14,7 @@ router.get('/', function (req, res, next) {
 /** 
  * Process Nature Language
  * http://localhost:3000/api/wit
+ * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
         "userMsg": "",
@@ -25,6 +26,7 @@ router.post('/', function (req, res, next) {
     var userMsg = req.body.userMsg;
     var sessionId = req.body.id;
     var context = req.body.context;
+    context.userid = req.headers.userid;
     wit.NLP(sessionId, userMsg, context)
         .then(function (result) {
             res.send(result);
