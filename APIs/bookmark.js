@@ -52,7 +52,7 @@ bookmark.getAllBookmarkID = function (userId) {
             data.forEach(onejob => {
                 jobids.push(onejob.Job.JobID);
             });
-            resolve(JSON.stringify(jobids))
+            resolve(jobids)
         }).catch(function (error) {
             console.log("Error: " + error)
             reject(error.toString());
