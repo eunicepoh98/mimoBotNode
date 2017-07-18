@@ -9,7 +9,7 @@ What's "done"
 What needs to be done
 + seeding data
 + user search table
-+ filter job with bookmark
++ filter job with bookmark (one more)
 + resume upload (Hibba)
 
 ### [Wit.ai](https://wit.ai/)
@@ -28,12 +28,12 @@ What needs to be done
 >[JWT](https://www.sitepoint.com/using-json-web-tokens-node-js/)
 
 What's "done"
-+ generate and verify jwt token
++ generate, verify and renew jwt token
 + sign in and sign up with local passport
 
 What needs to be done
-+ facebook access_token verification
-+ renewing accessToken
++ facebook access_token signup and signin
++ jwt for all routes
 
 ### Need to create config.js file
 Contents in config.js
