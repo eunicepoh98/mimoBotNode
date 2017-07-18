@@ -1,3 +1,4 @@
+var moment = require('moment');
 //Job Model
 module.exports = function (sequelize, DataTypes) {
     var Job = sequelize.define('Job', {
@@ -57,7 +58,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('JobPostDate');
             },
             set: function (val) {
-                this.setDataValue('JobPostDate', val);
+                this.setDataValue('JobPostDate', moment(val).toISOString());
             }
         },
         JobPostalCode: {

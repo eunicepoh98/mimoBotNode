@@ -1,3 +1,4 @@
+var moment = require('moment');
 //Work Experience model
 module.exports = function (sequelize, DataTypes) {
     var WorkExperience = sequelize.define('WorkExperience', {
@@ -48,7 +49,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('StartDate');
             },
             set: function (val) {
-                this.setDataValue('StartDate', val);
+                this.setDataValue('StartDate', moment(val).toISOString());
             }
         },
         EndDate: {
@@ -58,7 +59,7 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('EndDate');
             },
             set: function (val) {
-                this.setDataValue('EndDate', val);
+                this.setDataValue('EndDate', moment(val).toISOString());
             }
         },
         RecordStatus: {
