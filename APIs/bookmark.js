@@ -35,6 +35,32 @@ bookmark.getAllBookmark = function (userId) {
 }; //end of getAllBookmark()
 
 /**
+ * Get all the Job ID that are bookmarked
+ * @param {int} userId - UserID
+ * @returns {string} JSON format of all job id that are bookmarked
+ */
+bookmark.getAllBookmarkID = function (userId) {
+    return new Promise(function (resolve, reject) {
+        Bookmark.findAll({
+            where: { UserID: userId, RecordStatus: { $not: 'D' } },
+            attributes: [],
+            include: [{
+                model: model.Job, attributes: ['JobID'],
+            }]
+        }).then(function (data) {
+            var jobids = [];
+            data.forEach(onejob => {
+                jobids.push(onejob.Job.JobID);
+            });
+            resolve(JSON.stringify(jobids))
+        }).catch(function (error) {
+            console.log("Error: " + error)
+            reject(error.toString());
+        });
+    });
+}; //end of getAllBookmarkID()
+
+/**
  * Add job that is bookmark
  * @param {string} bookmark - JSON format of the bookmark details
  * @returns {string} JSON format of the new Bookmark added
