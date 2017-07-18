@@ -1,6 +1,8 @@
 var job = module.exports = {};
 var Job = require('../Models').Job;
 var model = require('../Models');
+var path = require('path');
+var bookmark = require(path.resolve('./APIs/bookmark.js'));
 
 /**
  * Get all the Jobs from the database arrange by ID
@@ -32,37 +34,6 @@ job.getAllJob = function () {
     })
 } //end of getAllJob()
 
-/**
- * Get the information of one Job from the database based on the ID 
- * @param {int} id - Job's ID
- * @returns {string} JSON format of one Job details
- */
-job.getOneJob = function (id) {
-    return new Promise(function (resolve, reject) {
-        Job.findOne({
-            where: { JobID: id },
-            attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
-                'JobPostDate', 'JobPostalCode', 'JobAddress'],
-            include: [
-                { model: model.Industry, attributes: ['IndustryName'], through: { attributes: [] } },
-                { model: model.JobFunction, attributes: ['JobFunctionName'], through: { attributes: [] } },
-                { model: model.JobType, attributes: ['JobType'] },
-                { model: model.Company, attributes: ['CompanyName', 'CompanyAddress', 'CompanyPostalCode'] },
-                {
-                    model: model.Salary,
-                    attributes: ['SalaryFrom', 'SalaryTo'],
-                    include: [{ model: model.Currency, attributes: ['Symbol', 'CurrencyCode'] }]
-                },
-                { model: model.Country, attributes: ['CountryName'] }]
-        }).then(function (data) {
-            resolve(JSON.stringify(data));
-        }).catch(function (error) {
-            console.log("Error: " + error)
-            reject(error.toString());
-        });
-    })
-} //end of getOneJob()
-
 /** NOT DONE
  * Get all Jobs from the database based on Industries, Job Functions and more variety search from other columns
  * @param {array} industry - Array of industry name
@@ -70,9 +41,10 @@ job.getOneJob = function (id) {
  * @param {array} jType - Array of jobtype
  * @returns {string} JSON format of all the filtered Jobs
  */
-job.getFilteredJob = function (industry, jFuntion, jType) {
+job.getFilteredJob = function (userId) {
+    var industry = [], jFuntion = [], jType = []
     return new Promise(function (resolve, reject) {
-        var everything = [], name = [], title = [], des = [], qual = [], res = [];
+        var everything = [], name = [], title = [], des = [], qual = [], res = [], whereStuff;
         for (i = 0; i < industry.length; i++) {
             name.push({ '$Industries.IndustryName$': { $like: '%' + industry[i] + '%' } });
             title.push({ JobTitle: { $like: '%' + industry[i] + '%' } });
@@ -93,13 +65,16 @@ job.getFilteredJob = function (industry, jFuntion, jType) {
             qual.push({ JobQualification: { $like: '%' + jType[i] + '%' } });
             res.push({ JobResponsibilities: { $like: '%' + jType[i] + '%' } });
         }
-        everything.push(name);
-        everything.push(title);
-        everything.push(des);
-        everything.push(qual);
-        everything.push(res);
-        var whereStuff = { $or: everything }
-        console.log(JSON.stringify(whereStuff))
+        if (name.length > 0) { everything.push(name); }
+        if (name.length > 0) { everything.push(title); }
+        if (name.length > 0) { everything.push(des); }
+        if (name.length > 0) { everything.push(qual); }
+        if (name.length > 0) { everything.push(res); }
+        if (everything.length > 0) {
+            whereStuff = { $or: everything };
+        } else {
+            whereStuff = {};
+        }
         Job.findAll({
             where: whereStuff,
             attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
@@ -115,7 +90,30 @@ job.getFilteredJob = function (industry, jFuntion, jType) {
                 },
                 { model: model.Country, attributes: ['CountryName'] }]
         }).then(function (data) {
-            resolve(JSON.stringify(data))
+            var result = []
+            bookmark.getAllBookmarkID(userId).then(ids => {
+                data.forEach(onejob => {
+                    var newjob = {
+                        "JobID": onejob.JobID,
+                        "JobTitle": onejob.JobTitle,
+                        "JobDescription": onejob.JobDescription,
+                        "JobQualification": onejob.JobQualification,
+                        "JobPostDate": onejob.JobPostDate,
+                        "JobPostalCode": onejob.JobPostalCode,
+                        "JobAddress": onejob.JobAddress,
+                        "Industries": onejob.Industries,
+                        "JobFunctions": onejob.JobFunctions,
+                        "JobType": onejob.JobType,
+                        "Company": onejob.Company,
+                        "Salary": onejob.Salary,
+                        "Country": onejob.Country,
+                        "isBookmarked": false
+                    }
+                    if (ids.includes(onejob.JobID)) { newjob["isBookmarked"] = true; }
+                    result.push(newjob);
+                });
+                resolve(JSON.stringify(result))
+            });
         }).catch(function (error) {
             console.log("Error: " + error)
             reject(error.toString());
@@ -225,3 +223,35 @@ job.addJob = function (salary, job, indID, jfID) {
         });
     });
 } //end of addJob()
+
+
+/**
+ * Get the information of one Job from the database based on the ID 
+ * @param {int} id - Job's ID
+ * @returns {string} JSON format of one Job details
+ */
+job.getOneJob = function (id) {
+    return new Promise(function (resolve, reject) {
+        Job.findOne({
+            where: { JobID: id },
+            attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
+                'JobPostDate', 'JobPostalCode', 'JobAddress'],
+            include: [
+                { model: model.Industry, attributes: ['IndustryName'], through: { attributes: [] } },
+                { model: model.JobFunction, attributes: ['JobFunctionName'], through: { attributes: [] } },
+                { model: model.JobType, attributes: ['JobType'] },
+                { model: model.Company, attributes: ['CompanyName', 'CompanyAddress', 'CompanyPostalCode'] },
+                {
+                    model: model.Salary,
+                    attributes: ['SalaryFrom', 'SalaryTo'],
+                    include: [{ model: model.Currency, attributes: ['Symbol', 'CurrencyCode'] }]
+                },
+                { model: model.Country, attributes: ['CountryName'] }]
+        }).then(function (data) {
+            resolve(JSON.stringify(data));
+        }).catch(function (error) {
+            console.log("Error: " + error)
+            reject(error.toString());
+        });
+    })
+} //end of getOneJob()
