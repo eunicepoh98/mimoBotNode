@@ -1,27 +1,35 @@
 var user = module.exports = {};
 var User = require('../Models').User;
 var model = require('../Models');
+var token = require('../token.js');
 
 /**
  * Create account for User
  * @param {string} user - JSON format of User's details
  * @returns {string} JSON format of the User details and message / error message
  */
-user.signup = function (user) {
+user.signup = function (newuser) {
     return new Promise(function (resolve, reject) {
-        user.Password = User.generateHash(user.Password)
-        User.findOne({ where: { Email: user.Email } })
+        var plainpassword = newuser.Password
+        newuser.Password = User.generateHash(newuser.Password)
+        User.findOne({ where: { Email: newuser.Email } })
             .then(function (gotuser) {
                 if (gotuser) {
                     reject('That email is already taken');
                 } else {
-                    User.create(user)
+                    User.create(newuser)
                         .then(function (newUser) {
                             if (!newUser) {
                                 reject("Something went wrong, Please try again");
                             }
                             if (newUser) {
-                                resolve({ user: newUser, msg: "Successfully sign up" });
+                                user.signin(newUser.Email, plainpassword)
+                                    .then(function (result) {
+                                        resolve({ user: result.user, msg: result.msg });
+                                    }).catch(function (error) {
+                                        console.log("Error2: " + error);
+                                        reject(error);
+                                    });
                             }
                         }).catch(function (error) {
                             console.log("Error: " + error);
@@ -43,17 +51,26 @@ user.signup = function (user) {
  */
 user.signin = function (email, password) {
     return new Promise(function (resolve, reject) {
-        User.findOne({ where: { Email: email }, include: [{ model: model.Country, attributes: ['CountryName'] }] })
+        User.findOne({ where: { Email: email } })
             .then(function (user) {
+                console.log("user " + JSON.stringify(user));
+
                 if (!user) {
                     reject('Email does not exist');
                 }
                 if (!user.validPassword(password)) {
                     reject('Incorrect password.');
                 }
-                var userinfo = user.get();
-                delete userinfo.Password;
-                resolve({ user: userinfo, msg: 'Succuessfully signed in' });
+                var userinfo = {
+                    "Email": user.Email,
+                    "UserID": user.UserID
+                }
+                var response = {
+                    "Email": user.Email,
+                    "UserID": user.UserID,
+                    "accessToken": token.generateToken(userinfo)
+                }
+                resolve({ user: response, msg: 'Succuessfully signed in' });
             }).catch(function (err) {
                 console.log("Error:", err);
                 reject('Something went wrong when signing in')
