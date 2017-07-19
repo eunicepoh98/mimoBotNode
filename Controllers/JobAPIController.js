@@ -3,11 +3,14 @@ var router = express.Router();
 var path = require('path');
 var job = require(path.resolve('./APIs/job.js'));
 
-/* Get all Jobs
+/** [GET] 
+ * Get all Jobs
  * http://localhost:3000/api/job
-*/
+ * Headers: x-access-token (JWT Token) | For Testing - userid
+ */
 router.get('/', function (req, res, next) {
-  job.getAllJob()
+  var userid = req.headers.userid;
+  job.getFilteredJob(userid)
     .then(function (data) {
       var response = { success: true, result: JSON.parse(data) };
       res.status(200).send(response);
@@ -15,37 +18,7 @@ router.get('/', function (req, res, next) {
       var response = { success: false, message: error };
       res.send(response);
     });
-});
-
-/* Get One Job by Id
- * http://localhost:3000/api/job/1
- * Params: /id
- * id - id of the job
-*/
-router.get('/one/:id', function (req, res, next) {
-  job.getOneJob(req.params.id)
-    .then(function (data) {
-      var response = { success: true, result: JSON.parse(data) };
-      res.status(200).send(response);
-    }).catch(function (error) {
-      var response = { success: false, message: error };
-      res.send(response);
-    });
-});
-
-/* Get Filtered Jobs
- * http://localhost:3000/api/job/filter
-*/
-router.post('/filter', function (req, res, next) {
-  job.getFilteredJob(req.body.ind, req.body.jf, req.body.jt)
-    .then(function (data) {
-      var response = { success: true, result: JSON.parse(data) };
-      res.status(200).send(response);
-    }).catch(function (error) {
-      var response = { success: false, message: error };
-      res.send(response);
-    });
-  // job.getUserJob()
+  // job.getAllJob()
   //   .then(function (data) {
   //     var response = { success: true, result: JSON.parse(data) };
   //     res.status(200).send(response);
@@ -56,6 +29,7 @@ router.post('/filter', function (req, res, next) {
 });
 
 /** 
+ * [POST]
  * Add Job
  * http://localhost:3000/api/job
  * Body: JSON(application/json)
@@ -101,6 +75,36 @@ router.post('/add', function (req, res, next) {
       var response = { success: false, message: error };
       res.send(response);
     });
-})
+});
+
+/* Get One Job by Id
+ * http://localhost:3000/api/job/1
+ * Params: /id
+ * id - id of the job
+*/
+router.get('/one/:id', function (req, res, next) {
+  job.getOneJob(req.params.id)
+    .then(function (data) {
+      var response = { success: true, result: JSON.parse(data) };
+      res.status(200).send(response);
+    }).catch(function (error) {
+      var response = { success: false, message: error };
+      res.send(response);
+    });
+});
+
+/* Get Filtered Jobs
+ * http://localhost:3000/api/job/filter
+*/
+// router.post('/filter', function (req, res, next) {
+//   job.getUserJob(['Aerospace', 'Construction'], [], [])
+//     .then(function (data) {
+//       var response = { success: true, result: JSON.parse(data) };
+//       res.status(200).send(response);
+//     }).catch(function (error) {
+//       var response = { success: false, message: error };
+//       res.send(response);
+//     });
+// });
 
 module.exports = router;
