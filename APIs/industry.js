@@ -36,7 +36,29 @@ industry.getAllIndustryName = function () {
 }//end of getAllIndustryName()
 
 /**
- * Get the information of one Industry from the database based on the ID 
+ * Get all the Industry name from the database
+ * @returns {array} array of all Industry Synonyms from the database
+ */
+industry.getAllIndustrySynonyms = function () {
+    return new Promise(function (resolve, reject) {
+        Industry.findAll({ attributes: ['Synonyms'] })
+            .then(function (data) {
+                var array = [];
+                data.forEach(function (oneIndustrySynonyms) {
+                    JSON.parse(oneIndustrySynonyms.Synonyms).forEach(function (onesynonyms) {
+                        array.push(onesynonyms)
+                    });
+                });
+                resolve(array);
+            }).catch(function (error) {
+                console.log("Error: " + error)
+                reject(error.toString());
+            });
+    });
+}//end of getAllIndustrySynonyms()
+
+/**
+ * Get one Industry from the database
  * @param {int} id - Industry's ID
  * @returns {string} JSON format of one Industry details
  */
@@ -68,3 +90,31 @@ industry.addIndustry = function (industry) {
         });
     });
 }//end of addIndustry()
+
+/**
+ * Add new Industry synonyms
+ * @param {array} newSynonyms - Array of industry synonyms to add
+ * @returns {array} array of all Industry Synonyms from the database
+ */
+industry.addIndustrySynonyms = function (indId, newSynonyms) {
+    return new Promise(function (resolve, reject) {
+        Industry.find({ where: { IndustryID: indId } })
+            .then(function (data) {
+                var oldSynonyms = [];
+                JSON.parse(data.Synonyms).forEach(function (onesynonyms) {
+                    oldSynonyms.push(onesynonyms)
+                });
+                var updateSynonyms = oldSynonyms.concat(newSynonyms);
+                data.update({ Synonyms: JSON.stringify(updateSynonyms), LastUpdated: '' }, { fields: ['Synonyms', 'LastUpdated'] })
+                    .then(function (update) {
+                        resolve({ data: JSON.stringify(update), msg: 'Successfully updated industry synonyms' })
+                    }).catch(function (error) {
+                        console.log("Error: " + error)
+                        reject(error.toString());
+                    });
+            }).catch(function (error) {
+                console.log("Error: " + error)
+                reject(error.toString());
+            });
+    });
+}//end of getAllIndustrySynonyms()

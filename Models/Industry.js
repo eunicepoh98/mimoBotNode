@@ -22,6 +22,15 @@ module.exports = function (sequelize, DataTypes) {
                 this.setDataValue('IndustryName', val);
             }
         },
+        Synonyms: {
+            type: DataTypes.STRING,
+            get: function () {
+                return this.getDataValue('Synonyms');
+            },
+            set: function (val) {
+                this.setDataValue('Synonyms', val);
+            }
+        },
         RecordStatus: {
             type: DataTypes.STRING,
             allowNull: false,

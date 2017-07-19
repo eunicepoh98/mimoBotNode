@@ -10,7 +10,7 @@ var industry = require(path.resolve('./APIs/industry.js'));
 router.get('/', function (req, res, next) {
   industry.getAllIndustry()
     .then(function (data) {
-      var response = { success: true, result: JSON.parse(data) };
+      var response = { success: true, result: data };
       res.status(200).send(response);
     }).catch(function (error) {
       var response = { success: false, message: error };
@@ -27,7 +27,7 @@ router.get('/', function (req, res, next) {
 router.get('/:id', function (req, res, next) {
   industry.getOneIndustry(req.params.id)
     .then(function (data) {
-      var response = { success: true, result: JSON.parse(data) };
+      var response = { success: true, result: data };
       res.status(200).send(response);
     }).catch(function (error) {
       var response = { success: false, message: error };
@@ -40,16 +40,38 @@ router.get('/:id', function (req, res, next) {
  * http://localhost:3000/api/industry
  * Body: JSON(application/json)
  * {
-	    "IndustryName": ""
+	    "IndustryName": "",
+      "Synonyms": []
    }
 */
 router.post('/', function (req, res, next) {
   var ind = {
-    IndustryName: req.body.IndustryName
+    IndustryName: req.body.IndustryName,
+    Synonyms: req.body.Synonyms
   };
   industry.addIndustry(ind)
     .then(function (data) {
-      var response = { success: true, result: JSON.parse(data) };
+      var response = { success: true, message: data.msg, result: JSON.parse(data.data) };
+      res.status(200).send(response);
+    }).catch(function (error) {
+      var response = { success: false, message: error };
+      res.send(response);
+    });
+});
+
+/** 
+ * Add Industry Synonyms
+ * http://localhost:3000/api/industry/synonyms
+ * Body: JSON(application/json)
+ * {
+      "IndustryID": "",
+      "Synonyms": []
+   }
+*/
+router.post('/synonyms', function (req, res, next) {
+  industry.addIndustrySynonyms(req.body.IndustryID, req.body.Synonyms)
+    .then(function (data) {
+      var response = { success: true, message: data.msg, result: JSON.parse(data.data) };
       res.status(200).send(response);
     }).catch(function (error) {
       var response = { success: false, message: error };

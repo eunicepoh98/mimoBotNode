@@ -3,7 +3,7 @@ var JobFunction = require('../Models').JobFunction;
 
 /**
  * Get all the JobFunction information from the database
- * @returns {string} JSON format of all the JobFunction details from the database
+ * @returns {string} JSON format of all the JobFunction details
  */
 jobfunction.getAllJobFunction = function () {
     return new Promise(function (resolve, reject) {
@@ -19,7 +19,7 @@ jobfunction.getAllJobFunction = function () {
 
 /**
  * Get all the JobFunction name from the database
- * @returns {array} array of all JobFunction Name from the database
+ * @returns {array} array of all JobFunction Name
  */
 jobfunction.getAllJobFunctionName = function () {
     return new Promise(function (resolve, reject) {
@@ -36,7 +36,29 @@ jobfunction.getAllJobFunctionName = function () {
 } //end of getAllJobFunctionName()
 
 /**
- * Get the information of one JobFunction from the database based on the ID 
+ * Get all the JobFunction Synonyms from the database
+ * @returns {array} array of all JobFunction Synonyms
+ */
+jobfunction.getAllJobFunctionSynonyms = function () {
+    return new Promise(function (resolve, reject) {
+        JobFunction.findAll({ attributes: ['Synonyms'] })
+            .then(function (data) {
+                var array = [];
+                data.forEach(function (oneJobFunctionSynonyms) {
+                    JSON.parse(oneJobFunctionSynonyms.Synonyms).forEach(function (onesynonyms) {
+                        array.push(onesynonyms)
+                    });
+                });
+                resolve(array);
+            }).catch(function (error) {
+                console.log("Error: " + error)
+                reject(error.toString());
+            });
+    });
+} //end of getAllJobFunctionSynonyms()
+
+/**
+ * Get one JobFunction from the database
  * @param {int} id - JobFunction's ID
  * @returns {string} JSON format of one JobFunction details
  */
@@ -60,10 +82,38 @@ jobfunction.getOneJobFunction = function (id) {
 jobfunction.addJobFunction = function (jobFunction) {
     return new Promise(function (resolve, reject) {
         JobFunction.create(jobFunction).then(function (newJobFunction) {
-            resolve(JSON.stringify(newJobFunction))
+            resolve({ data: JSON.stringify(jobFunction), msg: 'Successfully added jobfunction' })
         }).catch(function (error) {
             console.log("Error: " + error)
             reject(error.toString());
         });
     });
 } //end of addJobFunction()
+
+/**
+ * Add new JobFunction synonyms
+ * @param {array} newSynonyms - Array of jobfunction synonyms to add
+ * @returns {array} array of all JobFunction Synonyms from the database
+ */
+jobfunction.addJobFunctionSynonyms = function (indId, newSynonyms) {
+    return new Promise(function (resolve, reject) {
+        JobFunction.find({ where: { JobFunctionID: indId } })
+            .then(function (data) {
+                var oldSynonyms = [];
+                JSON.parse(data.Synonyms).forEach(function (onesynonyms) {
+                    oldSynonyms.push(onesynonyms)
+                });
+                var updateSynonyms = oldSynonyms.concat(newSynonyms);
+                data.update({ Synonyms: JSON.stringify(updateSynonyms), LastUpdated: '' }, { fields: ['Synonyms', 'LastUpdated'] })
+                    .then(function (update) {
+                        resolve({ data: JSON.stringify(update), msg: 'Successfully added jobfunction synonyms' })
+                    }).catch(function (error) {
+                        console.log("Error: " + error)
+                        reject(error.toString());
+                    });
+            }).catch(function (error) {
+                console.log("Error: " + error)
+                reject(error.toString());
+            });
+    });
+}//end of getAllJobFunctionSynonyms()

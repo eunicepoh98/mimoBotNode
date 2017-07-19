@@ -10,7 +10,7 @@ var jobtype = require(path.resolve('./APIs/jobtype.js'));
 router.get('/', function (req, res, next) {
   jobtype.getAllJobType()
     .then(function (data) {
-      var response = { success: true, result: JSON.parse(data) };
+      var response = { success: true, result: data };
       res.status(200).send(response);
     }).catch(function (error) {
       var response = { success: false, message: error };
@@ -27,7 +27,7 @@ router.get('/', function (req, res, next) {
 router.get('/:id', function (req, res, next) {
   jobtype.getOneJobType(req.params.id)
     .then(function (data) {
-      var response = { success: true, result: JSON.parse(data) };
+      var response = { success: true, result: data };
       res.status(200).send(response);
     }).catch(function (error) {
       var response = { success: false, message: error };
@@ -40,21 +40,43 @@ router.get('/:id', function (req, res, next) {
  * http://localhost:3000/api/jobtype
  * Body: JSON(application/json)
  * {
-	    "JobType": ""
+	    "JobType": "",
+      "Synonyms": []
    }
 */
 router.post('/', function (req, res, next) {
   var jt = {
-    JobType: req.body.JobType
+    JobType: req.body.JobType,
+    Synonyms: req.body.Synonyms
   };
   jobtype.addJobType(jt)
     .then(function (data) {
-      var response = { success: true, result: JSON.parse(data) };
+      var response = { success: true, message: data.msg, result: JSON.parse(data.data) };
       res.status(200).send(response);
     }).catch(function (error) {
       var response = { success: false, message: error };
       res.send(response);
     });
 })
+
+/** 
+ * Add JobType Synonyms
+ * http://localhost:3000/api/jobtype/synonyms
+ * Body: JSON(application/json)
+ * {
+      "JobTypeID": "",
+      "Synonyms": []
+   }
+*/
+router.post('/synonyms', function (req, res, next) {
+  jobtype.addJobTypeSynonyms(req.body.JobTypeID, req.body.Synonyms)
+    .then(function (data) {
+      var response = { success: true, message: data.msg, result: JSON.parse(data.data) };
+      res.status(200).send(response);
+    }).catch(function (error) {
+      var response = { success: false, message: error };
+      res.send(response);
+    });
+});
 
 module.exports = router;

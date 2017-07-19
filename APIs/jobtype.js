@@ -36,7 +36,29 @@ jobtype.getAllJobTypeName = function () {
 } //end of getAllJobTypeName()
 
 /**
- * Get the information of one JobType from the database based on the ID 
+ * Get all the JobType Synonyms from the database
+ * @returns {array} array of all JobType Synonyms
+ */
+jobtype.getAllJobTypeSynonyms = function () {
+    return new Promise(function (resolve, reject) {
+        JobType.findAll({ attribute: ['Synonyms'] })
+            .then(function (data) {
+                var array = [];
+                data.forEach(function (oneJobTypeSynonyms) {
+                    JSON.parse(oneJobTypeSynonyms.Synonyms).forEach(function (onesynonyms) {
+                        array.push(onesynonyms)
+                    });
+                });
+                resolve(array);
+            }).catch(function (error) {
+                console.log("Error: " + error)
+                reject(error.toString());
+            });
+    });
+} //end of getAllJobTypeSynonyms()
+
+/**
+ * Get one JobType from the database based on the ID 
  * @param {int} id - JobType's ID
  * @returns {string} JSON format of one JobType details
  */
@@ -67,3 +89,31 @@ jobtype.addJobType = function (jobtype) {
         });
     });
 } //end of addJobType()
+
+/**
+ * Add new JobType synonyms
+ * @param {array} newSynonyms - Array of jobtype synonyms to add
+ * @returns {array} array of all JobType Synonyms from the database
+ */
+jobtype.addJobTypeSynonyms = function (jtId, newSynonyms) {
+    return new Promise(function (resolve, reject) {
+        JobType.find({ where: { JobTypeID: jtId } })
+            .then(function (data) {
+                var oldSynonyms = [];
+                JSON.parse(data.Synonyms).forEach(function (onesynonyms) {
+                    oldSynonyms.push(onesynonyms)
+                });
+                var updateSynonyms = oldSynonyms.concat(newSynonyms);
+                data.update({ Synonyms: JSON.stringify(updateSynonyms), LastUpdated: '' }, { fields: ['Synonyms', 'LastUpdated'] })
+                    .then(function (update) {
+                        resolve({ data: JSON.stringify(update), msg: 'Successfully updated jobtype synonyms' })
+                    }).catch(function (error) {
+                        console.log("Error: " + error)
+                        reject(error.toString());
+                    });
+            }).catch(function (error) {
+                console.log("Error: " + error)
+                reject(error.toString());
+            });
+    });
+}//end of getAllJobTypeSynonyms()
