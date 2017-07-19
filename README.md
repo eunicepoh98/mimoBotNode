@@ -1,42 +1,74 @@
 # FYP Backend
+---
+My Notes
+### [*Sequelize*](http://docs.sequelizejs.com/)
+***
+**Sequelize** is a promise-based ORM for Node.js v4 and up. It supports the dialects PostgreSQL, MySQL, SQLite and MSSQL and features solid transaction support, relations, read replication and more.
++ [Setting up](http://docs.sequelizejs.com/manual/installation/getting-started)
++ [Model Definition](http://docs.sequelizejs.com/manual/tutorial/models-definition.html)
++ [Model Usage](http://docs.sequelizejs.com/manual/tutorial/models-usage.html)
++ [Querying](http://docs.sequelizejs.com/manual/tutorial/querying.html)
++ [Bulk CRUD](http://docs.sequelizejs.com/manual/tutorial/instances.html)
 
-## My Notes
-### [Sequelize](http://docs.sequelizejs.com/)
+What's "done"| 
+-----------------------|
+APIs for all the tables|
+add synonyms column, api to add synonyms| 
+load wit entities values with synonyms|
 
-What's "done"
-+ APIs for all the tables
-
-What needs to be done
-+ seeding data
-+ add synonyms column, load wit entities values with that, api to add synonyms ****
-+ edit get jobs filtering *** (add search in synonyms column)
-+ get applications *
-+ add job [include company] api, view? *
-+ resume upload (Hibba)
+What needs to be done| 
+-------------|
+seeding data|
+edit get jobs filtering *** (add search in synonyms column)|
+get applications *|
+add job [include company] api, view? *|
+resume upload (Hibba)|
 
 ### [Wit.ai](https://wit.ai/)
+***
+Nature Language for Developers
+- [Tutorials](https://wit.ai/docs/recipes)
+- [HTTP API](https://wit.ai/docs/http/20170307#put--entities-:entity-id-link)
+- [Node SDK](https://github.com/wit-ai/node-wit)
 
-What's "done"
-+ API to load data and nlp
-+ able to handle search job, add work experience scenario **
+What's "done"|
+---|
+API to load data and nlp|
+able to handle search job, add work experience scenario **|
 
-What needs to be done
-+ integrate add work experience, usersearch with database 
-+ testings + training
+What needs to be done|
+---|
+integrate add work experience, usersearch with database| 
+testings + training|
+***
+### [JSON Web Token (JWT)](https://jwt.io/)
+**JSON Web Tokens** are an open, industry standard RFC 7519 method for representing claims securely between two parties.
+- [Tutorial for node.js](https://www.sitepoint.com/using-json-web-tokens-node-js/)
+ 
+What's "done"|
+---|
+generate, verify and renew jwt token|
 
-### Authentication/Security
->[Passport](http://passportjs.org)
+What needs to be done|
+--|
+verify jwt for all routes|
+***
+### [Passport.js](http://passportjs.org)
+Passport Strategies
+- [Local Passport](https://www.npmjs.com/package/passport-local)
+- [Facebook Passport](https://www.npmjs.com/package/passport-facebook-token)
 
->[JWT](https://www.sitepoint.com/using-json-web-tokens-node-js/)
+What's "done"|
+---|
+sign in and sign up with local passport & facebook|
 
-What's "done"
-+ generate, verify and renew jwt token
-+ sign in and sign up with local passport & facebook
-
-What needs to be done
-+ verify jwt for all routes
-
-### Need to create config.js file
+### Firebase Cloud Messaging (Notification)
+***
+##### ~Server Side~
+- [Firebase Admin Setup](https://firebase.google.com/docs/admin/setup)
+- [Sending Message](https://firebase.google.com/docs/cloud-messaging/admin/send-messages)
+***
+### Create config.js file
 Contents in config.js
 
 ```
@@ -73,4 +105,3 @@ config.others = {
     'secretKey': ''
 }
 ```
-
