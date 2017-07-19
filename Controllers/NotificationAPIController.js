@@ -47,4 +47,17 @@ router.post('/', function (req, res, next) {
     });
 });
 
+router.post('/send', function (req, res, next) {
+  var regToken = req.body.deviceToken;
+  var description = req.body.description;
+  notification.sendToDevice(regToken, description)
+    .then(function (msg) {
+      var response = { success: true, message: msg };
+      res.status(200).send(response);
+    }).catch(function (error) {
+      var response = { success: false, message: error };
+      res.send(response);
+    });
+})
+
 module.exports = router;
