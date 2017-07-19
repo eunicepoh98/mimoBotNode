@@ -40,7 +40,7 @@ router.post('/', function (req, res, next) {
  * http://localhost:3000/api/wit/data
 */
 router.get('/data', function (req, res, next) {
-    witdata.loadJobFunction()
+    witdata.loadAllData()
         .then(function () {
             res.send("Data loaded into wit!")
         })
