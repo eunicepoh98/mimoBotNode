@@ -8,20 +8,21 @@ What's "done"
 
 What needs to be done
 + seeding data
-+ user search table
-+ filter job with bookmark (one more)
-+ get job and applications
++ add synonyms column, load wit entities values with that, api to add synonyms ****
++ edit get jobs filtering *** (add search in synonyms column)
++ get applications *
++ add job [include company] api, view? *
 + resume upload (Hibba)
 
 ### [Wit.ai](https://wit.ai/)
 
 What's "done"
 + API to load data and nlp
-+ able to handle search job, add work experience scenario
++ able to handle search job, add work experience scenario **
 
 What needs to be done
-+ integrate add work experience with database
-+ testings
++ integrate add work experience, usersearch with database 
++ testings + training
 
 ### Authentication/Security
 >[Passport](http://passportjs.org)
@@ -41,6 +42,7 @@ Contents in config.js
 ```
 var config = module.exports = {}
 
+// MySQL Credentials
 config.dbCredentials = {
     'database': 'database_name',
     'username': 'root',
@@ -49,15 +51,24 @@ config.dbCredentials = {
     "dialect": "mysql"
 }
 
+// Wit.ai Credentials
 config.wit = {
     'appId': '', //Settings > API Details > App ID
     'serverToken': '' //Settings > API Details > Server Access Token
 }
 
+// Facebook Credentials
+config.facebook = {
+    'clientID': '',
+    "clientSecret": ''
+}
+
+// Firebase Admin Credentials
 config.fbAdminCredentials = {
     // firebase admin key
 }
 
+// JWT Credentials
 config.others = {
     'secretKey': ''
 }
