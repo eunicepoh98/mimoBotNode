@@ -10,6 +10,7 @@ What needs to be done
 + seeding data
 + user search table
 + filter job with bookmark (one more)
++ get job and applications
 + resume upload (Hibba)
 
 ### [Wit.ai](https://wit.ai/)
@@ -29,11 +30,10 @@ What needs to be done
 
 What's "done"
 + generate, verify and renew jwt token
-+ sign in and sign up with local passport
++ sign in and sign up with local passport & facebook
 
 What needs to be done
-+ facebook access_token signup and signin
-+ jwt for all routes
++ verify jwt for all routes
 
 ### Need to create config.js file
 Contents in config.js
