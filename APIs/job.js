@@ -3,6 +3,7 @@ var Job = require('../Models').Job;
 var model = require('../Models');
 var path = require('path');
 var bookmark = require(path.resolve('./APIs/bookmark.js'));
+var usersearch = require(path.resolve('./APIs/usersearch.js'));
 
 /**
  * Get all the Jobs from the database arrange by ID
@@ -42,83 +43,144 @@ job.getAllJob = function () {
  * @returns {string} JSON format of all the filtered Jobs
  */
 job.getFilteredJob = function (userId) {
-    var industry = [], jFuntion = [], jType = []
     return new Promise(function (resolve, reject) {
-        var everything = [], name = [], title = [], des = [], qual = [], res = [], whereStuff;
-        for (i = 0; i < industry.length; i++) {
-            name.push({ '$Industries.IndustryName$': { $like: '%' + industry[i] + '%' } });
-            title.push({ JobTitle: { $like: '%' + industry[i] + '%' } });
-            des.push({ JobDescription: { $like: '%' + industry[i] + '%' } });
-            qual.push({ JobQualification: { $like: '%' + industry[i] + '%' } });
-            res.push({ JobResponsibilities: { $like: '%' + industry[i] + '%' } });
-        }
-        for (i = 0; i < jFuntion.length; i++) {
-            name.push({ '$JobFunctions.JobFunctionName$': { $like: '%' + jFuntion[i] + '%' } });
-            title.push({ JobTitle: { $like: '%' + jFuntion[i] + '%' } });
-            des.push({ JobDescription: { $like: '%' + jFuntion[i] + '%' } });
-            qual.push({ JobQualification: { $like: '%' + jFuntion[i] + '%' } });
-            res.push({ JobResponsibilities: { $like: '%' + jFuntion[i] + '%' } });
-        }
-        for (i = 0; i < jType.length; i++) {
-            title.push({ JobTitle: { $like: '%' + jType[i] + '%' } });
-            des.push({ JobDescription: { $like: '%' + jType[i] + '%' } });
-            qual.push({ JobQualification: { $like: '%' + jType[i] + '%' } });
-            res.push({ JobResponsibilities: { $like: '%' + jType[i] + '%' } });
-        }
-        if (name.length > 0) { everything.push(name); }
-        if (name.length > 0) { everything.push(title); }
-        if (name.length > 0) { everything.push(des); }
-        if (name.length > 0) { everything.push(qual); }
-        if (name.length > 0) { everything.push(res); }
-        if (everything.length > 0) {
-            whereStuff = { $or: everything };
-        } else {
-            whereStuff = {};
-        }
-        Job.findAll({
-            where: whereStuff,
-            attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
-                'JobPostDate', 'JobPostalCode', 'JobAddress'],
-            include: [
-                { model: model.Industry, as: 'Industries', attributes: ['IndustryName'], through: { attributes: [] } },
-                { model: model.JobFunction, as: 'JobFunctions', attributes: ['JobFunctionName'], through: { attributes: [] } },
-                { model: model.JobType, attributes: ['JobType'] },
-                { model: model.Company, attributes: ['CompanyName', 'CompanyAddress', 'CompanyPostalCode'] },
-                {
-                    model: model.Salary, attributes: ['SalaryFrom', 'SalaryTo'],
-                    include: [{ model: model.Currency, attributes: ['Symbol', 'CurrencyCode'] }]
-                },
-                { model: model.Country, attributes: ['CountryName'] }]
-        }).then(function (data) {
-            var result = []
-            bookmark.getAllBookmarkID(userId).then(ids => {
-                data.forEach(onejob => {
-                    var newjob = {
-                        "JobID": onejob.JobID,
-                        "JobTitle": onejob.JobTitle,
-                        "JobDescription": onejob.JobDescription,
-                        "JobQualification": onejob.JobQualification,
-                        "JobPostDate": onejob.JobPostDate,
-                        "JobPostalCode": onejob.JobPostalCode,
-                        "JobAddress": onejob.JobAddress,
-                        "Industries": onejob.Industries,
-                        "JobFunctions": onejob.JobFunctions,
-                        "JobType": onejob.JobType,
-                        "Company": onejob.Company,
-                        "Salary": onejob.Salary,
-                        "Country": onejob.Country,
-                        "isBookmarked": false
-                    }
-                    if (ids.includes(onejob.JobID)) { newjob["isBookmarked"] = true; }
-                    result.push(newjob);
+
+        // Load user's past search results
+        var industry = [], jFuntion = [], jType = [];
+        usersearch.getUserSearch(userId).then(function (result) {
+            industry = result.IndustryList;
+            jFuntion = result.JobFunctionList;
+            jType = result.JobTypeList;
+
+            // Formatting query conditions
+            var everything = [], name = [], title = [], des = [], qual = [], res = [], whereStuff;
+            for (i = 0; i < industry.length; i++) {
+                name.push({ '$Industries.IndustryName$': { $like: '%' + industry[i] + '%' } });
+                title.push({ JobTitle: { $like: '%' + industry[i] + '%' } });
+                des.push({ JobDescription: { $like: '%' + industry[i] + '%' } });
+                qual.push({ JobQualification: { $like: '%' + industry[i] + '%' } });
+                res.push({ JobResponsibilities: { $like: '%' + industry[i] + '%' } });
+            }
+            for (i = 0; i < jFuntion.length; i++) {
+                name.push({ '$JobFunctions.JobFunctionName$': { $like: '%' + jFuntion[i] + '%' } });
+                title.push({ JobTitle: { $like: '%' + jFuntion[i] + '%' } });
+                des.push({ JobDescription: { $like: '%' + jFuntion[i] + '%' } });
+                qual.push({ JobQualification: { $like: '%' + jFuntion[i] + '%' } });
+                res.push({ JobResponsibilities: { $like: '%' + jFuntion[i] + '%' } });
+            }
+            for (i = 0; i < jType.length; i++) {
+                title.push({ JobTitle: { $like: '%' + jType[i] + '%' } });
+                des.push({ JobDescription: { $like: '%' + jType[i] + '%' } });
+                qual.push({ JobQualification: { $like: '%' + jType[i] + '%' } });
+                res.push({ JobResponsibilities: { $like: '%' + jType[i] + '%' } });
+            }
+            if (name.length > 0) { everything.push({ $or: name }); }
+            if (title.length > 0) { everything.push({ $or: title }); }
+            if (des.length > 0) { everything.push({ $or: des }); }
+            if (qual.length > 0) { everything.push({ $or: qual }); }
+            if (res.length > 0) { everything.push({ $or: res }); }
+            if (everything.length > 0) { whereStuff = { $or: everything }; }
+            else { whereStuff = {}; }
+            var opposite = { $not: whereStuff };
+            var pastsearchjobs = [], allotherjob = [], jobresults = [];
+
+            // Get jobs based on past search results
+            Job.findAll({
+                where: whereStuff,
+                attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
+                    'JobPostDate', 'JobPostalCode', 'JobAddress'],
+                include: [
+                    { model: model.Industry, as: 'Industries', attributes: ['IndustryName'], through: { attributes: [] } },
+                    { model: model.JobFunction, as: 'JobFunctions', attributes: ['JobFunctionName'], through: { attributes: [] } },
+                    { model: model.JobType, attributes: ['JobType'] },
+                    { model: model.Company, attributes: ['CompanyName', 'CompanyAddress', 'CompanyPostalCode'] },
+                    {
+                        model: model.Salary, attributes: ['SalaryFrom', 'SalaryTo'],
+                        include: [{ model: model.Currency, attributes: ['Symbol', 'CurrencyCode'] }]
+                    },
+                    { model: model.Country, attributes: ['CountryName'] }]
+            }).then(function (data) {
+                pastsearchjobs = data;
+
+                // Checks whether user past search job is bookmarked by user
+                bookmark.getAllBookmarkID(userId).then(ids => {
+                    pastsearchjobs.forEach(onejob => {
+                        var newjob = {
+                            "JobID": onejob.JobID,
+                            "JobTitle": onejob.JobTitle,
+                            "JobDescription": onejob.JobDescription,
+                            "JobQualification": onejob.JobQualification,
+                            "JobPostDate": onejob.JobPostDate,
+                            "JobPostalCode": onejob.JobPostalCode,
+                            "JobAddress": onejob.JobAddress,
+                            "Industries": onejob.Industries,
+                            "JobFunctions": onejob.JobFunctions,
+                            "JobType": onejob.JobType,
+                            "Company": onejob.Company,
+                            "Salary": onejob.Salary,
+                            "Country": onejob.Country,
+                            "isBookmarked": false
+                        }
+                        if (ids.includes(onejob.JobID)) { newjob["isBookmarked"] = true; }
+                        jobresults.push(newjob);
+                    });
+                }).catch(function (error) {
+                    console.log("Error: " + error)
+                    reject(error.toString());
                 });
-                resolve(JSON.stringify(result))
+
+                // Get all other jobs
+                Job.findAll({
+                    where: opposite,
+                    attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
+                        'JobPostDate', 'JobPostalCode', 'JobAddress'],
+                    include: [
+                        { model: model.Industry, as: 'Industries', attributes: ['IndustryName'], through: { attributes: [] } },
+                        { model: model.JobFunction, as: 'JobFunctions', attributes: ['JobFunctionName'], through: { attributes: [] } },
+                        { model: model.JobType, attributes: ['JobType'] },
+                        { model: model.Company, attributes: ['CompanyName', 'CompanyAddress', 'CompanyPostalCode'] },
+                        {
+                            model: model.Salary, attributes: ['SalaryFrom', 'SalaryTo'],
+                            include: [{ model: model.Currency, attributes: ['Symbol', 'CurrencyCode'] }]
+                        },
+                        { model: model.Country, attributes: ['CountryName'] }]
+                }).then(function (data) {
+                    allotherjob = data;
+
+                    // Checks whether all other job is bookmarked by user
+                    bookmark.getAllBookmarkID(userId).then(ids => {
+                        allotherjob.forEach(onejob => {
+                            var newjob = {
+                                "JobID": onejob.JobID,
+                                "JobTitle": onejob.JobTitle,
+                                "JobDescription": onejob.JobDescription,
+                                "JobQualification": onejob.JobQualification,
+                                "JobPostDate": onejob.JobPostDate,
+                                "JobPostalCode": onejob.JobPostalCode,
+                                "JobAddress": onejob.JobAddress,
+                                "Industries": onejob.Industries,
+                                "JobFunctions": onejob.JobFunctions,
+                                "JobType": onejob.JobType,
+                                "Company": onejob.Company,
+                                "Salary": onejob.Salary,
+                                "Country": onejob.Country,
+                                "isBookmarked": false
+                            }
+                            if (ids.includes(onejob.JobID)) { newjob["isBookmarked"] = true; }
+                            jobresults.push(newjob);
+                        });
+                        resolve(JSON.stringify(jobresults))
+                    }).catch(function (error) {
+                        console.log("Error: " + error)
+                        reject(error.toString());
+                    });
+                });
+            }).catch(function (error) {
+                console.log("Error: " + error)
+                reject(error.toString());
             });
-        }).catch(function (error) {
-            console.log("Error: " + error)
-            reject(error.toString());
         });
-    })
+    });
 } //end of getFilteredJob()
 
 /**
