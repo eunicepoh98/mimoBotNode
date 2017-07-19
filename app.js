@@ -43,7 +43,7 @@ app.use('/api/bookmark', bookmarks);
 app.use('/api/resume', resumes);
 app.use('/api/application', applications);
 app.use('/api/notification', notifications);
-app.use('/api/wit', wit); //, token.verifyToken
+app.use('/api/wit', wit); //, token.verifyToken,
 app.use('/', authentication);
 
 // Load Passport Strategies
