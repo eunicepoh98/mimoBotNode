@@ -1,5 +1,7 @@
 var jobtype = module.exports = {};
 var JobType = require('../Models').JobType;
+var path = require('path');
+var witdata = require(path.resolve('./APIs/witdata.js'));
 
 /**
  * Get all the JobType information from the database
@@ -103,6 +105,9 @@ jobtype.addJobTypeSynonyms = function (jtId, newSynonyms) {
                 JSON.parse(data.Synonyms).forEach(function (onesynonyms) {
                     oldSynonyms.push(onesynonyms)
                 });
+                newSynonyms.forEach(function (one) {
+                    witdata.addKeywordToEntity('job_type', one);
+                })
                 var updateSynonyms = oldSynonyms.concat(newSynonyms);
                 data.update({ Synonyms: JSON.stringify(updateSynonyms), LastUpdated: '' }, { fields: ['Synonyms', 'LastUpdated'] })
                     .then(function (update) {

@@ -1,5 +1,7 @@
 var jobfunction = module.exports = {};
 var JobFunction = require('../Models').JobFunction;
+var path = require('path');
+var witdata = require(path.resolve('./APIs/witdata.js'));
 
 /**
  * Get all the JobFunction information from the database
@@ -104,6 +106,9 @@ jobfunction.addJobFunctionSynonyms = function (indId, newSynonyms) {
                     oldSynonyms.push(onesynonyms)
                 });
                 var updateSynonyms = oldSynonyms.concat(newSynonyms);
+                newSynonyms.forEach(function (one) {
+                    witdata.addKeywordToEntity('job_function', one);
+                })
                 data.update({ Synonyms: JSON.stringify(updateSynonyms), LastUpdated: '' }, { fields: ['Synonyms', 'LastUpdated'] })
                     .then(function (update) {
                         resolve({ data: JSON.stringify(update), msg: 'Successfully added jobfunction synonyms' })

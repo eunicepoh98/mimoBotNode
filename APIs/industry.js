@@ -1,5 +1,7 @@
 var industry = module.exports = {};
 var Industry = require('../Models').Industry;
+var path = require('path');
+var witdata = require(path.resolve('./APIs/witdata.js'));
 
 /**
  * Get all the Industry information from the database
@@ -105,6 +107,9 @@ industry.addIndustrySynonyms = function (indId, newSynonyms) {
                     oldSynonyms.push(onesynonyms)
                 });
                 var updateSynonyms = oldSynonyms.concat(newSynonyms);
+                newSynonyms.forEach(function (one) {
+                    witdata.addKeywordToEntity('industry_type', one);
+                })
                 data.update({ Synonyms: JSON.stringify(updateSynonyms), LastUpdated: '' }, { fields: ['Synonyms', 'LastUpdated'] })
                     .then(function (update) {
                         resolve({ data: JSON.stringify(update), msg: 'Successfully updated industry synonyms' })

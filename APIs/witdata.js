@@ -79,6 +79,28 @@ function createEntity(entityName, description, value) {
     });
 }
 
+
+function addKeywordToEntity(entityId, value) {
+    var newKeyword = {
+        "value": value
+    };
+    var options = {
+        url: "https://api.wit.ai/entities/" + entitiesId + "/values?v=20170307",
+        method: "POST",
+        body: newKeyword,
+        headers: {
+            Authorization: 'Bearer ' + serverToken,
+            'Content-Type': 'application/json'
+        },
+        json: true
+    };
+    //sends the request
+    request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+        return body
+    });
+}
+
 witdata.loadAllData = function () {
     return new Promise(function (resolve, reject) {
         witdata.loadIndustry().then(witdata.loadJobFunction().then(witdata.loadJobType().then(resolve)));
