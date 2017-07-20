@@ -2,12 +2,13 @@ var usersearch = module.exports = {};
 var UserSearch = require('../Models').UserSearch;
 
 /**
- * Add WorkExperience information into the database
+ * Add UserSearch into the database
  * @param {string} usersearch - JSON format of the usersearch details
  * {
       "JobTypeList": [],
       "JobFunctionList": ["Engineering"],
-      "IndustryList": ["Aerospace"]
+      "IndustryList": ["Aerospace"],
+      "UserID": 1
     }
  * @returns {string} JSON format of the added usersearch
  */
