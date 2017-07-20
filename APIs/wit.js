@@ -5,25 +5,27 @@ var jobfunction = require(path.resolve('./APIs/jobfunction.js'));
 var industry = require(path.resolve('./APIs/industry.js'));
 var jobtype = require(path.resolve('./APIs/jobtype.js'));
 var job = require(path.resolve('./APIs/job.js'));
+var usersearch = require(path.resolve('./APIs/usersearch.js'));
+var workexperience = require(path.resolve('./APIs/workexperience.js'));
 
 var witConfig = require('../config').wit;
 const { Wit, log } = require('node-wit');
 
 var serverToken = witConfig.serverToken;
 var sessionResult = {};
-var usersessionid = {};
 
+var industryList = [], jobfunctionList = [], jobtypeList = [];
 // loads Job Type, Job Function and Industry data from the database
-var jobType, jobFunction, jobIndustry;
-jobtype.getAllJobTypeName().then(function (data) {
-    jobType = data;
-})
-industry.getAllIndustryName().then(function (data) {
-    jobIndustry = data;
-})
-jobfunction.getAllJobFunctionName().then(function (data) {
-    jobFunction = data;
-})
+
+industry.getAllIndustrySynonyms().then(function (data) {
+    industryList = data;
+});
+jobfunction.getAllJobFunctionSynonyms().then(function (data) {
+    jobfunctionList = data;
+});
+jobtype.getAllJobTypeSynonyms().then(function (data) {
+    jobtypeList = data;
+});
 
 /**
  * Process user message and return the bot next action
@@ -32,9 +34,10 @@ jobfunction.getAllJobFunctionName().then(function (data) {
  * @param {string} prevContext - wit Context 
  * @returns {string} JSON format containing the bot message and wit context
  */
-wit.NLP = function (sessionId, userMsg, prevContext) {
+wit.NLP = function (sessionId, userMsg, prevContext, userid) {
     return new Promise(function (resolve, reject) {
         if (userMsg == "") { userMsg = " "; }
+        prevContext.userid = userid;
         client.runActions(sessionId, userMsg, prevContext)
             .then(function (context1) {
                 var result = sessionResult[sessionId];
@@ -50,18 +53,6 @@ wit.NLP = function (sessionId, userMsg, prevContext) {
     });
 };
 
-wit.test = function () {
-    return new Promise(function (resolve, reject) {
-        var industries = ['aerospace', '1', '2']
-        var s = []
-        for (i = 0; i < industries.length; i++) {
-            s.push({ IndustryName: { $like: '%' + industries[i] + '%' } })
-        }
-        resolve(s)
-    })
-}
-
-
 const actions = {
     send(request, response) {
         const { sessionId, context, userText, entities } = request;
@@ -76,7 +67,7 @@ const actions = {
                 context.addWorkExperience = intent;
                 context.action = { action: false };
             } else if (intent == "search job") {
-                context.action = { action: true, name: 'displaySuggestion', data: jobIndustry }; //industry list from db 
+                context.action = { action: true, name: 'displaySuggestion', data: industryList }; //industry list from db 
                 context.searchJob = intent;
             }
             delete context.missingIntent;
@@ -90,7 +81,7 @@ const actions = {
         context.userid = context.userid;
         context.searchJob = context['searchJob'];
         var short_replies = firstEntityValue(entities, 'short_replies');
-        context.action = { action: true, name: 'displaySuggestion', data: jobFunction }; //list of job function from db
+        context.action = { action: true, name: 'displaySuggestion', data: jobfunctionList }; //list of job function from db
         if (short_replies == 'no') {
             context.industryType = [];
         } else {
@@ -109,7 +100,7 @@ const actions = {
         context.searchJob = context['searchJob'];
         context.industryType = context['industryType'];
         var short_replies = firstEntityValue(entities, 'short_replies');
-        context.action = [{ action: true, name: 'displaySuggestion', data: jobType }]; //list of job type from db
+        context.action = [{ action: true, name: 'displaySuggestion', data: jobtypeList }]; //list of job type from db
         if (short_replies == 'no') {
             context.jobFunction = [];
         } else {
@@ -150,15 +141,24 @@ const actions = {
         var industryType = context['industryType'];
         var jobFunction = context['jobFunction'];
         context.action = { action: true, name: "resetID" };
-        //console.log(jobType + " " + industryType + " " + jobFunction)
-        job.getUserJob(industryType, jobFunction, jobType).then(function (result) {
+        
+        //add user search data into database
+        usersearch.addUserSearch({
+            JobTypeList: JSON.stringify(jobType), JobFunctionList: JSON.stringify(jobFunction),
+            IndustryList: JSON.stringify(industryType), UserID: userid
+        })
+            .then(function (result) { console.log("Usersearch created: " + result); })
+            .catch(function (error) { console.log(error); });
+
+        //get filtered job based on user search criteria
+        job.getUserJob(industryType, jobFunction, jobType, userid).then(function (result) {
             delete context.industryType;
             delete context.jobFunction;
             delete context.jobType;
             delete context.searchJob;
             delete context.suggestionList;
             context.result = [{ jobList: JSON.parse(result) }]; //list of jobs based on users criteria
-        })
+        });
         return context;
     },
     //Add Work Experience Methods
@@ -296,8 +296,11 @@ const actions = {
         var description = context['description'];
         var startDay = context['startDay'];
         var endDay = context['endDay'];
-        console.log(companyName + " " + workAs + " " + description + " " + startDay + " " + endDay);
-        //add to db here
+
+        //add to workexperience to database
+        workexperience.addWorkExperience({
+            CompanyName: companyName, Role: workAs, Description: description, StartDate: startDay, EndDate: endDay, UserID: userid
+        }).then(function (result) { }).catch(function (error) { });
         return context;
     }
 }
@@ -314,9 +317,7 @@ const firstEntityValue = function (entities, entity) {
         entities[entity].length > 0 &&
         entities[entity][0].value
         ;
-    if (!val) {
-        return null;
-    }
+    if (!val) { return null; }
     return typeof val === 'object' ? val.value : val;
 };
 
@@ -332,12 +333,11 @@ const getEntityValues = function (entities, entity) {
         Array.isArray(entities[entity]) &&
         entities[entity].length > 0 &&
         entities[entity][0].value;
-    if (!val) {
-        return null;
-    } else {
+    if (!val) { return null; }
+    else {
         entities[entity].forEach(function (one) {
             entityArray.push(one.value);
-        })
+        });
         return entityArray;
     }
 }

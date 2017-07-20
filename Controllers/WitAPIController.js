@@ -26,11 +26,11 @@ router.post('/', function (req, res, next) {
     var userMsg = req.body.userMsg;
     var sessionId = req.body.id;
     var context = req.body.context;
-    context.userid = req.headers.userid;
-    wit.NLP(sessionId, userMsg, context)
+    var userid = req.headers.userid;
+    wit.NLP(sessionId, userMsg, context, userid)
         .then(function (result) {
             res.send(result);
-        }).catch(function (result) {
+        }).catch(function (error) {
             var response = { success: false, message: error };
             res.send(response);
         });
