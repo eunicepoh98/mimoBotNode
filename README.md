@@ -10,14 +10,14 @@ My Notes
 + [Querying](http://docs.sequelizejs.com/manual/tutorial/querying.html)
 + [Bulk CRUD](http://docs.sequelizejs.com/manual/tutorial/instances.html)
 
-What's "done":
-- APIs for all the tables
-- add synonyms column, api to add synonyms
-- load wit entities values with synonyms
-
 TODO:
+- ~APIs for all the tables~
+- ~add synonyms column, api to add synonyms~
+- ~load wit entities values with synonyms~
 - seeding data
-- edit get jobs filtering *** (add search in synonyms column)
+- ~edit get jobs filtering *** (add search in synonyms column)~
+- ~getUserJob filter by - what they search, past search and all other jobs~
+- resume query methods for job?
 - get applications *
 - add job [include company] api, view? *
 - resume upload (Hibba)
@@ -29,22 +29,19 @@ Nature Language for Developers
 - [HTTP API](https://wit.ai/docs/http/20170307#put--entities-:entity-id-link)
 - [Node SDK](https://github.com/wit-ai/node-wit)
 
-What's "done":
-- API to load data and nlp
-- able to handle search job, add work experience scenario **
-
 TODO:
-- integrate add work experience, usersearch with database 
-- testings + training
+- ~API to load data and nlp~
+- ~able to handle search job, add work experience scenario **~
+- ~integrate add work experience, usersearch with database~
+- testings + training, shorten response time
+- ~api to add new keywords(synonyms) to entities~
 ***
 ### [JSON Web Token (JWT)](https://jwt.io/)
 **JSON Web Tokens** are an open, industry standard RFC 7519 method for representing claims securely between two parties.
 - [Tutorial for node.js](https://www.sitepoint.com/using-json-web-tokens-node-js/)
- 
-What's "done":
-- generate, verify and renew jwt token
 
 TODO:
+- ~generate, verify and renew jwt token~
 - verify jwt for all routes
 ***
 ### [Passport.js](http://passportjs.org)
@@ -52,8 +49,8 @@ Passport Strategies
 - [Local Passport](https://www.npmjs.com/package/passport-local)
 - [Facebook Passport](https://www.npmjs.com/package/passport-facebook-token)
 
-What's "done":
-- sign in and sign up with local passport & facebook
+TODO:
+- ~sign in and sign up with local passport & facebook~
 
 ### Firebase Cloud Messaging (Notification)
 ***
