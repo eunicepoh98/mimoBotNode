@@ -42,7 +42,7 @@ router.get('/:id', function (req, res, next) {
  * {
 	    "CompanyName": "",
       "CompanyAddress": "",
-      CompanyPostalCode: "",
+      "CompanyPostalCode": ""
    }
  */
 router.post('/', function (req, res, next) {
