@@ -17,9 +17,9 @@ TODO:
 - seeding data
 - ~edit get jobs filtering *** (add search in synonyms column)~
 - ~getUserJob filter by - what they search, past search and all other jobs~
-- resume query methods for job?
-- get applications *
-- add job [include company] api, view? *
+- ~query methods for job~
+- ~get applications *~
+- add job ~[include company] api,~ view? *
 - resume upload (Hibba)
 
 ### [Wit.ai](https://wit.ai/)
