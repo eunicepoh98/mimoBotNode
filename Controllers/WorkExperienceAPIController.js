@@ -59,7 +59,7 @@ router.post('/', function (req, res, next) {
 /**
  * [PUT]
  * Update WorkExperience
- * http://localhost:3000/api/workexperience
+ * http://localhost:3000/api/workexperience/id
  * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
@@ -71,7 +71,7 @@ router.post('/', function (req, res, next) {
       "UserID": ""
    }
  */
-router.put('/', function (req, res) {
+router.put('/:id', function (req, res) {
     var userid = req.headers.userid;
     var we = {
         CompanyName: req.body.CompanyName,
