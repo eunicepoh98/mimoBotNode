@@ -18,6 +18,15 @@ router.get('/', function (req, res, next) {
       var response = { success: false, message: error };
       res.send(response);
     });
+
+  // job.getUserJob(['Aerospace', 'Construction'], [], [], userid)
+  //   .then(function (data) {
+  //     var response = { success: true, result: JSON.parse(data) };
+  //     res.status(200).send(response);
+  //   }).catch(function (error) {
+  //     var response = { success: false, message: error };
+  //     res.send(response);
+  //   });
   // job.getAllJob()
   //   .then(function (data) {
   //     var response = { success: true, result: JSON.parse(data) };
