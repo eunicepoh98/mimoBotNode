@@ -1,7 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
+var multer = require('multer');
+var moment = require('moment');
 var resume = require(path.resolve('./APIs/resume.js'));
+var today = moment(new Date()).format("YYYYMMDD")
+var upload = multer({ dest: 'uploads/' + today });
 
 /**
  * [GET]
@@ -31,9 +35,17 @@ router.get('/', function (req, res, next) {
 	    "Description": ""
    }
 */
-router.post('/', function (req, res, next) {
+router.post('/', upload.single('file'), function (req, res, next) {
   var userid = req.headers.userid;
-  resume.addResume(userid, req.body.Description)
+  var file = req.file;
+  var newResume = {
+    UserID: userid,
+    Description: req.body.Description,
+    MD5Code: file.filename,
+    PathName: file.path,
+    FileName: file.originalname,
+  }
+  resume.addResume(newResume)
     .then(function (data) {
       var response = { success: true, message: 'Successfully added resume', result: JSON.parse(data) };
       res.status(200).send(response);

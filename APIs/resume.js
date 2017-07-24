@@ -25,20 +25,13 @@ resume.getAllResume = function (userId) {
  * @param {string} description - Description of resume
  * @returns {string} JSON format of the information of the new Resume added
  */
-resume.addResume = function (userId, description) {
+resume.addResume = function (resume) {
     return new Promise(function (resolve, reject) {
-        var newResume = {
-            UserID: userId,
-            Description: description,
-            MD5Code: "",
-            PathName: "",
-            FileName: "",
-        }
-        Resume.create(newResume)
+        Resume.create(resume)
             .then(function (result) {
                 resolve(JSON.stringify(result))
             }).catch(function (error) {
-                console.log("Error: " + error)
+                console.log("Error: " + eror)
                 reject(error.toString());
             });
     });
