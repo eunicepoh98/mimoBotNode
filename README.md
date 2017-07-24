@@ -20,7 +20,8 @@ TODO:
 - ~query methods for job~
 - ~get applications *~
 - add job ~[include company] api,~ view? *
-- resume upload (Hibba)
+- ~resume upload (Hibba)~
+- get resume
 
 ### [Wit.ai](https://wit.ai/)
 ***
