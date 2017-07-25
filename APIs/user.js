@@ -2,6 +2,33 @@ var user = module.exports = {};
 var User = require('../Models').User;
 var model = require('../Models');
 var token = require('../token.js');
+var email = require('../email.js');
+
+/**
+ * Check if email exist in database
+ * @param {string} email - User's email
+ * @returns {string} JSON format of the User details
+ */
+user.checkEmail = function (host, useremail) {
+    return new Promise(function (resolve, reject) {
+        User.findOne({ where: { Email: useremail } })
+            .then(function (gotuser) {
+                if (gotuser) {
+                    email.sendVerificationEmail(host, useremail)
+                        .then(function (result) {
+                            resolve(result);
+                        }).catch(function (error) {
+                            reject(error);
+                        });
+                } else {
+                    reject("Sorry, you don't seems to have an account registered under that email");
+                }
+            }).catch(function (error) {
+                console.log("Error: " + error);
+                reject(error.toString());
+            });
+    });
+} //end of getOneUser()
 
 /**
  * Create account for Facebook User
@@ -39,7 +66,9 @@ user.facebook = function (newuser) {
                                     "UserID": newUser.UserID,
                                     "accessToken": token.generateToken(userinfo)
                                 }
-                                resolve({ user: response, msg: 'Successfully signed in with Facebook' });
+                                user.updateVerificationStatus(newUser.Email).then(function () {
+                                    resolve({ user: response, msg: 'Successfully signed in with Facebook' });
+                                });
                             }
                         }).catch(function (error) {
                             console.log("Error: " + error);
@@ -58,7 +87,7 @@ user.facebook = function (newuser) {
  * @param {string} user - JSON format of User's details
  * @returns {string} JSON format of user {UserID, Email, accessToken} and message || error message
  */
-user.signup = function (newuser) {
+user.signup = function (host, newuser) {
     return new Promise(function (resolve, reject) {
         var plainpassword = newuser.Password
         newuser.Password = User.generateHash(newuser.Password)
@@ -74,15 +103,12 @@ user.signup = function (newuser) {
                             }
                             if (newUser) {
                                 //Send email to user for verification
-
-                                resolve({ user: result.user, msg: 'Successfully signed up. An email have been sent to you. Please verify before logging in.' });
-                                // user.signin(newUser.Email, plainpassword)
-                                //     .then(function (result) {
-                                //         resolve({ user: result.user, msg: 'Successfully signed up' });
-                                //     }).catch(function (error) {
-                                //         console.log("Error: " + error);
-                                //         reject(error);
-                                //     });
+                                email.sendVerificationEmail(host, newUser.Email)
+                                    .then(function (result) {
+                                        resolve({ user: result.user, msg: 'Successfully signed up. An email have been sent to you. Please verify before logging in.' });
+                                    }).catch(function (error) {
+                                        reject(error);
+                                    });
                             }
                         }).catch(function (error) {
                             console.log("Error: " + error);
@@ -106,13 +132,14 @@ user.signin = function (email, password) {
     return new Promise(function (resolve, reject) {
         User.findOne({ where: { Email: email } })
             .then(function (user) {
-                console.log("user " + JSON.stringify(user));
-
                 if (!user) {
                     reject('Email does not exist');
                 }
                 if (!user.validPassword(password)) {
                     reject('Incorrect password.');
+                }
+                if (!user.Verified) {
+                    reject("You have not verified your email account");
                 }
                 var userinfo = {
                     "Email": user.Email,
@@ -197,6 +224,32 @@ user.updateDeviceToken = function (userId, deviceToken) {
                         }).catch(function (error) {
                             console.log("Error: " + error)
                             reject(error.toString());
+                        });
+                } else {
+                    reject("User not found");
+                }
+            }).catch(function (error) {
+                console.log("Error: " + error)
+                reject(error.toString());
+            });
+    });
+};// end of updateDeviceToken()
+
+/**
+ * Update the User's Verification Status
+ * @param {string} email - User's Email
+ */
+user.updateVerificationStatus = function (email) {
+    return new Promise(function (resolve, reject) {
+        User.find({ where: { Email: email } })
+            .then(function (user) {
+                if (user) {
+                    user.update({ Verified: true, LastUpdated: '' }, { fields: ['Verified', 'LastUpdated'] })
+                        .then(function (update) {
+                            resolve("Your email " + email + " has been successfully verified")
+                        }).catch(function (error) {
+                            console.log("Error: " + error)
+                            reject();
                         });
                 } else {
                     reject("User not found");

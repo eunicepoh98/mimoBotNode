@@ -107,6 +107,17 @@ module.exports = function (sequelize, DataTypes) {
                 this.setDataValue('DeviceToken', val);
             }
         },
+        Verified: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true,
+            defaultValue: false,
+            get: function () {
+                return this.getDataValue('Verified');
+            },
+            set: function (val) {
+                this.setDataValue('Verified', val);
+            }
+        },
         RecordStatus: {
             type: DataTypes.STRING,
             allowNull: false,

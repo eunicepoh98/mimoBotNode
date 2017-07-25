@@ -3,10 +3,45 @@ var router = express.Router();
 var path = require('path');
 var passport = require('passport');
 var token = require('../token.js');
+var email = require('../email.js');
+var user = require(path.resolve('./APIs/user.js'));
 
 router.get('/', function (req, res) {
     res.send('Available')
 })
+
+/**
+ * [POST]
+ * Resend confirmation email to user's email
+ * http://localhost:3000/resendemail
+ * Body: JSON(application/json)
+ * {
+        "email": ""   
+    }
+ */
+router.post('/resendemail', function (req, res) {
+    user.checkEmail(req.get('host'), req.body.email)
+        .then(function (result) {
+            res.send({ success: true, message: result });
+        }).catch(function (error) {
+            res.send({ success: false, message: error });
+        });
+});
+
+/**
+ * [GET]
+ * URL that user receive in their email to verify their email address
+ * http://localhost:3000/verifyemail?token=
+ */
+router.get('/verifyemail?', function (req, res) {
+    var token = req.query.token;
+    email.verifyEmail(token)
+        .then(function (result) {
+            res.send(result);
+        }).catch(function (error) {
+            res.send(error);
+        });
+});
 
 /**
  * Check user credentials for sign in

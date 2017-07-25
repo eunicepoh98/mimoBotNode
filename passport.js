@@ -26,7 +26,7 @@ module.exports = function (passport) {
                 CountryID: req.body.CountryID,
                 DeviceToken: req.body.DeviceToken
             };
-            user.signup(data)
+            user.signup(req.get('host'), data)
                 .then(function (data) {
                     return done(null, data.user, { message: data.msg });
                 }).catch(function (error) {
@@ -65,7 +65,6 @@ module.exports = function (passport) {
                 DateOfBirth: profile._json.birthday,
                 Gender: profile._json.gender
             };
-            console.log(data);
             user.facebook(data)
                 .then(function (data) {
                     return done(null, data.user, { message: data.msg });
