@@ -73,13 +73,16 @@ user.signup = function (newuser) {
                                 reject("Something went wrong, Please try again");
                             }
                             if (newUser) {
-                                user.signin(newUser.Email, plainpassword)
-                                    .then(function (result) {
-                                        resolve({ user: result.user, msg: result.msg });
-                                    }).catch(function (error) {
-                                        console.log("Error: " + error);
-                                        reject(error);
-                                    });
+                                //Send email to user for verification
+
+                                resolve({ user: result.user, msg: 'Successfully signed up. An email have been sent to you. Please verify before logging in.' });
+                                // user.signin(newUser.Email, plainpassword)
+                                //     .then(function (result) {
+                                //         resolve({ user: result.user, msg: 'Successfully signed up' });
+                                //     }).catch(function (error) {
+                                //         console.log("Error: " + error);
+                                //         reject(error);
+                                //     });
                             }
                         }).catch(function (error) {
                             console.log("Error: " + error);
