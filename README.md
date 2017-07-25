@@ -21,6 +21,7 @@ TODO:
 - ~get applications *~
 - add job ~[include company] api,~ view? *
 - ~resume upload (Hibba)~
+- ~verify email~
 - get resume
 
 ### [Wit.ai](https://wit.ai/)
