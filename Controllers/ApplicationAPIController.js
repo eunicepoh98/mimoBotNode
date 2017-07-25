@@ -10,7 +10,8 @@ var application = require(path.resolve('./APIs/application.js'));
  * Headers: x-access-token (JWT Token) | For Testing - userid
  */
 router.get('/', function (req, res, next) {
-  var userid = req.headers.userid;
+  var userid = req.headers.userid;   
+  if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
   application.getAllApplication(userid)
     .then(function (data) {
       var response = { success: true, result: JSON.parse(data) };
@@ -33,7 +34,8 @@ router.get('/', function (req, res, next) {
    }
  */
 router.post('/', function (req, res, next) {
-  var userid = req.headers.userid;
+  var userid = req.headers.userid;   
+  if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
   var newapplication = {
     JobID: req.body.JobID,
     UserID: userid,

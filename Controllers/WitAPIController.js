@@ -27,6 +27,7 @@ router.post('/', function (req, res, next) {
     var sessionId = req.body.id;
     var context = req.body.context;
     var userid = req.headers.userid;
+  if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
     wit.NLP(sessionId, userMsg, context, userid)
         .then(function (result) {
             res.send(result);
