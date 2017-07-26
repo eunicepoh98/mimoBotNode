@@ -5,7 +5,7 @@ var industry = require(path.resolve('./APIs/industry.js'));
 
 /** 
  * Get all Industries
- * http://localhost:3000/api/industry
+ * http://localhost:8680/api/industry
 */
 router.get('/', function (req, res, next) {
   industry.getAllIndustry()
@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
 
 /** 
  * Get One Industry by Id
- * http://localhost:3000/api/industry/1
+ * http://localhost:8680/api/industry/1
  * Params: /id
  * id - id of the industry
 */
@@ -37,7 +37,7 @@ router.get('/:id', function (req, res, next) {
 
 /** 
  * Add Industry
- * http://localhost:3000/api/industry
+ * http://localhost:8680/api/industry
  * Body: JSON(application/json)
  * {
 	    "IndustryName": "",
@@ -61,7 +61,7 @@ router.post('/', function (req, res, next) {
 
 /** 
  * Add Industry Synonyms
- * http://localhost:3000/api/industry/synonyms
+ * http://localhost:8680/api/industry/synonyms
  * Body: JSON(application/json)
  * {
       "IndustryID": "",

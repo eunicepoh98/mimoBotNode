@@ -6,7 +6,7 @@ var workexperience = require(path.resolve('./APIs/workexperience.js'));
 /**
  * [GET]
  * Get all WorkExperience of 1 user
- * http://localhost:3000/api/workexperience
+ * http://localhost:8680/api/workexperience
  * Headers: x-access-token (JWT Token) | For Testing - userid
  */
 router.get('/', function (req, res, next) {
@@ -25,7 +25,7 @@ router.get('/', function (req, res, next) {
 /**
  * [POST]
  * Add WorkExperience
- * http://localhost:3000/api/workexperience
+ * http://localhost:8680/api/workexperience
  * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
@@ -61,7 +61,7 @@ router.post('/', function (req, res, next) {
 /**
  * [PUT]
  * Update WorkExperience
- * http://localhost:3000/api/workexperience/id
+ * http://localhost:8680/api/workexperience/id
  * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
@@ -79,6 +79,7 @@ router.put('/:id', function (req, res) {
     var we = {
         CompanyName: req.body.CompanyName,
         Description: req.body.Description,
+        Role: req.body.Role,
         StartDate: req.body.StartDate,
         EndDate: req.body.EndDate,
         UserID: userid
@@ -96,7 +97,7 @@ router.put('/:id', function (req, res) {
 /**
  * [DELETE]
  * Delete WorkExperience
- * http://localhost:3000/api/workexperience/1
+ * http://localhost:8680/api/workexperience/1
  * Headers: x-access-token (JWT Token) | For Testing - userid
  * Params: workexperience id
  */

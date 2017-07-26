@@ -4,7 +4,7 @@ var path = require('path');
 var notification = require(path.resolve('./APIs/notification.js'));
 
 /* Get all Notification
- * http://localhost:3000/api/notification
+ * http://localhost:8680/api/notification
  * Headers: x-access-token (JWT Token) | For Testing - userid
 */
 router.get('/', function (req, res, next) {
@@ -23,7 +23,7 @@ router.get('/', function (req, res, next) {
 /**
  * [POST]
  * Send Notification to one user
- * http://localhost:3000/api/notification
+ * http://localhost:8680/api/notification
  * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {

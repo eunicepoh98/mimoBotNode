@@ -10,7 +10,7 @@ var upload = multer({ dest: 'uploads/' + today });
 /**
  * [GET]
  * Get all resume of user
- * http://localhost:3000/api/resume
+ * http://localhost:8680/api/resume
  * Headers: x-access-token (JWT Token) | For Testing - userid
  */
 router.get('/', function (req, res, next) {
@@ -29,7 +29,7 @@ router.get('/', function (req, res, next) {
 /**
  * [POST]
  * Add Resume
- * http://localhost:3000/api/resume
+ * http://localhost:8680/api/resume
  * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
@@ -59,7 +59,7 @@ router.post('/', upload.single('file'), function (req, res, next) {
 /** 
  * [PUT]
  * Update Resume
- * http://localhost:3000/api/resume
+ * http://localhost:8680/api/resume
  * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
@@ -81,7 +81,7 @@ router.put('/', function (req, res) {
 /**
  * [DELETE]
  * Delete Resume
- * http://localhost:3000/api/resume/1
+ * http://localhost:8680/api/resume/1
  * Headers: x-access-token (JWT Token) | For Testing - userid
  * Params: resume id
  */

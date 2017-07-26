@@ -6,7 +6,7 @@ var bookmark = require(path.resolve('./APIs/bookmark.js'));
 /**
  * [GET]
  * Get all User Bookmarks
- * http://localhost:3000/api/bookmark
+ * http://localhost:8680/api/bookmark
  * Headers: x-access-token (JWT Token) | For Testing - userid
  */
 router.get('/', function (req, res, next) {
@@ -25,7 +25,7 @@ router.get('/', function (req, res, next) {
 /** 
  * [POST]
  * Add User Bookmark
- * http://localhost:3000/api/bookmark
+ * http://localhost:8680/api/bookmark
  * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
@@ -52,7 +52,7 @@ router.post('/', function (req, res, next) {
 /**
  * [PUT]
  * Remove Bookmark
- * http://localhost:3000/api/bookmark
+ * http://localhost:8680/api/bookmark
  * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {

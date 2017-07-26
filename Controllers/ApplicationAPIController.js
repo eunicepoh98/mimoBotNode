@@ -6,7 +6,7 @@ var application = require(path.resolve('./APIs/application.js'));
 /**
  * [GET]
  * Get all User Applications
- * http://localhost:3000/api/application
+ * http://localhost:8680/api/application
  * Headers: x-access-token (JWT Token) | For Testing - userid
  */
 router.get('/', function (req, res, next) {
@@ -25,7 +25,7 @@ router.get('/', function (req, res, next) {
 /** 
  * [POST]
  * Add User Application
- * http://localhost:3000/api/application
+ * http://localhost:8680/api/application
  * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {

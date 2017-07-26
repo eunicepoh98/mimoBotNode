@@ -5,7 +5,7 @@ var wit = require(path.resolve('./APIs/wit.js'));
 var witdata = require(path.resolve('./APIs/witdata.js'));
 
 /* Test Wit Controller
- * http://localhost:3000/api/wit
+ * http://localhost:8680/api/wit
 */
 router.get('/', function (req, res, next) {
     res.send("Available");
@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
 
 /** 
  * Process Nature Language
- * http://localhost:3000/api/wit
+ * http://localhost:8680/api/wit
  * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
@@ -38,7 +38,7 @@ router.post('/', function (req, res, next) {
 });
 
 /* Populate Some Data into Wit 
- * http://localhost:3000/api/wit/data
+ * http://localhost:8680/api/wit/data
 */
 router.get('/data', function (req, res, next) {
     witdata.loadAllData()

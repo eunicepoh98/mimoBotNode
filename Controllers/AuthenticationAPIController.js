@@ -13,7 +13,7 @@ router.get('/', function (req, res) {
 /**
  * [POST]
  * Resend confirmation email to user's email
- * http://localhost:3000/resendemail
+ * http://localhost:8680/resendemail
  * Body: JSON(application/json)
  * {
         "email": ""   
@@ -31,7 +31,7 @@ router.post('/resendemail', function (req, res) {
 /**
  * [GET]
  * URL that user receive in their email to verify their email address
- * http://localhost:3000/verifyemail?token=
+ * http://localhost:8680/verifyemail?token=
  */
 router.get('/verifyemail?', function (req, res) {
     var token = req.query.token;
@@ -45,7 +45,7 @@ router.get('/verifyemail?', function (req, res) {
 
 /**
  * Check user credentials for sign in
- * http://localhost:3000/facebook
+ * http://localhost:8680/facebook
  * Body: JSON(application/json)
  * {
         "access_token": ""   
@@ -68,7 +68,7 @@ router.post('/facebook', function (req, res, next) {
 
 /**
  * Create an account for the user
- * http://localhost:3000/signup
+ * http://localhost:8680/signup
  * Body: JSON(application/json)
  * {
         "email": "",
@@ -96,7 +96,7 @@ router.post('/signup', function (req, res, next) {
 
 /**
  * Check user credentials for sign in
- * http://localhost:3000/signin
+ * http://localhost:8680/signin
  * Body: JSON(application/json)
  * {
         "Email": "",
@@ -116,7 +116,7 @@ router.post('/signin', function (req, res, next) {
 
 /**
  * Check if JWT token is valid
- * http://localhost:3000/checktoken
+ * http://localhost:8680/checktoken
  */
 router.get('/checktoken', token.verifyToken, function (req, res) {
     //console.log(req.decoded)
@@ -128,7 +128,7 @@ router.get('/checktoken', token.verifyToken, function (req, res) {
 
 /**
  * Renew JWT token
- * http://localhost:3000/renewtoken
+ * http://localhost:8680/renewtoken
  * Body: JSON(application/json)
  * {
         "Email": 1,

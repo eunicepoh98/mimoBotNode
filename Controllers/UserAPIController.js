@@ -6,7 +6,7 @@ var user = require(path.resolve('./APIs/user.js'));
 /** 
  * [GET]
  * Get User Details by UserID
- * http://localhost:3000/api
+ * http://localhost:8680/api
  * Headers: x-access-token (JWT Token) | For Testing - userid
 */
 router.get('/', function (req, res, next) {
@@ -25,7 +25,7 @@ router.get('/', function (req, res, next) {
 /**
  * [PUT]
  * Update User
- * http://localhost:3000/api
+ * http://localhost:8680/api
  * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {
@@ -60,7 +60,7 @@ router.put('/', function (req, res) {
 /**
  * [PUT]
  * Update User Device Token
- * http://localhost:3000/api/user/devicetoken
+ * http://localhost:8680/api/user/devicetoken
  * Headers: x-access-token (JWT Token) | For Testing - userid
  * Body: JSON(application/json)
  * {

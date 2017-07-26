@@ -4,7 +4,7 @@ var path = require('path');
 var jobfunction = require(path.resolve('./APIs/jobfunction.js'));
 
 /* Get all JobFunctions
- * http://localhost:3000/api/jobfunction
+ * http://localhost:8680/api/jobfunction
 */
 router.get('/', function (req, res, next) {
   jobfunction.getAllJobFunction()
@@ -18,7 +18,7 @@ router.get('/', function (req, res, next) {
 });
 
 /* Get One JobFunction by Id
- * http://localhost:3000/api/jobfunction/1
+ * http://localhost:8680/api/jobfunction/1
  * Params: /id
  * id - id of the job function
 */
@@ -35,7 +35,7 @@ router.get('/:id', function (req, res, next) {
 
 /** 
  * Add JobFunction
- * http://localhost:3000/api/jobfunction
+ * http://localhost:8680/api/jobfunction
  * Body: JSON(application/json)
  * {
 	    "JobfunctionName": "",
@@ -59,7 +59,7 @@ router.post('/', function (req, res, next) {
 
 /** 
  * Add JobFunction Synonyms
- * http://localhost:3000/api/jobfunction/synonyms
+ * http://localhost:8680/api/jobfunction/synonyms
  * Body: JSON(application/json)
  * {
       "JobFunctionID": "",

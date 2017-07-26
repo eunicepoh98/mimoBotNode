@@ -6,7 +6,7 @@ var company = require(path.resolve('./APIs/company.js'));
 
 /** [GET] 
  * Get all Jobs
- * http://localhost:3000/api/job
+ * http://localhost:8680/api/job
  * Headers: x-access-token (JWT Token) | For Testing - userid
  */
 router.get('/', function (req, res, next) {
@@ -42,7 +42,7 @@ router.get('/', function (req, res, next) {
 /** 
  * [POST]
  * Add Job
- * http://localhost:3000/api/job/add
+ * http://localhost:8680/api/job/add
  * Body: JSON(application/json)
  * {
 	    "JobTitle": "",
@@ -91,7 +91,7 @@ router.post('/add', function (req, res, next) {
 /** 
  * [POST]
  * Add Job
- * http://localhost:3000/api/job
+ * http://localhost:8680/api/job
  * Body: JSON(application/json)
  * {
 	    "JobTitle": "",
@@ -149,7 +149,7 @@ router.post('/', function (req, res, next) {
 });
 
 /* Get One Job by Id
- * http://localhost:3000/api/job/1
+ * http://localhost:8680/api/job/1
  * Params: /id
  * id - id of the job
 */

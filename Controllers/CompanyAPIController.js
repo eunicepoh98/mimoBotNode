@@ -5,7 +5,7 @@ var company = require(path.resolve('./APIs/company.js'));
 
 /**
  * Get all Companies
- * http://localhost:3000/api/company
+ * http://localhost:8680/api/company
  */
 router.get('/', function (req, res, next) {
   company.getAllCompany()
@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
 
 /**
  * Get One Company by Id
- * http://localhost:3000/api/company/1
+ * http://localhost:8680/api/company/1
  * Params: /id
  * id - id of the company
  */
@@ -37,7 +37,7 @@ router.get('/:id', function (req, res, next) {
 
 /**
  * Add Company
- * http://localhost:3000/api/company
+ * http://localhost:8680/api/company
  * Body: JSON(application/json)
  * {
 	    "CompanyName": "",

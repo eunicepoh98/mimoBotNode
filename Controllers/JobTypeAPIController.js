@@ -5,7 +5,7 @@ var jobtype = require(path.resolve('./APIs/jobtype.js'));
 
 /** 
  * Get all JobTypes
- * http://localhost:3000/api/jobtype
+ * http://localhost:8680/api/jobtype
 */
 router.get('/', function (req, res, next) {
   jobtype.getAllJobType()
@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
 
 /**
  * Get One JobType by Id
- * http://localhost:3000/api/jobtype/1
+ * http://localhost:8680/api/jobtype/1
  * Params: /id
  * id - id of the job type
 */
@@ -37,7 +37,7 @@ router.get('/:id', function (req, res, next) {
 
 /**
  * Add JobType
- * http://localhost:3000/api/jobtype
+ * http://localhost:8680/api/jobtype
  * Body: JSON(application/json)
  * {
 	    "JobType": "",
@@ -61,7 +61,7 @@ router.post('/', function (req, res, next) {
 
 /** 
  * Add JobType Synonyms
- * http://localhost:3000/api/jobtype/synonyms
+ * http://localhost:8680/api/jobtype/synonyms
  * Body: JSON(application/json)
  * {
       "JobTypeID": "",
