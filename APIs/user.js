@@ -131,23 +131,23 @@ user.signup = function (host, newuser) {
 user.signin = function (email, password) {
     return new Promise(function (resolve, reject) {
         User.findOne({ where: { Email: email } })
-            .then(function (user) {
-                if (!user) {
+            .then(function (gotuser) {
+                if (!gotuser) {
                     reject('Email does not exist');
                 }
-                if (!user.validPassword(password)) {
+                if (!gotuser.validPassword(password)) {
                     reject('Incorrect password.');
                 }
-                if (!user.Verified) {
+                if (!gotuser.Verified) {
                     reject("You have not verified your email account");
                 }
                 var userinfo = {
-                    "Email": user.Email,
-                    "UserID": user.UserID
+                    "Email": gotuser.Email,
+                    "UserID": gotuser.UserID
                 }
                 var response = {
-                    "Email": user.Email,
-                    "UserID": user.UserID,
+                    "Email": gotuser.Email,
+                    "UserID": gotuser.UserID,
                     "accessToken": token.generateToken(userinfo)
                 }
                 resolve({ user: response, msg: 'Successfully signed in' });
@@ -167,7 +167,7 @@ user.getOneUser = function (id) {
     return new Promise(function (resolve, reject) {
         User.findOne({
             where: { UserID: id },
-            attributes: { exclude: ['RecordStatus', 'LastUpdated', 'CountryID', 'Password'] },
+            attributes: { exclude: ['RecordStatus', 'LastUpdated', 'Password'] },
             include: [{ model: model.Country, attributes: ['CountryName'] }]
         }).then(function (data) {
             resolve(JSON.stringify(data));
