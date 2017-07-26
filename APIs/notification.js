@@ -40,7 +40,6 @@ notification.sendNotification = function (noty) {
             where: { UserID: noty.UserID }
         }).then(function (user) {
             if (user) {
-                //var deviceToken = "eIkMamjT0-M:APA91bFA7cMngZYFMXzY08kx8ZHQdbA03WmltpY0LMOsth8kCqZm6tm2VYCkGMtc80Bhkfj-oFDqbATH3lpAH_gw6MSieqCNnKYeTpZKDJsrT-HwQVeU6TvWVbO0luraRxPamXa_7nxJ"
                 Notification.create(noty)
                     .then(function (newNoty) {
                         notification.sendToDevice(user.deviceToken, newNoty.Title) //user.deviceToken

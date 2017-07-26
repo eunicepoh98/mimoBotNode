@@ -55,7 +55,7 @@ module.exports = function (passport) {
         {
             clientID: facebookConfig.clientID,
             clientSecret: facebookConfig.clientSecret,
-            profileFields: ['id', 'displayName', 'birthday', 'profileUrl', 'emails', 'gender']
+            profileFields: ['displayName', 'birthday', 'profileUrl', 'emails', 'gender']
         },
         function (accessToken, refreshToken, profile, done) {
             console.log(profile._json)

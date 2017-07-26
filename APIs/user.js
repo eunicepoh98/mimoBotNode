@@ -105,7 +105,7 @@ user.signup = function (host, newuser) {
                                 //Send email to user for verification
                                 email.sendVerificationEmail(host, newUser.Email)
                                     .then(function (result) {
-                                        resolve({ user: result.user, msg: 'Successfully signed up. An email have been sent to you. Please verify before logging in.' });
+                                        resolve({ user: newUser, msg: 'Successfully signed up. An email have been sent to you. Please verify before logging in.' });
                                     }).catch(function (error) {
                                         reject(error);
                                     });
@@ -189,7 +189,6 @@ user.updateAttributes = function (id, user) {
         User.find({ where: { UserID: id } })
             .then(function (gotuser) {
                 if (gotuser) {
-                    user["Password"] = User.generateHash(user["Password"]);
                     user["LastUpdated"] = '';
                     gotuser.update(user)
                         .then(function (update) {
