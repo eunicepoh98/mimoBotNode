@@ -29,21 +29,22 @@ var notifications = require('./Controllers/NotificationAPIController');
 var wit = require('./Controllers/WitAPIController');
 var authentication = require('./Controllers/AuthenticationAPIController');
 
+// JWT
 var token = require('./token.js');
 
-app.use('/api/job', jobs);
+app.use('/api/job', token.verifyToken, jobs);
 app.use('/api/jobtype', jobtypes);
 app.use('/api/jobfunction', jobfunctions);
 app.use('/api/industry', industries);
 app.use('/api/company', companies);
 app.use('/api/country', countries);
-app.use('/api/workexperience', workexperiences);
-app.use('/api/user', users);
-app.use('/api/bookmark', bookmarks);
-app.use('/api/resume', resumes);
-app.use('/api/application', applications);
-app.use('/api/notification', notifications);
-app.use('/api/wit', wit); //, token.verifyToken,
+app.use('/api/workexperience', token.verifyToken, workexperiences);
+app.use('/api/user', token.verifyToken, users);
+app.use('/api/bookmark', token.verifyToken, bookmarks);
+app.use('/api/resume', token.verifyToken, resumes);
+app.use('/api/application', token.verifyToken, applications);
+app.use('/api/notification', token.verifyToken, notifications);
+app.use('/api/wit', token.verifyToken, wit); //, token.verifyToken,
 app.use('/', authentication);
 
 // Load Passport Strategies
