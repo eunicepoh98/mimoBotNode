@@ -3,6 +3,7 @@ var path = require('path');
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var secretEmailKey = require(path.resolve('config.js')).others.secretEmailKey;
 var secretPwdKey = require(path.resolve('config.js')).others.secretPwdKey;
+var user = require(path.resolve('./APIs/user.js'));
 
 /** Generate JWT token for email verification*/
 jwttoken.generateEmailToken = function (email) {
@@ -59,10 +60,26 @@ jwttoken.renewToken = function (req, res, next) {
         // verifies secret and checks exp
         jwt.verify(token, secretPwdKey, function (err, decoded) {
             if (err) {
-                req.message = "Successfully renewed token";
-                req.headers.userid = jwttoken.generateToken({ "Email": req.body.Email, "UserID": req.body.UserID })
-                next();
-            } else {
+                if (err.name == "TokenExpiredError") {
+                    user.checkUserIDEmail(req.body.Email, req.body.UserID)
+                        .then(function () {
+                            req.message = "Successfully renewed token";
+                            req.headers.userid = jwttoken.generateToken({ "Email": req.body.Email, "UserID": req.body.UserID })
+                            next();
+                        }).catch(function () {
+                            return res.status(403).send({
+                                success: false,
+                                message: 'User Details Invalid'
+                            });
+                        })
+                } else if (err.name == "JsonWebTokenError") {
+                    return res.status(403).send({
+                        success: false,
+                        message: 'Invalid Token'
+                    });
+                }
+            }
+            else {
                 req.message = "Token is still valid";
                 req.headers.userid = token;
                 next();

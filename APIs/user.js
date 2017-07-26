@@ -6,8 +6,9 @@ var email = require('../email.js');
 
 /**
  * Check if email exist in database
- * @param {string} email - User's email
- * @returns {string} JSON format of the User details
+ * @param {string} host - Host address
+ * @param {string} useremail - User's email
+ * @returns {string} message
  */
 user.checkEmail = function (host, useremail) {
     return new Promise(function (resolve, reject) {
@@ -28,7 +29,31 @@ user.checkEmail = function (host, useremail) {
                 reject(error.toString());
             });
     });
-} //end of getOneUser()
+} //end of checkEmail()
+
+/**
+ * Check if email and UserID exist
+ * @param {string} usermail - User's email
+ * @param {string} userid - User's email
+ */
+user.checkUserIDEmail = function (useremail, userid) {
+    return new Promise(function (resolve, reject) {
+        User.findOne({ where: { Email: useremail } })
+            .then(function (gotuser) {
+                if (gotuser) {
+                    if (gotuser.UserID == userid) {
+                        resolve();
+                    }
+                    reject();
+                } else {
+                    reject();
+                }
+            }).catch(function (error) {
+                console.log("Error: " + error);
+                reject(error.toString());
+            });
+    });
+} //end of checkUserIDEmail()
 
 /**
  * Create account for Facebook User
