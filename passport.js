@@ -63,7 +63,11 @@ module.exports = function (passport) {
                 Email: profile._json.email,
                 UserName: profile._json.name,
                 DateOfBirth: profile._json.birthday,
-                Gender: profile._json.gender
+                Gender: profile._json.gender,
+                Address: "",
+                PostalCode: "",
+                CountryID: 1,
+                DeviceToken: ""
             };
             user.facebook(data)
                 .then(function (data) {
