@@ -25,7 +25,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         JobDescription: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(3000),
             get: function () {
                 return this.getDataValue('JobDescription');
             },
@@ -34,7 +34,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         JobQualification: {
-            type: DataTypes.STRING(9000),
+            type: DataTypes.STRING(8000),
             get: function () {
                 return this.getDataValue('JobQualification');
             },
@@ -43,7 +43,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         JobResponsibilities: {
-            type: DataTypes.STRING(9000),
+            type: DataTypes.STRING(8000),
             get: function () {
                 return this.getDataValue('JobResponsibilities');
             },

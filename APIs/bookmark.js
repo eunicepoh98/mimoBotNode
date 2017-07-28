@@ -11,6 +11,7 @@ bookmark.getAllBookmark = function (userId) {
     return new Promise(function (resolve, reject) {
         Bookmark.findAll({
             where: { UserID: userId, RecordStatus: { $not: 'D' } },
+            attributes: { exclude: ['RecordStatus', 'LastUpdated'] },
             include: [{
                 model: model.Job, attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
                     'JobPostDate', 'JobPostalCode', 'JobAddress'],

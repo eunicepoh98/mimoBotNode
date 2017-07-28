@@ -19,7 +19,8 @@ admin.initializeApp({
 notification.getAllNotification = function (userId) {
     return new Promise(function (resolve, reject) {
         Notification.findAll({
-            where: { UserID: userId, RecordStatus: { $not: 'D' } }
+            where: { UserID: userId, RecordStatus: { $not: 'D' } },
+            attributes: { exclude: ['RecordStatus', 'LastUpdated'] }
         }).then(function (data) {
             resolve(JSON.stringify(data));
         }).catch(function (error) {

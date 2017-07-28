@@ -59,6 +59,29 @@ router.put('/', function (req, res) {
 
 /**
  * [PUT]
+ * Change user password
+ * http://localhost:8680/api/user/changepassword
+ * Headers: x-access-token (JWT Token) | For Testing - userid
+ * Body: JSON(application/json)
+ * {
+      "OldPassword": "",
+      "NewPassword": ""
+   }
+ */
+router.put('/changepassword', function (req, res) {
+  var userid = req.headers.userid;
+  user.changePassword(userid, req.body.OldPassword, req.body.NewPassword)
+    .then(function (data) {
+      var response = { success: true, message: data };
+      res.status(200).send(response);
+    }).catch(function (error) {
+      var response = { success: false, message: error };
+      res.send(response);
+    });
+});
+
+/**
+ * [PUT]
  * Update User Device Token
  * http://localhost:8680/api/user/devicetoken
  * Headers: x-access-token (JWT Token) | For Testing - userid
@@ -72,7 +95,7 @@ router.put('/devicetoken', function (req, res) {
   var devicetoken = req.body.DeviceToken;
   user.updateDeviceToken(userid, devicetoken)
     .then(function (data) {
-      var response = { success: true, message: data.msg, result: JSON.parse(data.data) };
+      var response = { success: true, message: data };
       res.status(200).send(response);
     }).catch(function (error) {
       var response = { success: false, message: error };

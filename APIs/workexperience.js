@@ -9,7 +9,8 @@ var WorkExperience = require('../Models').WorkExperience;
 workexperience.getAllWorkExperience = function (userId) {
     return new Promise(function (resolve, reject) {
         WorkExperience.findAll({
-            where: { UserID: userId, RecordStatus: { $not: 'D' } }
+            where: { UserID: userId, RecordStatus: { $not: 'D' } },
+            attributes: { exclude: ['RecordStatus', 'LastUpdated'] }
         }).then(function (data) {
             resolve(JSON.stringify(data));
         }).catch(function (error) {

@@ -11,6 +11,22 @@ application.getAllApplication = function (userId) {
     return new Promise(function (resolve, reject) {
         Application.findAll({
             where: { UserID: userId, RecordStatus: { $not: 'D' } },
+            attributes: { exclude: ['RecordStatus', 'LastUpdated'] },
+            include: [{
+                model: model.Resume, attributes: ['FileName'],
+                model: model.Job, attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
+                    'JobPostDate', 'JobPostalCode', 'JobAddress'],
+                include: [
+                    { model: model.Industry, as: 'Industries', attributes: ['IndustryName'], through: { attributes: [] } },
+                    { model: model.JobFunction, as: 'JobFunctions', attributes: ['JobFunctionName'], through: { attributes: [] } },
+                    { model: model.JobType, attributes: ['JobType'] },
+                    { model: model.Company, attributes: ['CompanyName', 'CompanyAddress', 'CompanyPostalCode'] },
+                    {
+                        model: model.Salary, attributes: ['SalaryFrom', 'SalaryTo'],
+                        include: [{ model: model.Currency, attributes: ['Symbol', 'CurrencyCode'] }]
+                    },
+                    { model: model.Country, attributes: ['CountryName'] }]
+            }]
         }).then(function (data) {
             resolve(JSON.stringify(data))
         }).catch(function (error) {
@@ -37,6 +53,8 @@ application.sendApplication = function (application) {
                             if (exist) {
                                 reject("You have already applied for this Job");
                             } else {
+                                //Send Application here
+
                                 // Create application record in database
                                 Application.create(application)
                                     .then(function (newApplication) {

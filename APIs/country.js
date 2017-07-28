@@ -7,7 +7,7 @@ var Country = require('../Models').Country;
  */
 country.getAllCountry = function () {
     return new Promise(function (resolve, reject) {
-        Country.findAll({})
+        Country.findAll({ attributes: { exclude: ['RecordStatus', 'LastUpdated'] } })
             .then(function (data) {
                 resolve(JSON.stringify(data));
             }).catch(function (error) {

@@ -5,7 +5,7 @@ var token = require('../token.js');
 var email = require('../email.js');
 
 /**
- * Check if email exist in database
+ * Check if email exist in database, and send email
  * @param {string} host - Host address
  * @param {string} useremail - User's email
  * @returns {string} message
@@ -15,14 +15,18 @@ user.checkEmail = function (host, useremail) {
         User.findOne({ where: { Email: useremail } })
             .then(function (gotuser) {
                 if (gotuser) {
-                    email.sendVerificationEmail(host, useremail)
-                        .then(function (result) {
-                            resolve(result);
-                        }).catch(function (error) {
-                            reject(error);
-                        });
+                    if (gotuser.Verified) {
+                        reject("Your email account is already verified");
+                    } else {
+                        email.sendVerificationEmail(host, useremail)
+                            .then(function (result) {
+                                resolve(result);
+                            }).catch(function (error) {
+                                reject(error);
+                            });
+                    }
                 } else {
-                    reject("Sorry, you don't seems to have an account registered under that email");
+                    reject("Sorry, you don't seem to have an account registered under that email");
                 }
             }).catch(function (error) {
                 console.log("Error: " + error);
@@ -32,7 +36,7 @@ user.checkEmail = function (host, useremail) {
 } //end of checkEmail()
 
 /**
- * Check if email and UserID exist
+ * Check if email and UserID exist, used for renew jwt token
  * @param {string} usermail - User's email
  * @param {string} userid - User's email
  */
@@ -41,16 +45,42 @@ user.checkUserIDEmail = function (useremail, userid) {
         User.findOne({ where: { Email: useremail } })
             .then(function (gotuser) {
                 if (gotuser) {
-                    if (gotuser.UserID == userid) {
-                        resolve();
-                    }
+                    if (gotuser.UserID == userid) { resolve(); }
                     reject();
-                } else {
-                    reject();
-                }
+                } else { reject(); }
             }).catch(function (error) {
                 console.log("Error: " + error);
                 reject(error.toString());
+            });
+    });
+} //end of checkUserIDEmail()
+
+/**
+ * Check if email and UserID exist, used for renew jwt token
+ * @param {string} usermail - User's email
+ * @param {string} userid - User's email
+ */
+user.changePassword = function (userid, oldpassword, newpassword) {
+    return new Promise(function (resolve, reject) {
+        User.findOne({ where: { UserID: userid } })
+            .then(function (gotuser) {
+                if (gotuser) {
+                    if (gotuser.validPassword(oldpassword)) {
+                        // update password
+                        gotuser.update({ Password: User.generateHash(newpassword), LastUpdated: '' }, { fields: ['Password', 'LastUpdated'] })
+                            .then(function (update) {
+                                resolve('Password Updated')
+                            }).catch(function (error) {
+                                console.log("Error: " + error)
+                                reject("Unable to change password");
+                            });
+                    } else {
+                        reject("Incorrect password");
+                    }
+                } else { reject("User not found"); }
+            }).catch(function (error) {
+                console.log("Error: " + error);
+                reject("Unable to change password");
             });
     });
 } //end of checkUserIDEmail()

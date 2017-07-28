@@ -9,7 +9,8 @@ var Resume = require('../Models').Resume;
 resume.getAllResume = function (userId) {
     return new Promise(function (resolve, reject) {
         Resume.findAll({
-            where: { UserID: userId, RecordStatus: { $not: 'D' } }
+            where: { UserID: userId, RecordStatus: { $not: 'D' } },
+            attributes: { exclude: ['RecordStatus', 'LastUpdated'] }
         }).then(function (data) {
             resolve(JSON.stringify(data));
         }).catch(function (error) {
