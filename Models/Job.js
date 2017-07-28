@@ -45,10 +45,10 @@ module.exports = function (sequelize, DataTypes) {
         JobResponsibilities: {
             type: DataTypes.STRING(9000),
             get: function () {
-                return this.getDataValue('JoResponsibilities');
+                return this.getDataValue('JobResponsibilities');
             },
             set: function (val) {
-                this.setDataValue('JoResponsibilities', val);
+                this.setDataValue('JobResponsibilities', val);
             }
         },
         JobPostDate: {
