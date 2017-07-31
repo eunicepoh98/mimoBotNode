@@ -111,19 +111,22 @@ user.facebook = function (newuser) {
                             if (!newUser) {
                                 reject("Something went wrong, Please try again");
                             }
-                            if (newUser) {
-                                var userinfo = {
-                                    "Email": newUser.Email,
-                                    "UserID": newUser.UserID
-                                }
-                                var response = {
-                                    "Email": newUser.Email,
-                                    "UserID": newUser.UserID,
-                                    "accessToken": token.generateToken(userinfo)
-                                }
-                                user.updateVerificationStatus(newUser.Email).then(function () {
-                                    resolve({ user: response, msg: 'Successfully signed in with Facebook' });
-                                });
+                            if (newUser) { //doesn't return UserID
+                                User.findOne({ where: { Email: newUser.Email } }) // get new user information
+                                    .then(function (newuser) {
+                                        var userinfo = {
+                                            "Email": newuser.Email,
+                                            "UserID": newuser.UserID
+                                        }
+                                        var response = {
+                                            "Email": newuser.Email,
+                                            "UserID": newuser.UserID,
+                                            "accessToken": token.generateToken(userinfo)
+                                        }
+                                        user.updateVerificationStatus(newuser.Email).then(function () {
+                                            resolve({ user: response, msg: 'Successfully signed in with Facebook' });
+                                        });
+                                    })
                             }
                         }).catch(function (error) {
                             console.log("Error: " + error);
