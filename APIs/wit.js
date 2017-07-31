@@ -100,7 +100,7 @@ const actions = {
         context.searchJob = context['searchJob'];
         context.industryType = context['industryType'];
         var short_replies = firstEntityValue(entities, 'short_replies');
-        context.action = [{ action: true, name: 'displaySuggestion', data: jobtypeList }]; //list of job type from db
+        context.action = { action: true, name: 'displaySuggestion', data: jobtypeList }; //list of job type from db
         if (short_replies == 'no') {
             context.jobFunction = [];
         } else {
