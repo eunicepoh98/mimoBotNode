@@ -59,7 +59,12 @@ module.exports = function (sequelize, DataTypes) {
                 return this.getDataValue('EndDate');
             },
             set: function (val) {
-                this.setDataValue('EndDate', moment(val).toISOString());
+                if (val != "null    ") {
+                    console.log(val)
+                    this.setDataValue('EndDate', moment(val).toISOString());
+                } else {
+                    this.setDataValue('EndDate', val);
+                }
             }
         },
         RecordStatus: {
