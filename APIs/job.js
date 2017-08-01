@@ -191,6 +191,7 @@ function getJobs(criteria) {
     return new Promise(function (resolve, reject) {
         Job.findAll({
             where: criteria,
+            order: [['JobPostDate', 'DESC']],
             attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
                 'JobPostDate', 'JobPostalCode', 'JobAddress'],
             include: [
@@ -204,7 +205,7 @@ function getJobs(criteria) {
                 },
                 { model: model.Country, attributes: ['CountryName'] }]
         }).then(function (data) {
-            shuffle(data);
+            //shuffle(data);
             resolve(data);
         }).catch(function (error) {
             console.log("Error: " + error)
@@ -267,6 +268,7 @@ function filterJobs(industry, jFuntion, jType, jobid) {
         // Get the jobs
         Job.findAll({
             where: whereStuff,
+            order: [['JobPostDate', 'DESC']],
             attributes: ['JobID', 'JobTitle', 'JobDescription', 'JobQualification', 'JobResponsibilities',
                 'JobPostDate', 'JobPostalCode', 'JobAddress'],
             include: [
@@ -284,7 +286,7 @@ function filterJobs(industry, jFuntion, jType, jobid) {
             data.forEach(function (one) {
 
                 // jobids of selected job
-                jobid.push(one.JobID); 
+                jobid.push(one.JobID);
 
                 // grouping by job type
                 if (jType.includes(one.JobType.JobType)) {
@@ -293,8 +295,8 @@ function filterJobs(industry, jFuntion, jType, jobid) {
                     otherJT.push(one);
                 }
             });
-            shuffle(relevantJT);
-            shuffle(otherJT);
+            //shuffle(relevantJT);
+            //shuffle(otherJT);
             filteredjobs = relevantJT.concat(otherJT);
             resolve({ filteredjobs: filteredjobs, jobid: jobid });
         }).catch(function (error) {

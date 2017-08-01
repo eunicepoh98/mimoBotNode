@@ -303,7 +303,7 @@ user.updateVerificationStatus = function (email) {
                 if (user) {
                     user.update({ Verified: true, LastUpdated: '' }, { fields: ['Verified', 'LastUpdated'] })
                         .then(function (update) {
-                            resolve("Your email " + email + " has been successfully verified")
+                            resolve("<h2>Your email " + email + " has been successfully verified</h2>")
                         }).catch(function (error) {
                             console.log("Error: " + error)
                             reject();
