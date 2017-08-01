@@ -27,13 +27,24 @@ workexperience.getAllWorkExperience = function (userId) {
  */
 workexperience.addWorkExperience = function (workexperience) {
     return new Promise(function (resolve, reject) {
-        WorkExperience.create(workexperience)
-            .then(function (newWorkExperience) {
-                resolve(JSON.stringify(newWorkExperience))
-            }).catch(function (error) {
-                console.log("Error: " + error)
-                reject(error.toString());
-            });
+        if (workexperience.EndDate != "null" || workexperience.EndDate != null) { // not null
+            WorkExperience.create(workexperience)
+                .then(function (newWorkExperience) {
+                    resolve(JSON.stringify(newWorkExperience))
+                }).catch(function (error) {
+                    console.log("Error: " + error)
+                    reject(error.toString());
+                });
+        } else {
+            delete workexperience.EndDate;
+            WorkExperience.create(workexperience)
+                .then(function (newWorkExperience) {
+                    resolve(JSON.stringify(newWorkExperience))
+                }).catch(function (error) {
+                    console.log("Error: " + error)
+                    reject(error.toString());
+                });
+        }
     });
 }; //end of addWorkExperience()
 

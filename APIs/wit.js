@@ -141,7 +141,7 @@ const actions = {
         var industryType = context['industryType'];
         var jobFunction = context['jobFunction'];
         context.action = { action: true, name: "resetID" };
-        
+
         //add user search data into database
         usersearch.addUserSearch({
             JobTypeList: JSON.stringify(jobType), JobFunctionList: JSON.stringify(jobFunction),
@@ -197,11 +197,10 @@ const actions = {
         if (short_replies) {
             delete context.missingHaveDescription;
             if (short_replies == "no") {
-                context.haveDescription = false;
                 context.description = "";
                 context.action = { action: true, name: "displayDatePicker" };
             } else if (short_replies == "yes") {
-                context.haveDescription = true;
+                context.missingDescription = true;
             }
         } else {
             context.missingHaveDescription = true;
@@ -213,15 +212,13 @@ const actions = {
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
         context.workAs = context['workAs'];
-        context.haveDescription = context['haveDescription'];
         if (text.length < 2) {
-            delete context.haveDescription;
             context.action = { action: false };
             context.missingHaveDescription = true;
         } else {
             context.action = { action: true, name: "displayDatePicker" };
             context.description = text;
-            delete context.missingWorkAs;
+            delete context.missingDescription;
         }
         return context;
     },
@@ -231,7 +228,6 @@ const actions = {
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
         context.workAs = context['workAs'];
-        context.haveDescription = context['haveDescription'];
         context.description = context['description'];
         context.action = { action: false };
         if (startDay) {
@@ -249,7 +245,6 @@ const actions = {
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
         context.workAs = context['workAs'];
-        context.haveDescription = context['haveDescription'];
         context.description = context['description'];
         context.startDay = context['startDay'];
         if (context['endDay']) {
@@ -258,12 +253,15 @@ const actions = {
             if (short_replies) {
                 delete context.missingCurrentJob;
                 if (short_replies == "no") {
-                    context.currentJob = false;
+                    context.missingEndDay = true;
                     context.action = { action: true, name: "displayFilterDatePicker" };
                 } else if (short_replies == "yes") {
-                    context.currentJob = true;
+                    delete context.missingEndDay;
                     context.endDay = "null";
                     context.action = { action: true, name: "resetID" };
+                } else {
+                    context.missingCurrentJob = true;
+                    context.action = { action: false };
                 }
             } else {
                 context.missingCurrentJob = true;
@@ -278,8 +276,8 @@ const actions = {
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
         context.workAs = context['workAs'];
-        context.haveDescription = context['haveDescription'];
         context.description = context['description'];
+        context.startDay = context['startDay'];
         context.action = { action: false };
         if (endDay) {
             context.endDay = endDay;
@@ -296,12 +294,15 @@ const actions = {
         var description = context['description'];
         var startDay = context['startDay'];
         var endDay = context['endDay'];
-
+        console.log(userid, companyName, workAs, description, startDay, endDay);
         //add to workexperience to database
         workexperience.addWorkExperience({
             CompanyName: companyName, Role: workAs, Description: description, StartDate: startDay, EndDate: endDay, UserID: userid
-        }).then(function (result) { }).catch(function (error) { });
+        }).then(function (result) {
+            context.action = { action: true, name: "resetID" };
+        }).catch(function (error) { });
         return context;
+        //loops here
     }
 }
 
