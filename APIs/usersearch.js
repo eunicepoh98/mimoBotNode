@@ -24,6 +24,17 @@ usersearch.addUserSearch = function (usersearch) {
     });
 }
 
+function isJson(str) {
+    if (str) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
+}
+
 usersearch.getUserSearch = function (userid) {
     return new Promise(function (resolve, reject) {
         UserSearch.findAll({
@@ -31,15 +42,21 @@ usersearch.getUserSearch = function (userid) {
         }).then(function (data) {
             var jobfunctionlist = [], jobtypelist = [], industrylist = [];
             data.forEach(onesearch => {
-                JSON.parse(onesearch.JobFunctionList).forEach(onefunction => {
-                    if (!jobfunctionlist.includes(onefunction)) { jobfunctionlist.push(onefunction); }
-                });
-                JSON.parse(onesearch.JobTypeList).forEach(onetype => {
-                    if (!jobtypelist.includes(onetype)) { jobtypelist.push(onetype); }
-                });
-                JSON.parse(onesearch.IndustryList).forEach(oneindustry => {
-                    if (!industrylist.includes(oneindustry)) { industrylist.push(oneindustry); }
-                });
+                if (isJson(onesearch.JobTypeList)) {
+                    JSON.parse(onesearch.JobTypeList).forEach(onetype => {
+                        if (!jobtypelist.includes(onetype)) { jobtypelist.push(onetype); }
+                    });
+                }
+                if (isJson(onesearch.JobFunctionList)) {
+                    JSON.parse(onesearch.JobFunctionList).forEach(onefunction => {
+                        if (!jobfunctionlist.includes(onefunction)) { jobfunctionlist.push(onefunction); }
+                    });
+                }
+                if (isJson(onesearch.IndustryList)) {
+                    JSON.parse(onesearch.IndustryList).forEach(oneindustry => {
+                        if (!industrylist.includes(oneindustry)) { industrylist.push(oneindustry); }
+                    });
+                }
             })
             var result = { IndustryList: industrylist, JobFunctionList: jobfunctionlist, JobTypeList: jobtypelist }
             resolve(result)

@@ -78,9 +78,9 @@ const actions = {
     },
     //Search Job Methods
     ['getIndustry']({ context, entities }) {
+        var short_replies = firstEntityValue(entities, 'short_replies');
         context.userid = context.userid;
         context.searchJob = context['searchJob'];
-        var short_replies = firstEntityValue(entities, 'short_replies');
         context.action = { action: true, name: 'displaySuggestion', data: jobfunctionList }; //list of job function from db
         if (short_replies == 'no') {
             context.industryType = [];
@@ -96,10 +96,10 @@ const actions = {
         return context;
     },
     ['getJobFunction']({ context, entities }) {
+        var short_replies = firstEntityValue(entities, 'short_replies');
         context.userid = context.userid;
         context.searchJob = context['searchJob'];
         context.industryType = context['industryType'];
-        var short_replies = firstEntityValue(entities, 'short_replies');
         context.action = { action: true, name: 'displaySuggestion', data: jobtypeList }; //list of job type from db
         if (short_replies == 'no') {
             context.jobFunction = [];
@@ -110,7 +110,6 @@ const actions = {
                 delete context.missingJobFunction;
             } else {
                 context.missingJobFunction = true;
-                delete context.jobFunction;
             }
         }
         return context;
@@ -156,8 +155,11 @@ const actions = {
             delete context.jobFunction;
             delete context.jobType;
             delete context.searchJob;
-            delete context.suggestionList;
             context.result = [{ jobList: JSON.parse(result) }]; //list of jobs based on users criteria
+        }).catch(function (error) {
+            console.log("ERROR " + error)
+            context.result = [];
+            return context;
         });
         return context;
     },
@@ -166,7 +168,7 @@ const actions = {
         context.userid = context.userid;
         context.addWorkExperience = context['addWorkExperience'];
         context.action = { action: false };
-        if (text.length < 2) {
+        if (text.length < 2) { //company name too short
             context.missingCompanyName = true;
         } else {
             context.companyName = text;
@@ -179,31 +181,12 @@ const actions = {
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
         context.action = { action: false };
-        if (text.length < 2) {
+
+        if (text.length < 2) { // role too short
             context.missingWorkAs = true;
         } else {
             context.workAs = text;
             delete context.missingWorkAs;
-        }
-        return context;
-    },
-    ['haveDescription']({ context, entities, text }) {
-        context.userid = context.userid;
-        var short_replies = firstEntityValue(entities, 'short_replies');
-        context.addWorkExperience = context['addWorkExperience'];
-        context.companyName = context['companyName'];
-        context.workAs = context['workAs'];
-        context.action = { action: false };
-        if (short_replies) {
-            delete context.missingHaveDescription;
-            if (short_replies == "no") {
-                context.description = "";
-                context.action = { action: true, name: "displayDatePicker" };
-            } else if (short_replies == "yes") {
-                context.missingDescription = true;
-            }
-        } else {
-            context.missingHaveDescription = true;
         }
         return context;
     },
@@ -212,75 +195,63 @@ const actions = {
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
         context.workAs = context['workAs'];
-        if (text.length < 2) {
-            context.action = { action: false };
-            context.missingHaveDescription = true;
-        } else {
-            context.action = { action: true, name: "displayDatePicker" };
-            context.description = text;
-            delete context.missingDescription;
-        }
+        context.action = { action: true, name: "displayDatePicker" };
+        context.description = text;
         return context;
     },
     ['getStartDay']({ context, entities, text }) {
+        var startDate = firstEntityValue(entities, 'datetime'); // get start day
         context.userid = context.userid;
-        var startDay = firstEntityValue(entities, 'datetime');
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
         context.workAs = context['workAs'];
         context.description = context['description'];
         context.action = { action: false };
-        if (startDay) {
-            context.startDay = startDay;
-            delete context.missingStartDay;
+
+        if (startDate) { // got start day
+            context.startDay = startDate;
+            delete context.invalidDate;
         } else {
             context.action = { action: true, name: "displayDatePicker" };
-            context.missingStartDay = true;
+            context.invalidDate = true;
         }
         return context;
     },
-    ['currentJob']({ context, entities }) {
+    ['getCurrentJobValue']({ context, entities }) {
+        var short_replies = firstEntityValue(entities, 'short_replies'); // get yes or no
         context.userid = context.userid;
-        var short_replies = firstEntityValue(entities, 'short_replies');
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
         context.workAs = context['workAs'];
         context.description = context['description'];
         context.startDay = context['startDay'];
-        if (context['endDay']) {
-            context.endDay = context['endDay'];
-        } else {
-            if (short_replies) {
-                delete context.missingCurrentJob;
-                if (short_replies == "no") {
-                    context.missingEndDay = true;
-                    context.action = { action: true, name: "displayFilterDatePicker" };
-                } else if (short_replies == "yes") {
-                    delete context.missingEndDay;
-                    context.endDay = "null";
-                    context.action = { action: true, name: "resetID" };
-                } else {
-                    context.missingCurrentJob = true;
-                    context.action = { action: false };
-                }
-            } else {
-                context.missingCurrentJob = true;
-                context.action = { action: false };
+        context.action = { action: false };
+
+        if (short_replies) { //got yes or no
+            delete context.missingCurrentJob;
+            if (short_replies == "no") {
+                context.notCurrentJob = true;
+                context.action = { action: true, name: "displayFilterDatePicker" };
+            } else if (short_replies == "yes") {
+                context.isCurrentJob = "null";
             }
+        } else {
+            context.missingCurrentJob = true;
         }
         return context;
     },
     ['getEndDay']({ context, entities, text }) {
+        var endDate = firstEntityValue(entities, 'datetime'); //get end date
         context.userid = context.userid;
-        var endDay = firstEntityValue(entities, 'datetime');
         context.addWorkExperience = context['addWorkExperience'];
         context.companyName = context['companyName'];
         context.workAs = context['workAs'];
         context.description = context['description'];
         context.startDay = context['startDay'];
         context.action = { action: false };
-        if (endDay) {
-            context.endDay = endDay;
+
+        if (endDate) {
+            context.endDay = endDate;
             delete context.missingEndDay;
         } else {
             context.missingEndDay = true;
@@ -295,14 +266,12 @@ const actions = {
         var startDay = context['startDay'];
         var endDay = context['endDay'];
         console.log(userid, companyName, workAs, description, startDay, endDay);
+        context.action = { action: true, name: "resetID" };
         //add to workexperience to database
         workexperience.addWorkExperience({
             CompanyName: companyName, Role: workAs, Description: description, StartDate: startDay, EndDate: endDay, UserID: userid
-        }).then(function (result) {
-            context.action = { action: true, name: "resetID" };
-        }).catch(function (error) { });
+        }).then(function (result) { }).catch(function (error) { });
         return context;
-        //loops here
     }
 }
 
