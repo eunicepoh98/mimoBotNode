@@ -109,7 +109,7 @@ user.facebook = function (newuser) {
                     User.create(newuser)
                         .then(function (newUser) {
                             if (!newUser) {
-                                reject("Something went wrong, Please try again");
+                                reject("An error occurred in the server, Please try again");
                             }
                             if (newUser) { //doesn't return UserID
                                 User.findOne({ where: { Email: newUser.Email } }) // get new user information
@@ -130,12 +130,12 @@ user.facebook = function (newuser) {
                             }
                         }).catch(function (error) {
                             console.log("Error: " + error);
-                            reject("Something went wrong, Please try again");
+                            reject("An error occurred in the server, Please try again");
                         });
                 }
             }).catch(function (error) {
                 console.log("Error: " + error);
-                reject("Something went wrong, Please try again");
+                reject("An error occurred in the server, Please try again");
             });
     });
 }
@@ -157,7 +157,7 @@ user.signup = function (host, newuser) {
                     User.create(newuser)
                         .then(function (newUser) {
                             if (!newUser) {
-                                reject("Something went wrong, Please try again");
+                                reject("An error occurred in the server, Please try again");
                             }
                             if (newUser) {
                                 //Send email to user for verification
@@ -170,12 +170,12 @@ user.signup = function (host, newuser) {
                             }
                         }).catch(function (error) {
                             console.log("Error: " + error);
-                            reject("Something went wrong, Please try again");
+                            reject("An error occurred in the server, Please try again");
                         });
                 }
             }).catch(function (error) {
                 console.log("Error: " + error);
-                reject("Something went wrong, Please try again");
+                reject("An error occurred in the server, Please try again");
             });
     });
 }
@@ -211,7 +211,7 @@ user.signin = function (email, password) {
                 resolve({ user: response, msg: 'Successfully signed in' });
             }).catch(function (err) {
                 console.log("Error:", err);
-                reject('Something went wrong when signing in')
+                reject('An error occurred in the server when signing in')
             });
     });
 }

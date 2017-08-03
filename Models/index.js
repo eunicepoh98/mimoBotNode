@@ -180,7 +180,7 @@ sequelize.sync({
 
                   db['Job'].create(
                     {
-                      JobID: '3', JobTitle: '6000',
+                      JobID: '3', JobTitle: 'Cabin Program Manager',
                       JobDescription: '',
                       JobQualification: '<ul><li>Diploma/Degree in Engineering or related field</li><li>At least 5 years of experience in aerospace industry</li><li>Knowledge of aeronautical environment (MRO market, cabin components)</li><li>Proficient in Microsoft Office</li><li>Self-motivated and able to work independently</li><li>Team player with good interpersonal, communication, analytical and problem-solving skills</li></ul>',
                       JobResponsibilities: "'<ul><li>Prepare Cabin analysis depending on requirements from the customers</li><li>Perform Cabin Walk in the customer facilities and analyse its needs</li><li>Define the list of the necessary spares for the Cabin support, prepare the sales prices, and evaluate the spares</li><li>Prepare the contract review to organize the operational management of the contract like stock, repair and costs follow up, invoices, exclusions management etc</li><li>Prepare and present the offer review to the management with estimated financial prospective figures</li><li>Manage the contract preparation and signature</li><li>Follow the contract realization with regular reporting</li><li>Optimize the costs to increase the margins during contract realization</li><li>Follow-up of spares and repairs deliveries and invoicing</li><li>Follow the market trends and answer to customer needs</li><li>Assist in ad-hoc assignments where necessary</li></ul>",

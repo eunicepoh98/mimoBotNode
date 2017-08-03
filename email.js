@@ -17,7 +17,7 @@ let transporter = nodemailer.createTransport({
 email.sendVerificationEmail = function (host, email) {
     return new Promise(function (resolve, reject) {
         var emailToken = token.generateEmailToken(email);
-        link = "http://" + host + "/verifyemail?token=" + emailToken;
+        link = "http://" + host + "/verifyemail?token=" + emailToken + "&email=" + email;
 
         let mailOptions = {
             to: email,
@@ -44,7 +44,7 @@ email.sendVerificationEmail = function (host, email) {
     });
 }
 
-email.verifyEmail = function (emailtoken) {
+email.verifyEmail = function (host, emailtoken, email) {
     return new Promise(function (resolve, reject) {
         token.verifyEmailToken(emailtoken)
             .then(function (result) {
@@ -53,10 +53,22 @@ email.verifyEmail = function (emailtoken) {
                     .then(function (resultt) {
                         resolve(resultt);
                     }).catch(function (error) {
-                        reject("Sorry! Failed to verify email... Please try again or request for another email to verify your account.");
+                        console.log(error)
+                        user.checkEmail(host, email)
+                            .then(function (result) {
+                                reject("Failed to verify account, the verification email has expired. Another email has been sent to you.");
+                            }).catch(function (error) {
+                                reject(error)
+                            });
                     })
             }).catch(function (error) {
-                reject("Sorry! Failed to verify email... Please try again or request for another email to verify your account.");
+                console.log(error)
+                user.checkEmail(host, email)
+                    .then(function (result) {
+                        reject("Failed to verify account, the verification email has expired. Another email has been sent to you.");
+                    }).catch(function (error) {
+                        reject(error)
+                    });
             })
     });
 }

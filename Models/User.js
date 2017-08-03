@@ -17,7 +17,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         Email: {
-            type: DataTypes.STRING(100),
+            type: DataTypes.STRING(50),
             allowNull: false,
             get: function () {
                 return this.getDataValue('Email');
@@ -37,7 +37,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         UserName: {
-            type: DataTypes.STRING(),
+            type: DataTypes.STRING,
             allowNull: false,
             get: function () {
                 return this.getDataValue('UserName');
@@ -57,7 +57,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         Address: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING,
             allowNull: true,
             get: function () {
                 return this.getDataValue('Address');
@@ -98,7 +98,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         DeviceToken: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING(1000),
             allowNull: true,
             get: function () {
                 return this.getDataValue('DeviceToken');
@@ -119,7 +119,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         RecordStatus: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(10),
             allowNull: false,
             defaultValue: 'A',
             get: function () {

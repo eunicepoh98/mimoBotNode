@@ -31,11 +31,12 @@ router.post('/resendemail', function (req, res) {
 /**
  * [GET]
  * URL that user receive in their email to verify their email address
- * http://localhost:8680/verifyemail?token=
+ * http://localhost:8680/verifyemail?token=&email=
  */
 router.get('/verifyemail?', function (req, res) {
     var token = req.query.token;
-    email.verifyEmail(token)
+    var eemail = req.query.email;
+    email.verifyEmail(req.get('host'), token, eemail)
         .then(function (result) {
             res.send(result);
         }).catch(function (error) {
@@ -54,7 +55,7 @@ router.get('/verifyemail?', function (req, res) {
 router.post('/facebook', function (req, res, next) {
     passport.authenticate('facebook-token', function (error, user, msg) {
         if (error) {
-            return res.send({ success: false, message: error.message });
+            return res.status(409).send({ success: false, message: error.message });
         }
         if (!user) {
             return res.status(409).send({ success: false, message: msg.message });
@@ -88,7 +89,7 @@ router.post('/signup', function (req, res, next) {
             return res.status(409).send({ success: false, message: msg.message });
         }
         if (user) {
-            var response = { success: true, message: msg.message, result: user }
+            var response = { success: true, message: msg.message }
             return res.status(201).send(response);
         }
     })(req, res, next);
@@ -109,7 +110,7 @@ router.post('/signin', function (req, res, next) {
             return res.status(401).send({ success: false, message: msg.message });
         }
         if (user) {
-            return res.status(201).send({ success: true, message: msg.message, result: user });
+            return res.status(200).send({ success: true, message: msg.message, result: user });
         }
     })(req, res, next);
 });
