@@ -59,7 +59,7 @@ module.exports = function (sequelize, DataTypes) {
         Picture:{
             type: DataTypes.STRING,
             allowNull: true,
-            default: "https://www.drupal.org/files/profile_default.png",
+            defaultValue: "https://www.drupal.org/files/profile_default.png",
             get: function () {
                 return this.getDataValue('Picture');
             },
