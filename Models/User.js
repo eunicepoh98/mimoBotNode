@@ -56,6 +56,17 @@ module.exports = function (sequelize, DataTypes) {
                 this.setDataValue('DateOfBirth', moment(val).toISOString());
             }
         },
+        Picture:{
+            type: DataTypes.STRING,
+            allowNull: true,
+            default: "",
+            get: function () {
+                return this.getDataValue('Picture');
+            },
+            set: function (val) {
+                this.setDataValue('Picture', val);
+            }
+        },
         Address: {
             type: DataTypes.STRING,
             allowNull: true,

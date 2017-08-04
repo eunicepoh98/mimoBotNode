@@ -316,4 +316,31 @@ user.updateVerificationStatus = function (email) {
                 reject(error.toString());
             });
     });
-};// end of updateDeviceToken()
+};// end of updateVerificationStatus()
+
+/**
+ * Update the User's profile URL
+ * @param {int} userId - User's ID
+ * @param {string} url - user's deviceToken
+ */
+user.updateProfilePicture = function (userId, url) {
+    return new Promise(function (resolve, reject) {
+        User.find({ where: { UserID: userId } })
+            .then(function (user) {
+                if (user) {
+                    user.update({ Picture: url, LastUpdated: '' }, { fields: ['Picture', 'LastUpdated'] })
+                        .then(function (update) {
+                            resolve({ data: JSON.stringify(update), msg: 'Successfully updated profile picture' })
+                        }).catch(function (error) {
+                            console.log("Error: " + error)
+                            reject(error.toString());
+                        });
+                } else {
+                    reject("User not found");
+                }
+            }).catch(function (error) {
+                console.log("Error: " + error)
+                reject(error.toString());
+            });
+    });
+};// end of updateProfilePicture()

@@ -55,7 +55,7 @@ module.exports = function (passport) {
         {
             clientID: facebookConfig.clientID,
             clientSecret: facebookConfig.clientSecret,
-            profileFields: ['displayName', 'birthday', 'profileUrl', 'emails', 'gender']
+            profileFields: ['displayName', 'birthday', 'picture', 'emails', 'gender']
         },
         function (accessToken, refreshToken, profile, done) {
             console.log(profile._json)
@@ -63,6 +63,7 @@ module.exports = function (passport) {
                 Email: profile._json.email,
                 UserName: profile._json.name,
                 DateOfBirth: profile._json.birthday,
+                Picture: profile._json.picture.data.url,
                 Gender: profile._json.gender,
                 Address: "",
                 PostalCode: "",

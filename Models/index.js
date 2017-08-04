@@ -129,6 +129,7 @@ sequelize.sync({
                 { CompanyID: '6', CompanyName: 'YM PROJECTS PTE LTD', CompanyAddress: 'YM Projects Pte. Ltd. 35 Kallang Pudding Road Tong Lee Building Blk A, #01-01', CompanyPostalCode: 'Singapore' },
                 { CompanyID: '7', CompanyName: 'Project Lighting Design Pte Ltd', CompanyAddress: '1 Commonwealth Lane, One Commonwealth #09-01/02/03', CompanyPostalCode: '149544' },
                 { CompanyID: '8', CompanyName: 'Mindlab Tuition Centre Pte. Ltd.', CompanyAddress: '545 Orchard Road #06-01 Far East Shopping Centre', CompanyPostalCode: '238882' },
+                { CompanyID: '9', CompanyName: 'Stafflink', CompanyAddress: '10 Anson Road #22-07 International Plaza', CompanyPostalCode: '079903' }
                 //{ CompanyID: '9', CompanyName: '', CompanyAddress: '', CompanyPostalCode: '' },
               ]).then(() => {
                 console.log("Companies Added");
@@ -141,6 +142,7 @@ sequelize.sync({
                   { SalaryID: '6', SalaryFrom: 2200, SalaryTo: 2900, CurrencyID: '1' },
                   { SalaryID: '7', SalaryFrom: 3700, SalaryTo: 4400, CurrencyID: '1' },
                   { SalaryID: '8', SalaryFrom: 2200, SalaryTo: 3400, CurrencyID: '1' },
+                  { SalaryID: '9', SalaryFrom: 2000, SalaryTo: 2500, CurrencyID: '1' }
                   // { SalaryID: '9', SalaryFrom: 1, SalaryTo: 1, CurrencyID: '1' },
                 ]).then(() => {
                   console.log("Salary Added");
@@ -276,6 +278,23 @@ sequelize.sync({
                         newjob.addIndustry(currentId).then(function (result) { });
                       });
                       [7].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                  db['Job'].create(
+                    {
+                      JobID: '9', JobTitle: "CRM Administrator",
+                      JobDescription: "Main Tasks: Support the CRM Team on basic administrative tasks, including database management, analysis and reporting, creation of contact lists for marketing and sales campaigns and other ad-hoc tasks as required.",
+                      JobQualification: "",
+                      JobResponsibilities: "<div><strong>Duties &amp; responsibilities:</strong><br />1. Birthday mailing list (Monthly)<br />2. First Vehicle Birthday mailing (Upcoming)<br />3. End-of Term mailing (Ongoing)<br />4. Welcome Mailing list (Monthly)<br />5. Fascination of Company's mailing list (Bimonthly)<br />6.&nbsp; News &amp; Selected Magazine mailing list (Quarterly)<br />7.&nbsp; Magazine mailing list (Bi-monthly)<br />8. Sales Round mailing lists (Upon request)<br />9. Event Invites list (when required)<br />10. Help to find event attendee BPs in C@P (After each event)<br />11. DM campaign mailing list (Upon request)<br />12. Call up return mailings (Weekly)<br />13. Enter test-drive and customer information form (Daily)<br />14. Create BPs for sales funnel related activities (Daily)<br />15. Pspecting list for sales team when requested (Upon request)<br />16. Monitoring and support of the App (Daily)</div>",
+                      JobPostDate: '2017-04-28', JobPostalCode: '079903', JobAddress: '10 Anson Road #22-07 International Plaza',
+                      CompanyID: '1', CountryID: '1', JobTypeID: '1', SalaryID: '9'
+                    }).then(function (newjob) {
+                      [1, 2, 3].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [1, 2].forEach(function (currentID) {
                         newjob.addJobFunction(currentID).then(function (result) { });
                       });
                     });

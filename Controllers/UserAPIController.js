@@ -103,4 +103,27 @@ router.put('/devicetoken', function (req, res) {
     });
 });
 
+/**
+ * [PUT]
+ * Update User Profile Picture
+ * http://localhost:8680/api/user/updatepicture
+ * Headers: x-access-token (JWT Token) | For Testing - userid
+ * Body: JSON(application/json)
+ * {
+      "Picture": ""
+   }
+ */
+router.put('/updatepicture', function (req, res) {
+  var userid = req.headers.userid;
+  var picture = req.body.Picture;
+  user.updateProfilePicture(userid, picture)
+    .then(function (data) {
+      var response = { success: true, message: data };
+      res.status(200).send(response);
+    }).catch(function (error) {
+      var response = { success: false, message: error };
+      res.send(response);
+    });
+});
+
 module.exports = router;
