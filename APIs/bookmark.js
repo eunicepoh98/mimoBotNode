@@ -27,7 +27,27 @@ bookmark.getAllBookmark = function (userId) {
                     { model: model.Country, attributes: ['CountryName'] }]
             }]
         }).then(function (data) {
-            resolve(JSON.stringify(data))
+            var jobBookmarkList = [];
+               data.forEach(onejob => {
+                var newjob = {
+                    "JobID": onejob.JobID,
+                    "JobTitle": onejob.JobTitle,
+                    "JobDescription": onejob.JobDescription,
+                    "JobQualification": onejob.JobQualification,
+                    "JobPostDate": onejob.JobPostDate,
+                    "JobPostalCode": onejob.JobPostalCode,
+                    "JobAddress": onejob.JobAddress,
+                    "Industries": onejob.Industries,
+                    "JobFunctions": onejob.JobFunctions,
+                    "JobType": onejob.JobType,
+                    "Company": onejob.Company,
+                    "Salary": onejob.Salary,
+                    "Country": onejob.Country,
+                    "isBookmarked": true
+                }
+                jobBookmarkList.push(newjob);
+            });
+            resolve(jobBookmarkList)
         }).catch(function (error) {
             console.log("Error: " + error)
             reject(error.toString());
