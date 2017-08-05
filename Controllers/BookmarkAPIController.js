@@ -14,7 +14,7 @@ router.get('/', function (req, res, next) {
   if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
   bookmark.getAllBookmark(userid)
     .then(function (data) {
-      var response = { success: true, result: JSON.parse(data) };
+      var response = { success: true, result: data };
       res.status(200).send(response);
     }).catch(function (error) {
       var response = { success: false, message: error };
