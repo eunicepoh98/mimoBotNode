@@ -28,7 +28,7 @@ bookmark.getAllBookmark = function (userId) {
             }]
         }).then(function (data) {
             var jobBookmarkList = [];
-               data.forEach(onejob => {
+            data.forEach(onejob => {
                 var newjob = {
                     "JobID": onejob.JobID,
                     "JobTitle": onejob.JobTitle,

@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
+var token = require('../token.js');
 var notification = require(path.resolve('./APIs/notification.js'));
 
 /* Get all Notification
  * http://localhost:8680/api/notification
  * Headers: x-access-token (JWT Token) | For Testing - userid
 */
-router.get('/', function (req, res, next) {
+router.get('/', token.verifyToken, function (req, res, next) {
   var userid = req.headers.userid;
   if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
   notification.getAllNotification(userid)
@@ -24,7 +25,7 @@ router.get('/', function (req, res, next) {
  * [POST]
  * Send Notification to one user
  * http://localhost:8680/api/notification
- * Headers: x-access-token (JWT Token) | For Testing - userid
+ * Headers: userid
  * Body: JSON(application/json)
  * {
 	    "Title": "",
