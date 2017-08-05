@@ -11,7 +11,7 @@ var application = require(path.resolve('./APIs/application.js'));
  */
 router.get('/', function (req, res, next) {
   var userid = req.headers.userid;   
-  if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
+  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
   application.getAllApplication(userid)
     .then(function (data) {
       var response = { success: true, result: JSON.parse(data) };
@@ -35,7 +35,7 @@ router.get('/', function (req, res, next) {
  */
 router.post('/', function (req, res, next) {
   var userid = req.headers.userid;   
-  if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
+  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
   var newapplication = {
     JobID: req.body.JobID,
     UserID: userid,

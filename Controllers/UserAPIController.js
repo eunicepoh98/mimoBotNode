@@ -11,7 +11,7 @@ var user = require(path.resolve('./APIs/user.js'));
 */
 router.get('/', function (req, res, next) {
   var userid = req.headers.userid;
-  if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
+  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
   user.getOneUser(userid)
     .then(function (data) {
       var response = { success: true, result: JSON.parse(data) };

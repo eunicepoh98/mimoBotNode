@@ -11,7 +11,7 @@ var workexperience = require(path.resolve('./APIs/workexperience.js'));
  */
 router.get('/', function (req, res, next) {
     var userid = req.headers.userid;
-  if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
+  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
     workexperience.getAllWorkExperience(userid)
         .then(function (data) {
             var response = { success: true, result: JSON.parse(data) };
@@ -39,7 +39,7 @@ router.get('/', function (req, res, next) {
  */
 router.post('/', function (req, res, next) {
     var userid = req.headers.userid;
-  if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
+  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
     var we = {
         CompanyName: req.body.CompanyName,
         Role: req.body.Role,
@@ -75,7 +75,7 @@ router.post('/', function (req, res, next) {
  */
 router.put('/:id', function (req, res) {
     var userid = req.headers.userid;
-  if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
+  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
     var we = {
         CompanyName: req.body.CompanyName,
         Description: req.body.Description,

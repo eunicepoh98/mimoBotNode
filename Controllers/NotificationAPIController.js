@@ -10,7 +10,7 @@ var notification = require(path.resolve('./APIs/notification.js'));
 */
 router.get('/', token.verifyToken, function (req, res, next) {
   var userid = req.headers.userid;
-  if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
+  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
   notification.getAllNotification(userid)
     .then(function (data) {
       var response = { success: true, result: JSON.parse(data) };
@@ -34,7 +34,7 @@ router.get('/', token.verifyToken, function (req, res, next) {
  */
 router.post('/', function (req, res, next) {
   var userid = req.headers.userid;
-  if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
+  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
   var noty = {
     Title: req.body.Title, //Subject of the Notification / body of what user will see when they receive message
     Description: req.body.Description, //Description about the notification

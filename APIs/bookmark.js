@@ -30,19 +30,19 @@ bookmark.getAllBookmark = function (userId) {
             var jobBookmarkList = [];
             data.forEach(onejob => {
                 var newjob = {
-                    "JobID": onejob.JobID,
-                    "JobTitle": onejob.JobTitle,
-                    "JobDescription": onejob.JobDescription,
-                    "JobQualification": onejob.JobQualification,
-                    "JobPostDate": onejob.JobPostDate,
-                    "JobPostalCode": onejob.JobPostalCode,
-                    "JobAddress": onejob.JobAddress,
-                    "Industries": onejob.Industries,
-                    "JobFunctions": onejob.JobFunctions,
-                    "JobType": onejob.JobType,
-                    "Company": onejob.Company,
-                    "Salary": onejob.Salary,
-                    "Country": onejob.Country,
+                    "JobID": onejob.Job.JobID,
+                    "JobTitle": onejob.Job.JobTitle,
+                    "JobDescription": onejob.Job.JobDescription,
+                    "JobQualification": onejob.Job.JobQualification,
+                    "JobPostDate": onejob.Job.JobPostDate,
+                    "JobPostalCode": onejob.Job.JobPostalCode,
+                    "JobAddress": onejob.Job.JobAddress,
+                    "Industries": onejob.Job.Industries,
+                    "JobFunctions": onejob.Job.JobFunctions,
+                    "JobType": onejob.Job.JobType,
+                    "Company": onejob.Job.Company,
+                    "Salary": onejob.Job.Salary,
+                    "Country": onejob.Job.Country,
                     "isBookmarked": true
                 }
                 jobBookmarkList.push(newjob);

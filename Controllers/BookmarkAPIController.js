@@ -11,7 +11,7 @@ var bookmark = require(path.resolve('./APIs/bookmark.js'));
  */
 router.get('/', function (req, res, next) {
   var userid = req.headers.userid;
-  if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
+  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
   bookmark.getAllBookmark(userid)
     .then(function (data) {
       var response = { success: true, result: data };
@@ -34,7 +34,7 @@ router.get('/', function (req, res, next) {
 */
 router.post('/', function (req, res, next) {
   var userid = req.headers.userid;
-  if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
+  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
   var newbookmark = {
     JobID: req.body.JobID,
     UserID: userid
@@ -61,7 +61,7 @@ router.post('/', function (req, res, next) {
  */
 router.put('/', function (req, res) {
   var userid = req.headers.userid;
-  if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
+  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
   bookmark.removeBookmark(req.body.JobID, userid)
     .then(function (data) {
       var response = { success: true, message: 'Job removed from Bookmark', result: JSON.parse(data) };

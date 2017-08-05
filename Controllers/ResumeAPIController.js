@@ -15,7 +15,7 @@ var upload = multer({ dest: 'uploads/' + today });
  */
 router.get('/', function (req, res, next) {
   var userid = req.headers.userid;
-  if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
+  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
   resume.getAllResume(userid)
     .then(function (data) {
       var response = { success: true, result: JSON.parse(data) };
