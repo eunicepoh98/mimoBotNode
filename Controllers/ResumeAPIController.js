@@ -59,16 +59,16 @@ router.post('/', upload.single('file'), function (req, res, next) {
 /** 
  * [PUT]
  * Update Resume
- * http://localhost:8680/api/resume
+ * http://localhost:8680/api/resume/1
  * Headers: x-access-token (JWT Token) | For Testing - userid
+ * Params: resume id
  * Body: JSON(application/json)
  * {
 	    "Description": ""
    }
 */
 router.put('/', function (req, res) {
-  var userid = req.headers.userid;
-  resume.updateAttributes(userid, req.body.Description)
+  resume.updateAttributes(req.params.id, req.body.Description)
     .then(function (data) {
       var response = { success: true, message: 'Successfully updated resume details', result: JSON.parse(data) };
       res.status(200).send(response);
