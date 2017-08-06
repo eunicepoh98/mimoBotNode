@@ -43,7 +43,7 @@ notification.sendNotification = function (noty) {
             if (user) {
                 Notification.create(noty)
                     .then(function (newNoty) {
-                        notification.sendToDevice(user.deviceToken, newNoty.Title) //user.deviceToken
+                        notification.sendToDevice(user.DeviceToken, newNoty.Title) //user.deviceToken
                             .then(function (deviceMsg) {
                                 var result = { noty: newNoty, msg: deviceMsg }
                                 resolve(result);
