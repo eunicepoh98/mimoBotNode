@@ -2,7 +2,6 @@ var job = module.exports = {};
 var Job = require('../Models').Job;
 var model = require('../Models');
 var path = require('path');
-var shuffle = require('shuffle-array');
 var bookmark = require(path.resolve('./APIs/bookmark.js'));
 var usersearch = require(path.resolve('./APIs/usersearch.js'));
 
@@ -205,7 +204,6 @@ function getJobs(criteria) {
                 },
                 { model: model.Country, attributes: ['CountryName'] }]
         }).then(function (data) {
-            //shuffle(data);
             resolve(data);
         }).catch(function (error) {
             console.log("Error: " + error)
@@ -295,8 +293,6 @@ function filterJobs(industry, jFuntion, jType, jobid) {
                     otherJT.push(one);
                 }
             });
-            //shuffle(relevantJT);
-            //shuffle(otherJT);
             filteredjobs = relevantJT.concat(otherJT);
             resolve({ filteredjobs: filteredjobs, jobid: jobid });
         }).catch(function (error) {

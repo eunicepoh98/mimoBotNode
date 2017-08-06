@@ -32,7 +32,8 @@ var authentication = require('./Controllers/AuthenticationAPIController');
 // JWT
 var token = require('./token.js');
 
-app.use('/api/job', token.verifyToken, jobs);
+app.use('/', authentication);
+app.use('/api/job', jobs);
 app.use('/api/jobtype', jobtypes);
 app.use('/api/jobfunction', jobfunctions);
 app.use('/api/industry', industries);
@@ -45,7 +46,7 @@ app.use('/api/resume', token.verifyToken, resumes);
 app.use('/api/application', token.verifyToken, applications);
 app.use('/api/notification', notifications);
 app.use('/api/wit', token.verifyToken, wit);
-app.use('/', authentication);
+
 
 // Load Passport Strategies
 require('./passport.js')(passport);

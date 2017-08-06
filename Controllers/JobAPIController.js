@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var job = require(path.resolve('./APIs/job.js'));
+var token = require('../token.js');
 var company = require(path.resolve('./APIs/company.js'));
 
 /** [GET] 
@@ -9,7 +10,7 @@ var company = require(path.resolve('./APIs/company.js'));
  * http://localhost:8680/api/job
  * Headers: x-access-token (JWT Token) | For Testing - userid
  */
-router.get('/', function (req, res, next) {
+router.get('/', token.verifyToken, function (req, res, next) {
   var userid = req.headers.userid;
   if (!userid) { res.send({ success: false, message: "Something went wrong" }) }
   job.getFilteredJob(userid)
@@ -20,7 +21,6 @@ router.get('/', function (req, res, next) {
       var response = { success: false, message: error };
       res.send(response);
     });
-
   // job.getUserJob(['Aerospace', 'Construction'], [], [], userid)
   //   .then(function (data) {
   //     var response = { success: true, result: JSON.parse(data) };
