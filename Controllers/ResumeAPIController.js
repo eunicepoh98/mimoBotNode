@@ -67,7 +67,7 @@ router.post('/', upload.single('file'), function (req, res, next) {
 	    "Description": ""
    }
 */
-router.put('/', function (req, res) {
+router.put('/:id', function (req, res) {
   resume.updateAttributes(req.params.id, req.body.Description)
     .then(function (data) {
       var response = { success: true, message: 'Successfully updated resume details', result: JSON.parse(data) };
