@@ -318,6 +318,7 @@ function setBookmarks(userId, joblist) {
                     "JobTitle": onejob.JobTitle,
                     "JobDescription": onejob.JobDescription,
                     "JobQualification": onejob.JobQualification,
+                    "JobResponsibilities": onejob.JobResponsibilities,
                     "JobPostDate": onejob.JobPostDate,
                     "JobPostalCode": onejob.JobPostalCode,
                     "JobAddress": onejob.JobAddress,
