@@ -58,7 +58,7 @@ email.verifyEmail = function (host, emailtoken, email) {
                             .then(function (result) {
                                 reject("Failed to verify account, the verification email has expired. Another email has been sent to you.");
                             }).catch(function (error) {
-                                reject(error)
+                                reject(error.msg)
                             });
                     })
             }).catch(function (error) {
@@ -67,7 +67,7 @@ email.verifyEmail = function (host, emailtoken, email) {
                     .then(function (result) {
                         reject("Failed to verify account, the verification email has expired. Another email has been sent to you.");
                     }).catch(function (error) {
-                        reject(error)
+                        reject(error.msg)
                     });
             })
     });

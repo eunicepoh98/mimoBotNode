@@ -14,7 +14,7 @@ jobtype.getAllJobType = function () {
                 resolve(JSON.stringify(data));
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 } //end of getAllJobType()
@@ -32,7 +32,7 @@ jobtype.getAllJobTypeName = function () {
                 resolve(array);
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 } //end of getAllJobTypeName()
@@ -54,7 +54,7 @@ jobtype.getAllJobTypeSynonyms = function () {
                 resolve(array);
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 } //end of getAllJobTypeSynonyms()
@@ -71,7 +71,7 @@ jobtype.getOneJobType = function (id) {
                 resolve(JSON.stringify(data));
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 } //end of getOneJobType()
@@ -87,7 +87,7 @@ jobtype.addJobType = function (jobtype) {
             resolve(JSON.stringify(newJobType))
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 } //end of addJobType()
@@ -114,11 +114,11 @@ jobtype.addJobTypeSynonyms = function (jtId, newSynonyms) {
                         resolve({ data: JSON.stringify(update), msg: 'Successfully updated jobtype synonyms' })
                     }).catch(function (error) {
                         console.log("Error: " + error)
-                        reject(error.toString());
+                        reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                     });
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }//end of getAllJobTypeSynonyms()

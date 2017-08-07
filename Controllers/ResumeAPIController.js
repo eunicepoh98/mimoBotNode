@@ -21,7 +21,7 @@ router.get('/', function (req, res, next) {
       var response = { success: true, result: JSON.parse(data) };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });
@@ -51,7 +51,7 @@ router.post('/', upload.single('file'), function (req, res, next) {
       var response = { success: true, message: 'Successfully added resume', result: JSON.parse(data) };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });
@@ -73,7 +73,7 @@ router.put('/:id', function (req, res) {
       var response = { success: true, message: 'Successfully updated resume details', result: JSON.parse(data) };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });
@@ -91,7 +91,7 @@ router.delete('/:id', function (req, res) {
       var response = { success: true, message: 'Successfully deleted resume', result: JSON.parse(data) };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });

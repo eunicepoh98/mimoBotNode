@@ -16,21 +16,21 @@ user.checkEmail = function (host, useremail) {
             .then(function (gotuser) {
                 if (gotuser) {
                     if (gotuser.Verified) {
-                        reject("Your email account is already verified");
+                        reject({ msg: "Your email account is already verified" });
                     } else {
                         email.sendVerificationEmail(host, useremail)
                             .then(function (result) {
                                 resolve(result);
                             }).catch(function (error) {
-                                reject(error);
+                                reject({ msg: error });
                             });
                     }
                 } else {
-                    reject("Sorry, you don't seem to have an account registered under that email");
+                    reject({ msg: "Sorry, you don't seem to have an account registered under that email" });
                 }
             }).catch(function (error) {
                 console.log("Error: " + error);
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 } //end of checkEmail()
@@ -50,7 +50,7 @@ user.checkUserIDEmail = function (useremail, userid) {
                 } else { reject(); }
             }).catch(function (error) {
                 console.log("Error: " + error);
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 } //end of checkUserIDEmail()
@@ -72,15 +72,15 @@ user.changePassword = function (userid, oldpassword, newpassword) {
                                 resolve('Password Updated')
                             }).catch(function (error) {
                                 console.log("Error: " + error)
-                                reject("Unable to change password");
+                                reject({ msg: "Unable to change password", errMsg: error.toString() });
                             });
                     } else {
-                        reject("Incorrect password");
+                        reject({ msg: "Incorrect password" });
                     }
-                } else { reject("User not found"); }
+                } else { reject({ msg: "User not found" }); }
             }).catch(function (error) {
                 console.log("Error: " + error);
-                reject("Unable to change password");
+                reject({ msg: "Unable to change password", errMsg: error.toString() });
             });
     });
 } //end of checkUserIDEmail()
@@ -109,7 +109,7 @@ user.facebook = function (newuser) {
                     User.create(newuser)
                         .then(function (newUser) {
                             if (!newUser) {
-                                reject("An error occurred in the server, Please try again");
+                                reject({ msg: "An error occurred in the server, Please try again" });
                             }
                             if (newUser) { //doesn't return UserID
                                 User.findOne({ where: { Email: newUser.Email } }) // get new user information
@@ -126,16 +126,19 @@ user.facebook = function (newuser) {
                                         user.updateVerificationStatus(newuser.Email).then(function () {
                                             resolve({ user: response, msg: 'Successfully signed in with Facebook' });
                                         });
-                                    })
+                                    }).catch(function (error) {
+                                        console.log("Error: " + error);
+                                        reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
+                                    });
                             }
                         }).catch(function (error) {
                             console.log("Error: " + error);
-                            reject("An error occurred in the server, Please try again");
+                            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                         });
                 }
             }).catch(function (error) {
                 console.log("Error: " + error);
-                reject("An error occurred in the server, Please try again");
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }
@@ -152,12 +155,12 @@ user.signup = function (host, newuser) {
         User.findOne({ where: { Email: newuser.Email } })
             .then(function (gotuser) {
                 if (gotuser) {
-                    reject('That email is already taken');
+                    reject({ msg: 'That email is already taken' });
                 } else {
                     User.create(newuser)
                         .then(function (newUser) {
                             if (!newUser) {
-                                reject("An error occurred in the server, Please try again");
+                                reject({ msg: "An error occurred in the server, Please try again" });
                             }
                             if (newUser) {
                                 //Send email to user for verification
@@ -170,12 +173,12 @@ user.signup = function (host, newuser) {
                             }
                         }).catch(function (error) {
                             console.log("Error: " + error);
-                            reject("An error occurred in the server, Please try again");
+                            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                         });
                 }
             }).catch(function (error) {
                 console.log("Error: " + error);
-                reject("An error occurred in the server, Please try again");
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }
@@ -191,13 +194,13 @@ user.signin = function (email, password) {
         User.findOne({ where: { Email: email } })
             .then(function (gotuser) {
                 if (!gotuser) {
-                    reject('Email does not exist');
+                    reject({ msg: 'Email does not exist' });
                 }
                 if (!gotuser.validPassword(password)) {
-                    reject('Incorrect password.');
+                    reject({ msg: 'Incorrect password.' });
                 }
                 if (!gotuser.Verified) {
-                    reject("You have not verified your email account");
+                    reject({ msg: "You have not verified your email account" });
                 }
                 var userinfo = {
                     "Email": gotuser.Email,
@@ -211,7 +214,7 @@ user.signin = function (email, password) {
                 resolve({ user: response, msg: 'Successfully signed in' });
             }).catch(function (err) {
                 console.log("Error:", err);
-                reject('An error occurred in the server when signing in')
+                reject({ msg: 'An error occurred in the server when signing in', errMsg: err.toString() });
             });
     });
 }
@@ -231,7 +234,7 @@ user.getOneUser = function (id) {
             resolve(JSON.stringify(data));
         }).catch(function (error) {
             console.log("Error: " + error);
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 } //end of getOneUser()
@@ -253,14 +256,14 @@ user.updateAttributes = function (id, user) {
                             resolve({ data: JSON.stringify(update), msg: 'Successfully updated user details' })
                         }).catch(function (error) {
                             console.log("Error: " + error)
-                            reject(error.toString());
+                            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                         });
                 } else {
-                    reject("User not found");
+                    reject({ msg: "User not found" });
                 }
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }; //end of updatAttributes()
@@ -280,14 +283,14 @@ user.updateDeviceToken = function (userId, deviceToken) {
                             resolve({ data: JSON.stringify(update), msg: 'Successfully updated user devicetoken' })
                         }).catch(function (error) {
                             console.log("Error: " + error)
-                            reject(error.toString());
+                            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                         });
                 } else {
-                    reject("User not found");
+                    reject({ msg: "User not found" });
                 }
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 };// end of updateDeviceToken()
@@ -309,11 +312,11 @@ user.updateVerificationStatus = function (email) {
                             reject();
                         });
                 } else {
-                    reject("User not found");
+                    reject({ msg: "User not found" });
                 }
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 };// end of updateVerificationStatus()
@@ -333,14 +336,14 @@ user.updateProfilePicture = function (userId, url) {
                             resolve({ data: JSON.stringify(update), msg: 'Successfully updated profile picture' })
                         }).catch(function (error) {
                             console.log("Error: " + error)
-                            reject(error.toString());
+                            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                         });
                 } else {
-                    reject("User not found");
+                    reject({ msg: "User not found" });
                 }
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 };// end of updateProfilePicture()

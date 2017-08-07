@@ -19,7 +19,7 @@ usersearch.addUserSearch = function (usersearch) {
                 resolve(newUserSearch)
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }
@@ -62,7 +62,7 @@ usersearch.getUserSearch = function (userid) {
             resolve(result)
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 }

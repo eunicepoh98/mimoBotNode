@@ -14,7 +14,7 @@ jobfunction.getAllJobFunction = function () {
                 resolve(JSON.stringify(data));
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 } //end of getAllJobFunction()
@@ -32,7 +32,7 @@ jobfunction.getAllJobFunctionName = function () {
                 resolve(array);
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 } //end of getAllJobFunctionName()
@@ -54,7 +54,7 @@ jobfunction.getAllJobFunctionSynonyms = function () {
                 resolve(array);
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 } //end of getAllJobFunctionSynonyms()
@@ -71,7 +71,7 @@ jobfunction.getOneJobFunction = function (id) {
                 resolve(JSON.stringify(data));
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 } //end of getOneJobFunction()
@@ -87,7 +87,7 @@ jobfunction.addJobFunction = function (jobFunction) {
             resolve({ data: JSON.stringify(jobFunction), msg: 'Successfully added jobfunction' })
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 } //end of addJobFunction()
@@ -114,11 +114,11 @@ jobfunction.addJobFunctionSynonyms = function (indId, newSynonyms) {
                         resolve({ data: JSON.stringify(update), msg: 'Successfully added jobfunction synonyms' })
                     }).catch(function (error) {
                         console.log("Error: " + error)
-                        reject(error.toString());
+                        reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                     });
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }//end of getAllJobFunctionSynonyms()

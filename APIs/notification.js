@@ -25,7 +25,7 @@ notification.getAllNotification = function (userId) {
             resolve(JSON.stringify(data));
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 }; //end of getAllNotification()
@@ -48,18 +48,18 @@ notification.sendNotification = function (noty) {
                                 var result = { noty: newNoty, msg: deviceMsg }
                                 resolve(result);
                             }).catch(function (error) {
-                                reject(error.toString());
+                                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                             });
                     }).catch(function (error) {
                         console.log("Error: " + error)
-                        reject(error.toString());
+                        reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                     });
             } else {
-                reject("User not found");
+                reject({ msg: "User not found" });
             }
         }).catch(function (error) {
             console.log("Error: " + error);
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 }; //end of getAllNotification()
@@ -89,7 +89,7 @@ notification.sendToDevice = function (regToken, description) {
                 }
             }).catch(function (error) {
                 console.log("Error sending message: ", JSON.stringify(error));
-                reject("Error sending message");
+                reject({ msg: "Error sending message" });
             });
     });
 }; //end of sendNotification()

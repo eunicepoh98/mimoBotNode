@@ -31,7 +31,7 @@ application.getAllApplication = function (userId) {
             resolve(JSON.stringify(data))
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 }; //end of getAllApplication()
@@ -51,7 +51,7 @@ application.sendApplication = function (application) {
                     Application.find({ where: { JobID: application.JobID, UserID: application.UserID } })
                         .then(function (exist) {
                             if (exist) {
-                                reject("You have already applied for this Job");
+                                reject({ msg: "You have already applied for this Job" });
                             } else {
                                 //Send Application here
 
@@ -61,19 +61,19 @@ application.sendApplication = function (application) {
                                         resolve(JSON.stringify(newApplication));
                                     }).catch(function (error) {
                                         console.log("Error: " + error)
-                                        reject(error.toString());
+                                        reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                                     });
                             }
                         }).catch(function (error) {
                             console.log("Error: " + error)
-                            reject(error.toString());
+                            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                         });
                 } else {
-                    reject("Resume not valid")
+                    reject({ msg: "Resume not valid" })
                 }
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }; //end of sendApplication()

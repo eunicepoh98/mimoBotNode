@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
       var response = { success: true, result: data };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });
@@ -28,7 +28,7 @@ router.get('/:id', function (req, res, next) {
       var response = { success: true, result: data };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });
@@ -52,7 +52,7 @@ router.post('/', function (req, res, next) {
       var response = { success: true, message: data.msg, result: JSON.parse(data.data) };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });
@@ -72,7 +72,7 @@ router.post('/synonyms', function (req, res, next) {
       var response = { success: true, message: data.msg, result: JSON.parse(data.data) };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });

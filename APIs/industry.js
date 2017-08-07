@@ -14,7 +14,7 @@ industry.getAllIndustry = function () {
                 resolve(JSON.stringify(data));
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 } //end of getAllIndustry()
@@ -32,7 +32,7 @@ industry.getAllIndustryName = function () {
                 resolve(array);
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }//end of getAllIndustryName()
@@ -54,7 +54,7 @@ industry.getAllIndustrySynonyms = function () {
                 resolve(array);
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }//end of getAllIndustrySynonyms()
@@ -71,7 +71,7 @@ industry.getOneIndustry = function (id) {
                 resolve(JSON.stringify(data));
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }//end of getOneIndustry()
@@ -88,7 +88,7 @@ industry.addIndustry = function (industry) {
             resolve(JSON.stringify(newIndustry))
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 }//end of addIndustry()
@@ -115,11 +115,11 @@ industry.addIndustrySynonyms = function (indId, newSynonyms) {
                         resolve({ data: JSON.stringify(update), msg: 'Successfully updated industry synonyms' })
                     }).catch(function (error) {
                         console.log("Error: " + error)
-                        reject(error.toString());
+                        reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                     });
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }//end of getAllIndustrySynonyms()

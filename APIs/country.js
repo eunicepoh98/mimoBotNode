@@ -12,7 +12,7 @@ country.getAllCountry = function () {
                 resolve(JSON.stringify(data));
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }; //end of getAllCountry()
@@ -30,7 +30,7 @@ country.getAllCountryName = function () {
                 resolve(array);
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }; //end of getAllCountryName()
@@ -47,7 +47,7 @@ country.getOneCountry = function (id) {
                 resolve(JSON.stringify(data));
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }; //end of getOneCountry()
@@ -64,7 +64,7 @@ country.addCountry = function (country) {
                 resolve(JSON.stringify(newCountry))
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }; //end of addCountry()

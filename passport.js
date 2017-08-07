@@ -30,7 +30,8 @@ module.exports = function (passport) {
                 .then(function (data) {
                     return done(null, data.user, { message: data.msg });
                 }).catch(function (error) {
-                    return done(null, false, { message: error });
+                    console.log(error)
+                    return done(null, false, { message: error.msg, errMessage: error.errMsg });
                 });
         }
     ));
@@ -46,7 +47,7 @@ module.exports = function (passport) {
                 .then(function (data) {
                     return done(null, data.user, { message: data.msg });
                 }).catch(function (error) {
-                    return done(null, false, { message: error });
+                    return done(null, false, { message: error.msg, errMessage: error.errMsg });
                 });
         }
     ));
@@ -74,7 +75,7 @@ module.exports = function (passport) {
                 .then(function (data) {
                     return done(null, data.user, { message: data.msg });
                 }).catch(function (error) {
-                    return done(null, false, { message: error });
+                    return done(null, false, { message: error.msg, errMessage: error.errMsg });
                 });
         }
     ));

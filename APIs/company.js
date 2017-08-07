@@ -12,7 +12,7 @@ company.getAllCompany = function () {
                 resolve(JSON.stringify(data));
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }; //end of getAllCompany()
@@ -30,7 +30,7 @@ company.getAllCompanyName = function () {
                 resolve(array);
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }; //end of getAllCompanyName()
@@ -47,7 +47,7 @@ company.getOneCompany = function (id) {
                 resolve(JSON.stringify(data));
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }; //end of getOneCompany()
@@ -64,7 +64,7 @@ company.addCompany = function (company) {
                 resolve(JSON.stringify(newCompany))
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }; //end of addCompany()
