@@ -1,9 +1,0 @@
-{
-    "success": true,
-    "message": "Successfully signed in with Facebook",
-    "result": {
-        "Email": "niyati.srinivasan@gmail.com",
-        "UserID": 2,
-        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkVtYWlsIjoibml5YXRpLnNyaW5pdmFzYW5AZ21haWwuY29tIiwiVXNlcklEIjoyfSwiaWF0IjoxNTAyMDcxMDM4LCJleHAiOjE1MDIwODE4Mzh9.B0Nc0OWC9PEhZJI3WPGPKZjQqoP1WVkfSrd9u5ugRzY"
-    }
-}
