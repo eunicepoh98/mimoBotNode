@@ -81,7 +81,7 @@ sequelize.sync({
         { JobFunctionID: 8, JobFunctionName: 'Finance & Accounting', Synonyms: '["Finance", "Accounting"]' },
         { JobFunctionID: 9, JobFunctionName: 'Healthcare & Wellness', Synonyms: '["Healthcare", "Wellness"]' },
         { JobFunctionID: 10, JobFunctionName: 'Human Resources', Synonyms: '["Human Resources", "HR"]' },
-        { JobFunctionID: 11, JobFunctionName: 'Information Technologies', Synonyms: '["Information Technologies", "IT"]' },
+        { JobFunctionID: 11, JobFunctionName: 'Information Technologies', Synonyms: '["Information Technologies", "IT", "Programming", "Development", "Analyst"]' },
         { JobFunctionID: 12, JobFunctionName: 'Legal & Compliance', Synonyms: '["Legal", "Compliance"]' },
         { JobFunctionID: 13, JobFunctionName: 'Manufacturing / Production / Engineering', Synonyms: '["Manufacturing", "Production", "Engineering"]' },
         { JobFunctionID: 14, JobFunctionName: 'Marketing, Public Relations & Communications', Synonyms: '["Marketing", "Public Relations", "Communications"]' },
@@ -145,6 +145,8 @@ sequelize.sync({
                 { CompanyID: '22', CompanyName: 'Adecco - GS Perm', CompanyAddress: ' 1 Scotts Road, #18-08,Shaw Centre', CompanyPostalCode: '228208' },
                 { CompanyID: '23', CompanyName: 'Hays', CompanyAddress: '#27-20 UOB Plaza 2, 80 Raffles Place', CompanyPostalCode: '048624' },
                 { CompanyID: '24', CompanyName: 'People Advantage Pte Ltd', CompanyAddress: '20 Jln Afifi', CompanyPostalCode: '409179' },
+                { CompanyID: '25', CompanyName: 'Capita Technology', CompanyAddress: 'Collyer Quay, Singapore', CompanyPostalCode: '049318' },
+                { CompanyID: '26', CompanyName: 'Kelly Services Singapore', CompanyAddress: '8 Marina View, #11-01 Asia Square Tower 1', CompanyPostalCode: '018960' }
 
                 //{ CompanyID: '9', CompanyName: '', CompanyAddress: '', CompanyPostalCode: '' },
               ]).then(() => {
@@ -173,7 +175,12 @@ sequelize.sync({
                   { SalaryID: '21', SalaryFrom: 4000, SalaryTo: 5000, CurrencyID: '1' },
                   { SalaryID: '22', SalaryFrom: 4000, SalaryTo: 5000, CurrencyID: '1' },
                   { SalaryID: '23', SalaryFrom: 7000, SalaryTo: 12000, CurrencyID: '1' },
-                  { SalaryID: '24', SalaryFrom: 2000, SalaryTo: 2500, CurrencyID: '1' }
+                  { SalaryID: '24', SalaryFrom: 2000, SalaryTo: 2500, CurrencyID: '1' },
+                  { SalaryID: '25', SalaryFrom: 9000, SalaryTo: 12600, CurrencyID: '1' },
+                  { SalaryID: '26', SalaryFrom: 5000, SalaryTo: 8000, CurrencyID: '1' },
+                  { SalaryID: '27', SalaryFrom: 4430, SalaryTo: 5086, CurrencyID: '1' },
+                  { SalaryID: '28', SalaryFrom: 4508, SalaryTo: 5975, CurrencyID: '1' },
+                  { SalaryID: '29', SalaryFrom: 4000, SalaryTo: 5000, CurrencyID: '1' }
                   // { SalaryID: '9', SalaryFrom: 1, SalaryTo: 1, CurrencyID: '1' },
                 ]).then(() => {
                   console.log("Salary Added");
@@ -384,7 +391,7 @@ sequelize.sync({
 
                   db['Job'].create(
                     {
-                      JobID: '13', JobTitle: "",
+                      JobID: '13', JobTitle: "Contract Sales Administrator",
                       JobDescription: "",
                       JobQualification: "Experience in reporting, documentation, presentation slides<br />Someone who is good with numbers<br />Candidate must possess at least a Bachelor's Degree, Business Studies/Administration/Management or equivalent.<br />Required skill(s): MS Powerpoint, EXCEL<br />1 year(s) of working experience or No experience welcome to apply!<br /><br /><br /><strong>Other Information</strong><br />Locaton: Harbourfront<br />6months contract - subject to renewal (with completed bonus and other attractive benefits!)<br />Singaporeans only<br /><br />",
                       JobResponsibilities: "Responsible for sales analytical function",
@@ -586,6 +593,91 @@ sequelize.sync({
                         newjob.addIndustry(currentId).then(function (result) { });
                       });
                       [3, 10].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                    db['Job'].create(
+                    {
+                      JobID: '25', JobTitle: "Mobile Application Lead (iOS/Android)",
+                      JobDescription: "",
+                      JobQualification:"<strong>Technical Skills:</strong><ol><li>5-7 years of overall software development experience and Android(Java) and iOS (Objective-C and Swift) native application development and customization.</li><li>Experienced with responsive web development will be a plus.</li><li>Experience on agile development teams</li><li>Experience in leading technical teams</li><li>Experience in cloud development technologies (AWS)</li><li>Experience with Relational and NoSQL databases</li><li>Experience with Git or other similar version control systems</li><li>Ability to set up continuous integration, static analysis tools and code coverage tools</li><li>Experience writing automated unit and functional tests</li><li>Bachelor of Science in Computer Science or related field</li></ol><p><strong>Leadership Skills:</strong></p><ul><li>Ability to lead and work with a team of size 4-5 members</li><li>Must be able to work with the project manager to map the development&nbsp;life-cycle, outline sprint &amp; overall&nbsp;road-map&nbsp;and schedule, and set / review the overall quality of&nbsp;deliverables.</li><li>Should be passionate about coding and able to mentor the junior team members.</li><li>Experience in handling or managing customer interactions and&nbsp;deliverables.</li><li>Excellent communication, collaboration, problem solving, and facilitation skills</li></ul>",
+                      JobResponsibilities: "<ul><li>Analyzing new requirements, designing and implementing technical solutions</li><li>Executing code reviews</li><li>Coaching and mentoring colleagues on the development team</li><li>Researching and testing new solutions, including authoring sample code, to solve a customer&rsquo;s technical obstacles</li><li>Interacting with managers, developers, and back end teams</li><li>Deployment of code, database migrations, and a thorough understanding the impact of changes in the production environment</li><li>Understanding and augmenting the system and application architecture as needed</li><li>Public showcase and repository of Mobile Apps and work desirable.</li></ul>",
+                      JobPostDate: '2017-08-13', JobPostalCode: '', JobAddress: 'Downtown Core (Bugis, City Hall, Tanjong Pagar, Raffles Place), CBD (Central Area)',
+                      CompanyID: '25', CountryID: '1', JobTypeID: '1', SalaryID: '25'
+                    }).then(function (newjob) {
+                      [15].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [11].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                    db['Job'].create(
+                    {
+                      JobID: '26', JobTitle: "Business Analyst",
+                      JobDescription: "<p>Must have Financial Industry knowledge especially Insurance.</p><ul><li>With Business Analysis knowledge especially on business requirement gathering, analysis, translating and documentation.</li><li>Able to perform planning and monitoring on BAU and Project related task/assignment.</li><li>Able to communicate effectively to both business and technical team.</li></ul>",
+                      JobQualification:"<ul><li>Min. 5 years of experience</li><li>Good communication skills</li><li>Excellent communication and client facing skills</li><li>Diploma/Degree holder in Engineering/ Information Technology/ Computer Science/ Electronics</li></ul>",
+                      JobResponsibilities: "",
+                      JobPostDate: '2017-08-13', JobPostalCode: '', JobAddress: 'North',
+                      CompanyID: '26', CountryID: '1', JobTypeID: '1', SalaryID: '26'
+                    }).then(function (newjob) {
+                      [15].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [11].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                    db['Job'].create(
+                    {
+                      JobID: '27', JobTitle: ".NET Developer",
+                      JobDescription: "",
+                      JobQualification:"<ul><li>Minimum 5 years of working experience in application design, development and construction of application systems in Microsoft .NET C# platform and Oracle PL/SQL</li><li>Knowledge of Agile and Test Driven Development will be an advantage</li><li>Understanding basic Network concepts will be an added advantage</li><li>Strong communication skills with good knowledge of design patterns</li><li>Have working experience in Insurance industry will be given preference</li><li>Good team player</li><li>Able to work independently and have good problem solving skills</li></ul>",
+                      JobResponsibilities: "",
+                      JobPostDate: '2017-08-13', JobPostalCode: '', JobAddress: 'North',
+                      CompanyID: '26', CountryID: '1', JobTypeID: '1', SalaryID: '27'
+                    }).then(function (newjob) {
+                      [15].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [11].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                    db['Job'].create(
+                    {
+                      JobID: '28', JobTitle: "Java Developer",
+                      JobDescription: "",
+                      JobQualification:"<ul><li>At least 3 years of experience in Java, J2EE development</li><li>Hands on struts, spring and hibernate frameworks,</li><li>Good understanding of SDLC Process</li><li>Experience on Web-servies (REST/SOAP), Javascript, HTML, CSS, JQuery, AngularJS</li><li>Experience on Oracle-PL/SQL</li></ul>",
+                      JobResponsibilities: "",
+                      JobPostDate: '2017-08-13', JobPostalCode: '', JobAddress: 'North',
+                      CompanyID: '26', CountryID: '1', JobTypeID: '1', SalaryID: '28'
+                    }).then(function (newjob) {
+                      [15].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [11].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                    db['Job'].create(
+                    {
+                      JobID: '29', JobTitle: "Unix & Infrastructure Engineer",
+                      JobDescription: "",
+                      JobQualification:"<ul><li>Bachelor in Information Technology/Computer Science&nbsp;</li><li>2-3 years of experience with Unix Server&nbsp;</li><li>Oracle Solaris 8 &amp; 10 (Knowledge in Solaris 11 &amp; Oracle Linux is a plus)</li><li>Hitachi &amp; EMC Isilon storage</li><li>BMC TrueSight</li><li>Symantec Netbackup</li><li>Knowledge in industry standard scheduling tool (Control-M is a plus)</li><li>Cloud technology knowledge is a plus</li></ul>",
+                      JobResponsibilities: "<div><strong>System Administration</strong></div><ul><li>Maintenance of servers, physical and virtual (Primarily Solaris with some Linux)</li><li>New Unix servers provisioning, physical and virtual (Solaris)</li><li>Operating System, Software and Hardware patching</li><li>Capacity planning and monitoring</li><li>Incidents resolution</li><li>Unix Operating System, software, hardware and Network troubleshooting</li></ul><p><strong>Storage and SAN administration</strong></p><ul><li>Capacity maintenance, provisioning and monitoring of Unix servers</li><li>SAN switches maintenance and provisioning (hard and soft)</li><li>Storage and SAN troubleshooting</li></ul>",
+                      JobPostDate: '2017-08-13', JobPostalCode: '', JobAddress: 'Tampiness/East',
+                      CompanyID: '25', CountryID: '1', JobTypeID: '1', SalaryID: '29'
+                    }).then(function (newjob) {
+                      [10].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [11].forEach(function (currentID) {
                         newjob.addJobFunction(currentID).then(function (result) { });
                       });
                     });
