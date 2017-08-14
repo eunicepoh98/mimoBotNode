@@ -81,7 +81,7 @@ sequelize.sync({
         { JobFunctionID: 8, JobFunctionName: 'Finance & Accounting', Synonyms: '["Finance", "Accounting"]' },
         { JobFunctionID: 9, JobFunctionName: 'Healthcare & Wellness', Synonyms: '["Healthcare", "Wellness"]' },
         { JobFunctionID: 10, JobFunctionName: 'Human Resources', Synonyms: '["Human Resources", "HR"]' },
-        { JobFunctionID: 11, JobFunctionName: 'Information Technologies', Synonyms: '["Information Technologies", "IT"]' },
+        { JobFunctionID: 11, JobFunctionName: 'Information Technologies', Synonyms: '["Information Technologies", "IT", "Programming", "Development", "Analyst"]' },
         { JobFunctionID: 12, JobFunctionName: 'Legal & Compliance', Synonyms: '["Legal", "Compliance"]' },
         { JobFunctionID: 13, JobFunctionName: 'Manufacturing / Production / Engineering', Synonyms: '["Manufacturing", "Production", "Engineering"]' },
         { JobFunctionID: 14, JobFunctionName: 'Marketing, Public Relations & Communications', Synonyms: '["Marketing", "Public Relations", "Communications"]' },
@@ -129,7 +129,25 @@ sequelize.sync({
                 { CompanyID: '6', CompanyName: 'YM PROJECTS PTE LTD', CompanyAddress: 'YM Projects Pte. Ltd. 35 Kallang Pudding Road Tong Lee Building Blk A, #01-01', CompanyPostalCode: 'Singapore' },
                 { CompanyID: '7', CompanyName: 'Project Lighting Design Pte Ltd', CompanyAddress: '1 Commonwealth Lane, One Commonwealth #09-01/02/03', CompanyPostalCode: '149544' },
                 { CompanyID: '8', CompanyName: 'Mindlab Tuition Centre Pte. Ltd.', CompanyAddress: '545 Orchard Road #06-01 Far East Shopping Centre', CompanyPostalCode: '238882' },
-                { CompanyID: '9', CompanyName: 'Stafflink', CompanyAddress: '10 Anson Road #22-07 International Plaza', CompanyPostalCode: '079903' }
+                { CompanyID: '9', CompanyName: 'Stafflink', CompanyAddress: '10 Anson Road #22-07 International Plaza', CompanyPostalCode: '079903' },
+                { CompanyID: '10', CompanyName: 'Achieve Group', CompanyAddress: 'Achieve Group 6 Shenton Way, OUE Downtown 1 #39-03', CompanyPostalCode: '068809' },
+                { CompanyID: '11', CompanyName: 'FCBC', CompanyAddress: '750A Chai Chee Road, #04-01 Viva Business Park', CompanyPostalCode: '469001' },
+                { CompanyID: '12', CompanyName: 'Ambition', CompanyAddress: 'One Raffles Place, #14-62 Office Tower 2', CompanyPostalCode: '048616' },
+                { CompanyID: '13', CompanyName: 'Manpower Staffing Services (Singapore) Pte Ltd', CompanyAddress: 'Manpower Staffing Services (S) Pte Ltd 1 Wallich Street #09-02 Guoco Tower', CompanyPostalCode: '078881' },
+                { CompanyID: '14', CompanyName: 'Inter-Continental Oils & Fats', CompanyAddress: '150 Beach Road Level 24, Gateway West', CompanyPostalCode: '189720' },
+                { CompanyID: '15', CompanyName: 'Recruit Express Pte Ltd', CompanyAddress: '391A Orchard Road Ngee Ann City Tower A #12-08', CompanyPostalCode: '238873' },
+                { CompanyID: '16', CompanyName: 'BGC Group', CompanyAddress: '10 Collyer Quay Centre,#06-07/08/09/10,Ocean Financial Centre', CompanyPostalCode: '049315' },
+                { CompanyID: '17', CompanyName: 'Capita Pte Ltd', CompanyAddress: '8 Marina View, #11-01 Asia Square Tower 1', CompanyPostalCode: '018960' },
+                { CompanyID: '18', CompanyName: 'Siew Lin YTF (Singapore) Pte Ltd', CompanyAddress: '180 Cecil St, Bangkok Bank Building', CompanyPostalCode: '069546' },
+                { CompanyID: '19', CompanyName: 'Randstad', CompanyAddress: '50 Raffles Place #17-02/05, Singapore Land Tower', CompanyPostalCode: '048623' },
+                { CompanyID: '20', CompanyName: 'DCI Consultants Pte Ltd', CompanyAddress: '15 Mayo St', CompanyPostalCode: '208312' },
+                { CompanyID: '21', CompanyName: 'Intelligence, a division with Capita Pte Ltd', CompanyAddress: '8 Marina View #11-01 Asia Square Tower 1', CompanyPostalCode: '018960' },
+                { CompanyID: '22', CompanyName: 'Adecco - GS Perm', CompanyAddress: ' 1 Scotts Road, #18-08,Shaw Centre', CompanyPostalCode: '228208' },
+                { CompanyID: '23', CompanyName: 'Hays', CompanyAddress: '#27-20 UOB Plaza 2, 80 Raffles Place', CompanyPostalCode: '048624' },
+                { CompanyID: '24', CompanyName: 'People Advantage Pte Ltd', CompanyAddress: '20 Jln Afifi', CompanyPostalCode: '409179' },
+                { CompanyID: '25', CompanyName: 'Capita Technology', CompanyAddress: 'Collyer Quay, Singapore', CompanyPostalCode: '049318' },
+                { CompanyID: '26', CompanyName: 'Kelly Services Singapore', CompanyAddress: '8 Marina View, #11-01 Asia Square Tower 1', CompanyPostalCode: '018960' }
+
                 //{ CompanyID: '9', CompanyName: '', CompanyAddress: '', CompanyPostalCode: '' },
               ]).then(() => {
                 console.log("Companies Added");
@@ -142,7 +160,27 @@ sequelize.sync({
                   { SalaryID: '6', SalaryFrom: 2200, SalaryTo: 2900, CurrencyID: '1' },
                   { SalaryID: '7', SalaryFrom: 3700, SalaryTo: 4400, CurrencyID: '1' },
                   { SalaryID: '8', SalaryFrom: 2200, SalaryTo: 3400, CurrencyID: '1' },
-                  { SalaryID: '9', SalaryFrom: 2000, SalaryTo: 2500, CurrencyID: '1' }
+                  { SalaryID: '9', SalaryFrom: 2000, SalaryTo: 2500, CurrencyID: '1' },
+                  { SalaryID: '10', SalaryFrom: 2200, SalaryTo: 2900, CurrencyID: '1' },
+                  { SalaryID: '11', SalaryFrom: 3000, SalaryTo: 3500, CurrencyID: '1' },
+                  { SalaryID: '12', SalaryFrom: 4000, SalaryTo: 5000, CurrencyID: '1' },
+                  { SalaryID: '13', SalaryFrom: 2000, SalaryTo: 2500, CurrencyID: '1' },
+                  { SalaryID: '14', SalaryFrom: 4000, SalaryTo: 6000, CurrencyID: '1' },
+                  { SalaryID: '15', SalaryFrom: 1500, SalaryTo: 2000, CurrencyID: '1' },
+                  { SalaryID: '16', SalaryFrom: 1600, SalaryTo: 1700, CurrencyID: '1' },
+                  { SalaryID: '17', SalaryFrom: 1800, SalaryTo: 2000, CurrencyID: '1' },
+                  { SalaryID: '18', SalaryFrom: 1500, SalaryTo: 2000, CurrencyID: '1' },
+                  { SalaryID: '19', SalaryFrom: 6000, SalaryTo: 9000, CurrencyID: '1' },
+                  { SalaryID: '20', SalaryFrom: 2500, SalaryTo: 4000, CurrencyID: '1' },
+                  { SalaryID: '21', SalaryFrom: 4000, SalaryTo: 5000, CurrencyID: '1' },
+                  { SalaryID: '22', SalaryFrom: 4000, SalaryTo: 5000, CurrencyID: '1' },
+                  { SalaryID: '23', SalaryFrom: 7000, SalaryTo: 12000, CurrencyID: '1' },
+                  { SalaryID: '24', SalaryFrom: 2000, SalaryTo: 2500, CurrencyID: '1' },
+                  { SalaryID: '25', SalaryFrom: 9000, SalaryTo: 12600, CurrencyID: '1' },
+                  { SalaryID: '26', SalaryFrom: 5000, SalaryTo: 8000, CurrencyID: '1' },
+                  { SalaryID: '27', SalaryFrom: 4430, SalaryTo: 5086, CurrencyID: '1' },
+                  { SalaryID: '28', SalaryFrom: 4508, SalaryTo: 5975, CurrencyID: '1' },
+                  { SalaryID: '29', SalaryFrom: 4000, SalaryTo: 5000, CurrencyID: '1' }
                   // { SalaryID: '9', SalaryFrom: 1, SalaryTo: 1, CurrencyID: '1' },
                 ]).then(() => {
                   console.log("Salary Added");
@@ -295,6 +333,351 @@ sequelize.sync({
                         newjob.addIndustry(currentId).then(function (result) { });
                       });
                       [1, 2].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                  db['Job'].create(
+                    {
+                      JobID: '10', JobTitle: "PR Marketing cum Social Media Exec",
+                      JobDescription: "leading developer, publisher and marketer of interactive entertainment for consumers",
+                      JobQualification: "<ul><li><strong>&nbsp;Min 1 year of relevant experience in the marketing, PR and/or Social industry in FMCG, gaming, entertainment marketing or consumer lifestyle brands</strong></li><li><strong>&nbsp;Posses a strong interest for video games</strong></li><li><strong>Exposure in executing against Marketing and Communications strategies to meet company objectives</strong></li><li><strong>Digital marketing experience including some social media and a broad grounding in offline. Social mavens and community leaders, a plus</strong></li><li>&nbsp;Mature and analytical with the ability to understand and work towards the company goals</li><li>&nbsp;Strong written and spoken communication, interpersonal and conceptual thinking skills</li><li>&nbsp;Resourceful, independent with basic Marketing, PR and/or Social knowledge</li></ul>",
+                      JobResponsibilities: "<ul><li>Assist in development of a comprehensive marketing and communications strategies, and tactics for the products</li><li>Conceptualize, plan, execute and evaluate integrated marketing communications campaigns from announcement through to product launch and lifecycle management</li><li>&nbsp;Manage relationship with media agency in developing, executing and evaluating advertising campaigns with a focus but not limit to digital and social placement</li><li>Work closely with Global Brand and Communications Lead to deliver marketing assets, communications documents and obtain approvals for the Asia Territories</li><li>Collate, file and prepare PR coverage report to the Global Communications team</li><li>Manage relationship with Singapore and South East Asia key media</li><li>Assist in the logistics for events and press tours including setting up game demo to press, consumers and partners as required</li><li>Contribute to the voice the social media channels and give input on growing our community in Asia</li><li>Manage the Asia social brand channels and liaise with the Global Communications lead on social content requests and approvals</li><li>Create and adapt global marketing assets for marketing purposes</li><li>&nbsp;Capture in-game images and footages for PR and Social purposes</li><li>&nbsp;Manage and monitor monthly marketing expenses and ensure expenses are within forecast</li></ul>",
+                      JobPostDate: '2017-07-28', JobPostalCode: '068809', JobAddress: 'Achieve Group 6 Shenton Way, OUE Downtown 1 #39-03',
+                      CompanyID: '10', CountryID: '1', JobTypeID: '1', SalaryID: '10'
+                    }).then(function (newjob) {
+                      [4].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [14].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                  db['Job'].create(
+                    {
+                      JobID: '11', JobTitle: "Central Support Officer (CSO)",
+                      JobDescription: "FCBC is a highly dynamic church organization. We are seeking a determined individual to work in a friendly environment that services the church, its members and the community with passion and commitment, especially in the area of training and equipping leaders and believers. The incumbent will provide administrative and logistic support to an equipping team of pastors that run course planning. Administration support on-site is required for the on-going classes.",
+                      JobQualification: "<strong>Education/Professional Qualification:</strong><ul><li>1 to 2 years of working experience</li><li>Minimum GCE A level or Diploma holder in any discipline</li></ul><strong>Preferred Skills/Experience:</strong><ul><li>An individual with pride, passion, and one that garners satisfaction from a job well done</li><li>Good organizational, interpersonal, communication and time management skills</li><li>Demonstrate flexibility, creativity and a good team player</li><li>Willing to learn new systems and processes</li><li>Able to multi-task in fast paced environment</li><li>Able to work under pressure and meet tight deadlines</li><li>Able to commit on weeknight and weekends (Saturday and Sunday)</li><li>Proficient in MS Office (Word, Excel and Powerpoint)</li><li>Proficient in written and spoken English</li></ul><strong>Language Requirements:</strong><ul><li>Need to receive Mandarin speaking clients and prepare basic English/Mandarin bilingual signage. Proficiencies in English and Mandarin are required.</li></ul>",
+                      JobResponsibilities: "CSO&rsquo;s duties include but are not limited to the following:<ul><li>Work closely with the Pastors in-charge, other Central Support Officers and helpers</li><li>Provide full spectrum of administrative support to the church-wide equipping classes</li><li>Oversee pre-registration procedures and manage classes on-site</li><li>Attend to enquiries made through email or telephone</li><li>Act as liaison between Pastors, trainers, students and inter-departments on event related matters</li><li>Secure facilities booking and coordinate logistic matters</li><li>Prepare and provide training materials for classes</li><li>Maintain records of attendance and outcomes for registration report/statistics report/evaluation summary</li><li>Maintain and update contents on church equipping course websites</li></ul>",
+                      JobPostDate: '2017-07-28', JobPostalCode: '469001', JobAddress: '750A Chai Chee Road, #04-01 Viva Business Park',
+                      CompanyID: '11', CountryID: '1', JobTypeID: '1', SalaryID: '11'
+                    }).then(function (newjob) {
+                      [5].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [3].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                  db['Job'].create(
+                    {
+                      JobID: '12', JobTitle: "Marketing Specialist",
+                      JobDescription: "",
+                      JobQualification: "<ul><li>At least 3-4 years of overall social media or content marketing experience including execution and experience in handling vendors and suppliers</li><li>Client servicing experience</li><li>Excellent oral and written business communication skills</li><li>Digital Native, able to handle digital platforms and content easily</li></ul>",
+                      JobResponsibilities: "Our client is a well-established company that delivers personalized learning experiences that help students, parents, educators and professionals drive results.&nbsp;<br /><br /><br />This role oversees the creation, management and development of the companys social media marketing strategy, PR strategy as well as supporting and executing events. You would be responsible for establishing a strategic approach to social media content that aligns with the companys global vision and marketing plans but tailored to the regional/local business needs, culture, trends through owned and social channels - Facebook, LinkedIn, Twitter and other social media platforms.<br />You would be required to work alongside PR agency to execute PR releases and content in line with GTM programs as well as company-wide news.<br /><br />'",
+                      JobPostDate: '2017-08-07', JobPostalCode: '048616', JobAddress: 'One Raffles Place, #14-62 Office Tower 2',
+                      CompanyID: '12', CountryID: '1', JobTypeID: '1', SalaryID: '12'
+                    }).then(function (newjob) {
+                      [7].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [14].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+
+                  db['Job'].create(
+                    {
+                      JobID: '13', JobTitle: "Contract Sales Administrator",
+                      JobDescription: "",
+                      JobQualification: "Experience in reporting, documentation, presentation slides<br />Someone who is good with numbers<br />Candidate must possess at least a Bachelor's Degree, Business Studies/Administration/Management or equivalent.<br />Required skill(s): MS Powerpoint, EXCEL<br />1 year(s) of working experience or No experience welcome to apply!<br /><br /><br /><strong>Other Information</strong><br />Locaton: Harbourfront<br />6months contract - subject to renewal (with completed bonus and other attractive benefits!)<br />Singaporeans only<br /><br />",
+                      JobResponsibilities: "Responsible for sales analytical function",
+                      JobPostDate: '2017-07-28', JobPostalCode: '078881', JobAddress: 'Manpower Staffing Services (S) Pte Ltd 1 Wallich Street #09-02 Guoco Tower',
+                      CompanyID: '13', CountryID: '1', JobTypeID: '1', SalaryID: '13'
+                    }).then(function (newjob) {
+                      [8].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [3, 10].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+
+                  db['Job'].create(
+                    {
+                      JobID: '14', JobTitle: "Infrastructure Engineer",
+                      JobDescription: "",
+                      JobQualification: "<ul><li>At least a Diploma/Degree in Computer Science/Information Technology Engineering</li><li>At least 5 year(s) working experience in managing large computing environment at data Centre</li><li>Candidates possess IT certificates such as Microsoft MCSE/MCSA/ITIL will be preferred</li><li>Good knowledge and hands-on experience in:</li><ul><li>Microsoft Windows/Exchange Server, Endpoints Security, Virtual Server, Citrix XenApp &amp; XenDesktop</li><li><div>Windows OS Services, AD, Web Services, SAN Interconnect, VDI, NAS, VMware LAN/WAN performance troubleshooting</div></li><li><div>Massaging and collaboration platform in MS Exchange Skype or Business Active Directory</div></li></ul>",
+                      JobResponsibilities: "<ul><li>Provide overall system and maintenance support of email servers</li><li>Responsible for the day to day system operations support &ndash; system monitoring, administration and maintenance upgrades including patch management</li><li>Involve project implementation with maintenance perspectives, processes, documentation of various configurations of various subsystems and familiarization of monitoring tools for System Management</li><li>Work with IT team members to maintain solutions and ensure systems meet the needs of global organization functionality and quality</li><li>Responsible for managing user accounts, network file sharing, software license management, installation and configuration of new server systems or rebuild, peripherals, services, storage, and printers, according to IT standards, projects and operational requirements</li><li>Manage MS exchange email system consisting of clustered back-end and front-end servers</li><li>Coordinate with other IT teams on corporate-initiated projects</li><li>Maintain operational inventory of data Centre equipment, technical documentation and SOPs</li><li>Responsible for vendor and change management</li></ul>",
+                      JobPostDate: '2017-07-28', JobPostalCode: '189720', JobAddress: '150 Beach Road Level 24, Gateway West',
+                      CompanyID: '14', CountryID: '1', JobTypeID: '1', SalaryID: '14'
+                    }).then(function (newjob) {
+                      [9].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [11].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+
+                  db['Job'].create(
+                    {
+                      JobID: '15', JobTitle: "Temp Bank Admin/Data entry assistants",
+                      JobDescription: "",
+                      JobQualification: "<ul><li>Minimum GCE 'O' Levels &amp; above</li><li>Able to commit for at least 2-3 months and longer</li><li>Knowledge in Microsoft Office</li></ul>",
+                      JobResponsibilities: "<ul><li>Updating of database</li><li>Sorting documents and paperwork</li><li>Checking and generation of reports</li><li>Photocopying and scanning duties</li><li>Filing, archiving&nbsp;</li><li>Other general admin duties</li></ul>",
+                      JobPostDate: '2017-07-28', JobPostalCode: '238873', JobAddress: '391A Orchard Road Ngee Ann City Tower A #12-08',
+                      CompanyID: '15', CountryID: '1', JobTypeID: '1', SalaryID: '15'
+                    }).then(function (newjob) {
+                      [10].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [3, 5, 10].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+
+                  db['Job'].create(
+                    {
+                      JobID: '16', JobTitle: "Office Executive (Govt)",
+                      JobDescription: "",
+                      JobQualification: "<ul><li>Diploma in any field</li><li>Candidate with prior experience in Administrative will be a plus</li><li>Available to start work within short notice</li><li>Proficient in MS Office Skill (MS Word / Excel)</li><li>Able to work for 6 mths and above</li></ul>",
+                      JobResponsibilities: "<ul><li>Assist Department with Administrative support</li><li>Reports generation (Excel)</li><li>Handle simple enquiry (Walk-in)</li><li>Receptionist duties</li></ul>",
+                      JobPostDate: '2017-07-28', JobPostalCode: '049315', JobAddress: '10 Collyer Quay Centre,#06-07/08/09/10,Ocean Financial Centre',
+                      CompanyID: '16', CountryID: '1', JobTypeID: '1', SalaryID: '16'
+                    }).then(function (newjob) {
+                      [11].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [3].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+
+                  db['Job'].create(
+                    {
+                      JobID: '17', JobTitle: "Front Desk Executive",
+                      JobDescription: "",
+                      JobQualification: "<ul><li>Experienced in front desk work, preferably from FMCG industry</li><li>Good communication skills</li><li>Experienced in cashiering, opening of retail shops</li></ul>>", 
+                      JobResponsibilities: "<ul><li>Answer to customer enquiries</li><li>Share and promote services &amp; products</li><li>Management of bookings for customers</li><li>Resolve of customer complaints in a professional manner</li></ul>",
+                      JobPostDate: '2017-07-28', JobPostalCode: '018960', JobAddress: '8 Marina View, #11-01 Asia Square Tower 1',
+                      CompanyID: '17', CountryID: '1', JobTypeID: '1', SalaryID: '17'
+                    }).then(function (newjob) {
+                      [12].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [9].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                  db['Job'].create(
+                    {
+                      JobID: '18', JobTitle: "Cashier",
+                      JobDescription: "",
+                      JobQualification: "<ul><li>Singaporean or those eligible to work in Singapore</li><li>Bilingual in English and Mandarin due to requirements in liaising with mandarin speaking customer</li><li>careful with cash</li><li>quick thinking&nbsp;</li></ul>",
+                      JobResponsibilities: "<ul><li>order taking</li><li>collect cash</li><li>ensure customers collect the correct items</li></ul>",
+                      JobPostDate: '2017-07-28', JobPostalCode: '069546', JobAddress: '180 Cecil St, Bangkok Bank Building',
+                      CompanyID: '18', CountryID: '1', JobTypeID: '1', SalaryID: '18'
+                    }).then(function (newjob) {
+                      [13].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [6, 18].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                  db['Job'].create(
+                    {
+                      JobID: '19', JobTitle: "Sales Manager (Technical Equipment)- Construction",
+                      JobDescription: "",
+                      JobQualification: "As the successful candidate for this role, you will influence and lead sales strategies and be directly involved in the performance a growing portion of the business. To qualify for the role, you should have more than 4 years experience in sales within the construction B2B arena. You will ideally have:<ul><li>Diploma/Degree in Engineering, technically inclined</li><li>Experience selling to consultants (construction), building owners and developers would be highly advantageous</li><li>Strong salesmanship, being able to engage and develop business through multiple industries</li><li>Highly independent and resourceful</li><li>Strategic thinking, proactive and self-driven</li><li>Strong technical acumen</li></ul>",
+                      JobResponsibilities: "In your role, you report directly to the Sales leaders based in Australia and will be responsible for taking charge of developing business and growing the brand within the region. You will be responsible to ensure the company remains competitive in the market and grows profitably. Some of the core duties of the role include:<ul><li>Developing and executing sales strategies and plans, identifying key areas where growth potential is high</li><li>Preparing annual budget and monthly forecasts, keeping track of sales progress and performance</li><li>Growing and maintaining existing key accounts, following up on key projects and maintaining current key relationships with customers</li><li>Providing professional and technical advice, working closely with relevant stakeholders to ensure strong partnerships</li><li>Expanding market share, developing distributor partnerships and promoting the brand.</li></ul>",
+                      JobPostDate: '2017-07-28', JobPostalCode: '048623', JobAddress: '50 Raffles Place #17-02/05, Singapore Land Tower',
+                      CompanyID: '19', CountryID: '1', JobTypeID: '1', SalaryID: '19'
+                    }).then(function (newjob) {
+                      [14].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [6, 18].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                  db['Job'].create(
+                    {
+                      JobID: '20', JobTitle: "Presale System Support Engineer",
+                      JobDescription: "",
+                      JobQualification: "<ul><li>Degree/Diploma in Electrical and Electronics, Telecommunications, Information Technology or equivalent.</li><li>Minimum&nbsp;3&nbsp;years&rsquo; experience in Physical Security and sound IT Network System knowledge. Extensive experience in handling presales function and design of large scale enterprise System for tenders.</li><li>Experience with server and storage hardware components including RAID levels and virtualization.</li><li>Certification:&nbsp;MCSE,&nbsp;CCNA, MS Certification are a plus.</li><li>Experience with Microsoft OS, Linux OS and VMWare.</li><li>Excellent client, vendor and team management skills as well as good interpersonal and negotiation skills &nbsp;</li><li>Excellent written and verbal communications skills with demonstrated ability to clearly articulate complex technical solution to customers and consultants</li></ul>",
+                      JobResponsibilities: "<ul><li>As a member of the solution team, you will develop solution, lead in bid submission to grow organizations business.</li><li>Analyse complex technical requirements and work with Solution Architect on bid strategies, compliance responses and propose&nbsp;technical&nbsp;solutions</li><li>Drive system demo and POC (Proof of Concept) as part of pre-tender engagement and post-tender submission engagement</li><li>To support Request for Quotation (RFQ), evaluate third-party technologies/solutions, negotiate and make recommendations to bid team for inclusion in proposal</li><li>Give support to project team in project implementation upon award, including driving system level and detailed design, Acceptance Test Plans, and seek approvals from customers and regulatory authorities where applicable, and manage 3rd party vendors on delivery and performance.</li><li>Conduct and develop materials for use in customer training and train others in project teams or life-cycle support services team</li><li>Conduct project post mortem, identify successful elements and propose recommendations on areas for improvement</li><li>Follow up on implemented solutions and identifies new opportunities that complement the work that was completed</li></ul>",
+                      JobPostDate: '2017-07-28', JobPostalCode: '208312', JobAddress: '15 Mayo St',
+                      CompanyID: '20', CountryID: '1', JobTypeID: '1', SalaryID: '20'
+                    }).then(function (newjob) {
+                      [15].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [11].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                  db['Job'].create(
+                    {
+                      JobID: '21', JobTitle: "Service Delivery Manager",
+                      JobDescription: "",
+                      JobQualification: "<div><strong>Requirements:</strong><br />&bull; Degree or Diploma in any discipline, preferably supplemented by trainings/certifications related to services delivery and project management.<div>&bull; At least 2 years operational experience as a SDM in a regional or multi-countries environment for services delivery to multi-nationals companies</div><div>&bull; Candidate must have worked with both customers and internal teams, preferably with liaison upstream to global/central teams as well as downstream to country teams.</div><div>&bull; History of meeting contracted service levels agreed with customers</div></div>",
+                      JobResponsibilities: "<div>&bull; The candidate should have experiences in services delivery involving Multi-Functional Devices (MFDs), Printers and Document Management Solutions. These are elements of Managed Document Services (MDS) programs. However, other IT projects may be suitable for consideration<br />&bull; Candidate must have worked with both customers and internal teams, preferably with liaison upstream to global/central teams as well as downstream to country teams<br />&bull; History of meeting contracted service levels agreed with customers</div><div>&nbsp;</div>",
+                      JobPostDate: '2017-07-28', JobPostalCode: '018960', JobAddress: '8 Marina View #11-01 Asia Square Tower 1',
+                      CompanyID: '21', CountryID: '1', JobTypeID: '1', SalaryID: '21'
+                    }).then(function (newjob) {
+                      [16].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [6, 18].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                  db['Job'].create(
+                    {
+                      JobID: '22', JobTitle: "Senior Shipping Executive (Trading/ MNC/ Perm/ LC)",
+                      JobDescription: "",
+                      JobQualification: "<ul><li><strong>Good import and export shipping knowledge for bulk shipping logistics to SEA markets</strong></li><li>Understands shipping incoterms</li><li>Experience in trading company (agricultural products) will be an advantage</li><li>Able to handle high volume of shipments and fast pace environment</li><li>Meticulous and a keen eye for details</li></ul>",
+                      JobResponsibilities: "<ul><li>Able to independently excute end to end shipment documentation for bulk vessels and containers</li><li>Liaise with customers on shipment irregularities</li><li>Coordinate shipments and handling operational requirements</li><li>Liaise with internal and 3PL on logistics and shipment status</li><li>Check contracts from suppliers and prepare contracts to factory and customers</li><li>Handles Letter of Credit (LC) and bank negotiation</li></ul>",
+                      JobPostDate: '2017-07-28', JobPostalCode: '228208', JobAddress: ' 1 Scotts Road, #18-08,Shaw Centre',
+                      CompanyID: '22', CountryID: '1', JobTypeID: '1', SalaryID: '22'
+                    }).then(function (newjob) {
+                      [17].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [8, 19].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                  db['Job'].create(
+                    {
+                      JobID: '23', JobTitle: "Digital Platform Manager",
+                      JobDescription: "",
+                      JobQualification: "<ul><li>You will have 5+ years' experience in digital transformation, digital marketing or digital innovation programs.</li><li>You will have a minimum of 3 years' experience in platform implementation and enjoy being a hands on subject matter expert.</li><li>A degree is required and candidates from pharma, marketing, sales, medical and digital agency are preferred.</li><li>You will be an expert in Adobe Marketing Cloud - Drupal - Adobe Target - Adobe Tag MGT - Adobe Analytics - Salesforce - Veeva Suite -CRM - CMS - Programmatic.</li></ul>",
+                      JobResponsibilities: "MarTech, Adobe Campaign, Digital Innovation, Web Personalisation, digital platforms, implementation<br /><br />A leader in consumer healthcare are looking for a hands on expert Digital Platform Manager to support a newly formed digital transformation team. Expecting to travel 10-15% of the time across the region, you will be responsible for<ul><li>Use and implementation of effective digital marketing campaigns using Adobe Campaign Manager</li><li>Use and implementation of Adobe Analytics, Adobe Dynamic Tag Management, Adobe Target</li><li>Managing the CMS (Drupal preferred)</li></ul><br />You will be experienced in deployment of multiple websites across the region using content management tools like Drupal, and understand how to troubleshoot problems that might arise during the implementation process. More analytical in your approach, you will be proficient in data driven marketing, including expert use of digital marketing tools to get the message to the right customer segment. You will be able to independently implement full end-to-end campaigns with automation and email triggers from scratch to kick start new digital marketing teams in their use of these new tools.<br /><br /><br />You will work closely with the Digital Transformation Manager, Digital Content Manager and Digital Innovation Lead, supporting the transformation process across the business with your hands on technical and implementation knowledge. The ideal candidate will be well versed in regional legal compliance of roll out of digital tools, and be available to troubleshoot for country heads and key internal stakeholders on a regular basis. You will be accustomed to managing third party digital vendors.",
+                      JobPostDate: '2017-07-28', JobPostalCode: '048624', JobAddress: '#27-20 UOB Plaza 2, 80 Raffles Place',
+                      CompanyID: '23', CountryID: '1', JobTypeID: '1', SalaryID: '23'
+                    }).then(function (newjob) {
+                      [18].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [14].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                  db['Job'].create(
+                    {
+                      JobID: '24', JobTitle: "Administrative Officer",
+                      JobDescription: "Ensure all company procedures and protocols are followed at all times. Ensure there is a full understanding of operating functions of all machines including machine maintenance. You will be trained on these procedures and if anything is unclear, inform managers or supervisors.<br /><br />Always ensure that all clients&rsquo; instructions are clear before commencement of a job to guarantee efficiency and accuracy. If help is needed to complete a job the Operations managers or supervisors must be informed immediately.",
+                      JobQualification: "You may also be required to perform electronic functions including:<br /><ul><li>Photocopying&nbsp;</li><li>Scanning</li><li>Printing</li><li>Delimiting</li><li>Pagination</li><li>Coding</li><li>Other processes as directed by management</li></ul>",
+                      JobResponsibilities: "<strong>Pickup/Delivery/Despatch</strong><br/>You will be expected from time to time to pick up or deliver documents to our client&rsquo;s offices and it is expected that you will be well presented and polite when performing deliveries.<strong><br/><br/>Ancillary Processes</strong><br/>From time to time you will be required to perform Quality Assurance (QA) on all jobs completed by other staff members. Make sure all QA procedures are followed according to company guidelines.<br/><br/><strong>Administration and Procedure</strong><br/>As part of your main duties the Job Management System (JMS) must be fully understood and must always be updated accordingly. It is important that you are fully trained on all aspects of JMS. Managers and Supervisors must be informed when JMS cannot be accessed or updated.You will be asked to follow a number of procedural guidelines in your role. Some of these procedures will include invoicing of jobs. A thorough training session will occur to cover all aspects of invoicing and different requirements for different clients.All staff must also follow company procedures and standards which are related to punctuality, grooming and OHS.",
+                      JobPostDate: '2017-07-28', JobPostalCode: '409179', JobAddress: '20 Jln Afifi',
+                      CompanyID: '24', CountryID: '1', JobTypeID: '1', SalaryID: '24'
+                    }).then(function (newjob) {
+                      [19].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [3, 10].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                    db['Job'].create(
+                    {
+                      JobID: '25', JobTitle: "Mobile Application Lead (iOS/Android)",
+                      JobDescription: "",
+                      JobQualification:"<strong>Technical Skills:</strong><ol><li>5-7 years of overall software development experience and Android(Java) and iOS (Objective-C and Swift) native application development and customization.</li><li>Experienced with responsive web development will be a plus.</li><li>Experience on agile development teams</li><li>Experience in leading technical teams</li><li>Experience in cloud development technologies (AWS)</li><li>Experience with Relational and NoSQL databases</li><li>Experience with Git or other similar version control systems</li><li>Ability to set up continuous integration, static analysis tools and code coverage tools</li><li>Experience writing automated unit and functional tests</li><li>Bachelor of Science in Computer Science or related field</li></ol><p><strong>Leadership Skills:</strong></p><ul><li>Ability to lead and work with a team of size 4-5 members</li><li>Must be able to work with the project manager to map the development&nbsp;life-cycle, outline sprint &amp; overall&nbsp;road-map&nbsp;and schedule, and set / review the overall quality of&nbsp;deliverables.</li><li>Should be passionate about coding and able to mentor the junior team members.</li><li>Experience in handling or managing customer interactions and&nbsp;deliverables.</li><li>Excellent communication, collaboration, problem solving, and facilitation skills</li></ul>",
+                      JobResponsibilities: "<ul><li>Analyzing new requirements, designing and implementing technical solutions</li><li>Executing code reviews</li><li>Coaching and mentoring colleagues on the development team</li><li>Researching and testing new solutions, including authoring sample code, to solve a customer&rsquo;s technical obstacles</li><li>Interacting with managers, developers, and back end teams</li><li>Deployment of code, database migrations, and a thorough understanding the impact of changes in the production environment</li><li>Understanding and augmenting the system and application architecture as needed</li><li>Public showcase and repository of Mobile Apps and work desirable.</li></ul>",
+                      JobPostDate: '2017-08-13', JobPostalCode: '', JobAddress: 'Downtown Core (Bugis, City Hall, Tanjong Pagar, Raffles Place), CBD (Central Area)',
+                      CompanyID: '25', CountryID: '1', JobTypeID: '1', SalaryID: '25'
+                    }).then(function (newjob) {
+                      [15].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [11].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                    db['Job'].create(
+                    {
+                      JobID: '26', JobTitle: "Business Analyst",
+                      JobDescription: "<p>Must have Financial Industry knowledge especially Insurance.</p><ul><li>With Business Analysis knowledge especially on business requirement gathering, analysis, translating and documentation.</li><li>Able to perform planning and monitoring on BAU and Project related task/assignment.</li><li>Able to communicate effectively to both business and technical team.</li></ul>",
+                      JobQualification:"<ul><li>Min. 5 years of experience</li><li>Good communication skills</li><li>Excellent communication and client facing skills</li><li>Diploma/Degree holder in Engineering/ Information Technology/ Computer Science/ Electronics</li></ul>",
+                      JobResponsibilities: "",
+                      JobPostDate: '2017-08-13', JobPostalCode: '', JobAddress: 'North',
+                      CompanyID: '26', CountryID: '1', JobTypeID: '1', SalaryID: '26'
+                    }).then(function (newjob) {
+                      [15].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [11].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                    db['Job'].create(
+                    {
+                      JobID: '27', JobTitle: ".NET Developer",
+                      JobDescription: "",
+                      JobQualification:"<ul><li>Minimum 5 years of working experience in application design, development and construction of application systems in Microsoft .NET C# platform and Oracle PL/SQL</li><li>Knowledge of Agile and Test Driven Development will be an advantage</li><li>Understanding basic Network concepts will be an added advantage</li><li>Strong communication skills with good knowledge of design patterns</li><li>Have working experience in Insurance industry will be given preference</li><li>Good team player</li><li>Able to work independently and have good problem solving skills</li></ul>",
+                      JobResponsibilities: "",
+                      JobPostDate: '2017-08-13', JobPostalCode: '', JobAddress: 'North',
+                      CompanyID: '26', CountryID: '1', JobTypeID: '1', SalaryID: '27'
+                    }).then(function (newjob) {
+                      [15].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [11].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                    db['Job'].create(
+                    {
+                      JobID: '28', JobTitle: "Java Developer",
+                      JobDescription: "",
+                      JobQualification:"<ul><li>At least 3 years of experience in Java, J2EE development</li><li>Hands on struts, spring and hibernate frameworks,</li><li>Good understanding of SDLC Process</li><li>Experience on Web-servies (REST/SOAP), Javascript, HTML, CSS, JQuery, AngularJS</li><li>Experience on Oracle-PL/SQL</li></ul>",
+                      JobResponsibilities: "",
+                      JobPostDate: '2017-08-13', JobPostalCode: '', JobAddress: 'North',
+                      CompanyID: '26', CountryID: '1', JobTypeID: '1', SalaryID: '28'
+                    }).then(function (newjob) {
+                      [15].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [11].forEach(function (currentID) {
+                        newjob.addJobFunction(currentID).then(function (result) { });
+                      });
+                    });
+
+                    db['Job'].create(
+                    {
+                      JobID: '29', JobTitle: "Unix & Infrastructure Engineer",
+                      JobDescription: "",
+                      JobQualification:"<ul><li>Bachelor in Information Technology/Computer Science&nbsp;</li><li>2-3 years of experience with Unix Server&nbsp;</li><li>Oracle Solaris 8 &amp; 10 (Knowledge in Solaris 11 &amp; Oracle Linux is a plus)</li><li>Hitachi &amp; EMC Isilon storage</li><li>BMC TrueSight</li><li>Symantec Netbackup</li><li>Knowledge in industry standard scheduling tool (Control-M is a plus)</li><li>Cloud technology knowledge is a plus</li></ul>",
+                      JobResponsibilities: "<div><strong>System Administration</strong></div><ul><li>Maintenance of servers, physical and virtual (Primarily Solaris with some Linux)</li><li>New Unix servers provisioning, physical and virtual (Solaris)</li><li>Operating System, Software and Hardware patching</li><li>Capacity planning and monitoring</li><li>Incidents resolution</li><li>Unix Operating System, software, hardware and Network troubleshooting</li></ul><p><strong>Storage and SAN administration</strong></p><ul><li>Capacity maintenance, provisioning and monitoring of Unix servers</li><li>SAN switches maintenance and provisioning (hard and soft)</li><li>Storage and SAN troubleshooting</li></ul>",
+                      JobPostDate: '2017-08-13', JobPostalCode: '', JobAddress: 'Tampiness/East',
+                      CompanyID: '25', CountryID: '1', JobTypeID: '1', SalaryID: '29'
+                    }).then(function (newjob) {
+                      [10].forEach(function (currentId) {
+                        newjob.addIndustry(currentId).then(function (result) { });
+                      });
+                      [11].forEach(function (currentID) {
                         newjob.addJobFunction(currentID).then(function (result) { });
                       });
                     });

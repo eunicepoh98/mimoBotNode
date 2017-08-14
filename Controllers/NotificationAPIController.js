@@ -16,7 +16,7 @@ router.get('/', token.verifyToken, function (req, res, next) {
       var response = { success: true, result: JSON.parse(data) };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });
@@ -45,7 +45,7 @@ router.post('/', function (req, res, next) {
       var response = { success: true, message: data.msg, result: data.noty };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });
@@ -58,7 +58,7 @@ router.post('/send', function (req, res, next) {
       var response = { success: true, message: msg };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 })

@@ -17,7 +17,7 @@ router.get('/', function (req, res, next) {
       var response = { success: true, result: JSON.parse(data) };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });
@@ -52,7 +52,7 @@ router.put('/', function (req, res) {
       var response = { success: true, message: data.msg, result: JSON.parse(data.data) };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });
@@ -75,7 +75,7 @@ router.put('/changepassword', function (req, res) {
       var response = { success: true, message: data };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });
@@ -98,7 +98,7 @@ router.put('/devicetoken', function (req, res) {
       var response = { success: true, message: data };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });
@@ -121,7 +121,7 @@ router.put('/updatepicture', function (req, res) {
       var response = { success: true, message: data };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });

@@ -50,7 +50,7 @@ bookmark.getAllBookmark = function (userId) {
             resolve(jobBookmarkList)
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 }; //end of getAllBookmark()
@@ -76,7 +76,7 @@ bookmark.getAllBookmarkID = function (userId) {
             resolve(jobids)
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 }; //end of getAllBookmarkID()
@@ -96,7 +96,7 @@ bookmark.addBookmark = function (bookmark) {
                             resolve(JSON.stringify(update))
                         }).catch(function (error) {
                             console.log("Error: " + error)
-                            reject(error.toString());
+                            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                         });
                 } else {
                     Bookmark.create(bookmark)
@@ -104,12 +104,12 @@ bookmark.addBookmark = function (bookmark) {
                             resolve(JSON.stringify(newBookmark));
                         }).catch(function (error) {
                             console.log("Error: " + error)
-                            reject(error.toString());
+                            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                         });
                 }
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }; //end of addBookmark()
@@ -128,12 +128,12 @@ bookmark.removeBookmark = function (jobId, userId) {
                             resolve(JSON.stringify(update))
                         }).catch(function (error) {
                             console.log("Error: " + error)
-                            reject(error.toString());
+                            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                         });
                 }
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 };// end of removeBookmark()

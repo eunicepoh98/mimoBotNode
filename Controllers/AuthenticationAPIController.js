@@ -24,7 +24,11 @@ router.post('/resendemail', function (req, res) {
         .then(function (result) {
             res.send({ success: true, message: result });
         }).catch(function (error) {
-            res.send({ success: false, message: error });
+            if (error.errMsg) {
+                res.send({ success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" });
+            } else {
+                res.send({ success: false, message: error.msg, errMessage: "" });
+            }
         });
 });
 
@@ -55,7 +59,7 @@ router.get('/verifyemail?', function (req, res) {
 router.post('/facebook', function (req, res, next) {
     passport.authenticate('facebook-token', function (error, user, msg) {
         if (error) {
-            return res.status(409).send({ success: false, message: error.message });
+            return res.status(409).send({ success: false, message: msg.message, errMessage: msg.errMessage ? msg.errMessage : "" });
         }
         if (!user) {
             return res.status(409).send({ success: false, message: msg.message });
@@ -86,7 +90,8 @@ router.post('/facebook', function (req, res, next) {
 router.post('/signup', function (req, res, next) {
     passport.authenticate('local-signup', function (err, user, msg) {
         if (!user) {
-            return res.status(409).send({ success: false, message: msg.message });
+            console.log(msg)
+            return res.status(409).send({ success: false, message: msg.message, errMessage: msg.errMessage ? msg.errMessage : "" });
         }
         if (user) {
             var response = { success: true, message: msg.message }
@@ -107,7 +112,7 @@ router.post('/signup', function (req, res, next) {
 router.post('/signin', function (req, res, next) {
     passport.authenticate('local-signin', function (err, user, msg) {
         if (!user) {
-            return res.status(401).send({ success: false, message: msg.message });
+            return res.status(401).send({ success: false, message: msg.message, errMessage: msg.errMessage ? msg.errMessage : "" });
         }
         if (user) {
             return res.status(200).send({ success: true, message: msg.message, result: user });

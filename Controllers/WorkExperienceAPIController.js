@@ -11,13 +11,13 @@ var workexperience = require(path.resolve('./APIs/workexperience.js'));
  */
 router.get('/', function (req, res, next) {
     var userid = req.headers.userid;
-  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
+    if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
     workexperience.getAllWorkExperience(userid)
         .then(function (data) {
             var response = { success: true, result: JSON.parse(data) };
             res.status(200).send(response);
         }).catch(function (error) {
-            var response = { success: false, message: error };
+            var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
             res.send(response);
         });
 });
@@ -39,7 +39,7 @@ router.get('/', function (req, res, next) {
  */
 router.post('/', function (req, res, next) {
     var userid = req.headers.userid;
-  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
+    if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
     var we = {
         CompanyName: req.body.CompanyName,
         Role: req.body.Role,
@@ -53,7 +53,7 @@ router.post('/', function (req, res, next) {
             var response = { success: true, message: 'Successfully added work experience', result: JSON.parse(data) };
             res.status(200).send(response);
         }).catch(function (error) {
-            var response = { success: false, message: error };
+            var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
             res.send(response);
         });
 });
@@ -75,7 +75,7 @@ router.post('/', function (req, res, next) {
  */
 router.put('/:id', function (req, res) {
     var userid = req.headers.userid;
-  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
+    if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
     var we = {
         CompanyName: req.body.CompanyName,
         Description: req.body.Description,
@@ -89,7 +89,7 @@ router.put('/:id', function (req, res) {
             var response = { success: true, message: "Successfully updated work experience", result: JSON.parse(data) };
             res.status(200).send(response);
         }).catch(function (error) {
-            var response = { success: false, message: error };
+            var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
             res.send(response);
         });
 });
@@ -107,7 +107,7 @@ router.delete('/:id', function (req, res) {
             var response = { success: true, message: "Successfully deleted work experience", result: JSON.parse(data) };
             res.status(200).send(response);
         }).catch(function (error) {
-            var response = { success: false, message: error };
+            var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
             res.send(response);
         });
 });

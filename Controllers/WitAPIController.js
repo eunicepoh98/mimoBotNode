@@ -27,12 +27,12 @@ router.post('/', function (req, res, next) {
     var sessionId = req.body.id;
     var context = req.body.context;
     var userid = req.headers.userid;
-  if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
+    if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
     wit.NLP(sessionId, userMsg, context, userid)
         .then(function (result) {
             res.send(result);
         }).catch(function (error) {
-            var response = { success: false, message: error };
+            var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
             res.send(response);
         });
 });

@@ -48,7 +48,7 @@ wit.NLP = function (sessionId, userMsg, prevContext, userid) {
                 };
                 resolve(res);
             }).catch(function (error) {
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 };

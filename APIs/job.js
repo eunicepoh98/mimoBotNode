@@ -16,7 +16,7 @@ job.getAllJob = function () {
                 resolve(JSON.stringify(data));
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     })
 } //end of getAllJob()
@@ -45,20 +45,20 @@ job.getFilteredJob = function (userId) {
                             resolve(JSON.stringify(result))
                         }).catch(function (error) {
                             console.log("Error: " + error)
-                            reject(error.toString());
+                            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                         });
 
                 }).catch(function (error) {
                     console.log("Error: " + error)
-                    reject(error.toString());
+                    reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                 });
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 } //end of getFilteredJob()
@@ -95,24 +95,24 @@ job.getUserJob = function (industry, jFuntion, jType, userId) {
                                 resolve(JSON.stringify(result))
                             }).catch(function (error) {
                                 console.log("Error: " + error)
-                                reject(error.toString());
+                                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                             });
 
                     }).catch(function (error) {
                         console.log("Error: " + error)
-                        reject(error.toString());
+                        reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                     });
                 }).catch(function (error) {
                     console.log("Error: " + error)
-                    reject(error.toString());
+                    reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                 });
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     })
 } //end of getUserJob()
@@ -140,11 +140,11 @@ job.addJob = function (salary, job, indID, jfID) {
                 resolve(JSON.stringify(newJob));
             }).catch(function (error) {
                 console.log("Error: " + error);
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
         }).catch(function (error) {
             console.log("Error: " + error);
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 } //end of addJob()
@@ -176,7 +176,7 @@ job.getOneJob = function (id) {
             resolve(JSON.stringify(data));
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     })
 } //end of getOneJob()
@@ -207,7 +207,7 @@ function getJobs(criteria) {
             resolve(data);
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     })
 } // end of getJobs()
@@ -297,7 +297,7 @@ function filterJobs(industry, jFuntion, jType, jobid) {
             resolve({ filteredjobs: filteredjobs, jobid: jobid });
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 } // end of filterJobs()
@@ -318,6 +318,7 @@ function setBookmarks(userId, joblist) {
                     "JobTitle": onejob.JobTitle,
                     "JobDescription": onejob.JobDescription,
                     "JobQualification": onejob.JobQualification,
+                    "JobResponsibilities": onejob.JobResponsibilities,
                     "JobPostDate": onejob.JobPostDate,
                     "JobPostalCode": onejob.JobPostalCode,
                     "JobAddress": onejob.JobAddress,
@@ -335,7 +336,7 @@ function setBookmarks(userId, joblist) {
             resolve(jobBookmarkList)
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 } // end of setBookmarks()

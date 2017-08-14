@@ -15,15 +15,14 @@ resume.getAllResume = function (userId) {
             resolve(JSON.stringify(data));
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 }; //end of getAllResume()
 
 /**
  * Add Resume details
- * @param {int} userId - User's ID
- * @param {string} description - Description of resume
+ * @param {string} resume - resume details
  * @returns {string} JSON format of the information of the new Resume added
  */
 resume.addResume = function (resume) {
@@ -33,7 +32,7 @@ resume.addResume = function (resume) {
                 resolve(JSON.stringify(result))
             }).catch(function (error) {
                 console.log("Error: " + eror)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }; //end of addResume()
@@ -54,14 +53,14 @@ resume.updateAttributes = function (id, description) {
                             resolve(JSON.stringify(update))
                         }).catch(function (error) {
                             console.log("Error: " + error)
-                            reject(error.toString());
+                            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                         });
                 } else {
-                    reject("Failed to update Resume");
+                    reject({ msg: "Failed to update Resume" });
                 }
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }; //end of updatAttributes()
@@ -81,14 +80,14 @@ resume.deleteResume = function (id) {
                             resolve(JSON.stringify(update))
                         }).catch(function (error) {
                             console.log("Error: " + error)
-                            reject(error.toString());
+                            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                         });
                 } else {
-                    reject("Failed to delete Resume");
+                    reject({ msg: "Failed to delete Resume" });
                 }
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 };// end of deleteResume()

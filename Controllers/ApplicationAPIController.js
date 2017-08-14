@@ -10,14 +10,14 @@ var application = require(path.resolve('./APIs/application.js'));
  * Headers: x-access-token (JWT Token) | For Testing - userid
  */
 router.get('/', function (req, res, next) {
-  var userid = req.headers.userid;   
+  var userid = req.headers.userid;
   if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
   application.getAllApplication(userid)
     .then(function (data) {
       var response = { success: true, result: JSON.parse(data) };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });
@@ -34,7 +34,7 @@ router.get('/', function (req, res, next) {
    }
  */
 router.post('/', function (req, res, next) {
-  var userid = req.headers.userid;   
+  var userid = req.headers.userid;
   if (!userid) { res.send({ success: false, message: "An error occurred in the server, Please try again" }) }
   var newapplication = {
     JobID: req.body.JobID,
@@ -46,7 +46,7 @@ router.post('/', function (req, res, next) {
       var response = { success: true, message: 'Job Applied!', result: JSON.parse(data) };
       res.status(200).send(response);
     }).catch(function (error) {
-      var response = { success: false, message: error };
+      var response = { success: false, message: error.msg, errMessage: error.errMsg ? error.errMsg : "" };
       res.send(response);
     });
 });

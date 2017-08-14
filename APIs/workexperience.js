@@ -15,7 +15,7 @@ workexperience.getAllWorkExperience = function (userId) {
             resolve(JSON.stringify(data));
         }).catch(function (error) {
             console.log("Error: " + error)
-            reject(error.toString());
+            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
         });
     });
 }; //end of getAllWorkExperience()
@@ -33,7 +33,7 @@ workexperience.addWorkExperience = function (workexperience) {
                     resolve(JSON.stringify(newWorkExperience))
                 }).catch(function (error) {
                     console.log("Error: " + error)
-                    reject(error.toString());
+                    reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                 });
         } else {
             delete workexperience.EndDate;
@@ -42,7 +42,7 @@ workexperience.addWorkExperience = function (workexperience) {
                     resolve(JSON.stringify(newWorkExperience))
                 }).catch(function (error) {
                     console.log("Error: " + error)
-                    reject(error.toString());
+                    reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                 });
         }
     });
@@ -65,14 +65,14 @@ workexperience.updateAttributes = function (id, workexperience) {
                             resolve(JSON.stringify(update))
                         }).catch(function (error) {
                             console.log("Error: " + error)
-                            reject(error.toString());
+                            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                         });
                 } else {
-                    reject("Failed to update Work Experience");
+                    reject({ msg: "Failed to update Work Experience" });
                 }
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 }; //end of updateAttributes()
@@ -91,14 +91,14 @@ workexperience.deleteWorkExperience = function (id) {
                             resolve(JSON.stringify(update))
                         }).catch(function (error) {
                             console.log("Error: " + error)
-                            reject(error.toString());
+                            reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
                         });
                 } else {
-                    reject("Failed to delete Work Experience");
+                    reject({ msg: "Failed to delete Work Experience" });
                 }
             }).catch(function (error) {
                 console.log("Error: " + error)
-                reject(error.toString());
+                reject({ msg: "An error occurred in the server, Please try again", errMsg: error.toString() });
             });
     });
 };// end of deleteWorkExperience()
