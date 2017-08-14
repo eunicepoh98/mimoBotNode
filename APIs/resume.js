@@ -22,8 +22,7 @@ resume.getAllResume = function (userId) {
 
 /**
  * Add Resume details
- * @param {int} userId - User's ID
- * @param {string} description - Description of resume
+ * @param {string} resume - resume details
  * @returns {string} JSON format of the information of the new Resume added
  */
 resume.addResume = function (resume) {
