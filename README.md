@@ -75,6 +75,7 @@ config.gmail = {
 
 // JWT Credentials
 config.others = {
-    'secretKey': ''
+    'secretEmailKey': '',
+    'secretPwdKey': ''
 }
 ```
