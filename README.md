@@ -1,4 +1,9 @@
 # FYP Backend
+
+This project consists of the backend code for a final year project (mimoBot) in Sinapore Polytechnic.
+
+mimoBot is a cross-platform mobile application job portal using Ionic Framework, Node.js and Wit.ai, allowing users to search for jobs via a chatbot.
+
 My Notes
 
 ### [*Sequelize*](http://docs.sequelizejs.com/)
